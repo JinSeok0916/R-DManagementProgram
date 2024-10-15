@@ -2,39 +2,53 @@ package DTO;
 
 public class ScheduleDTO {
 	private String companyName = null; // FK(company table, companyName)
-	private int totalSchedule = 0;
-	private int restSchedule = 0;
-	private String taskName = null; // FK(task table, taskName)
-	private int taskComplete = 0;
+	private int totalDate = 0; // 연구개발에 필요한 총 기간(일)
+	private int restDate = 0;
+	private int totalTaskCount = 0;
+	private int completeTaskCount = 0;
+	private int requiredDateForCompleteTask = 0;
+	private int requiredDateForCompleteTaskPerRestDate = 0; // 100이 넘으면, 일정 조정이 필요하다는 것을 의미함으로 GUI 에서 하이라이트 필요
 	public String getCompanyName() {
 		return companyName;
 	}
-	public void setCompanyName(String companyNameFK) {
-		this.companyName = companyNameFK;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
-	public int getTotalSchedule() {
-		return totalSchedule;
+	public int getTotalDate() {
+		return totalDate;
 	}
-	public void setTotalSchedule(int totalSchedule) {
-		this.totalSchedule = totalSchedule;
+	public void setTotalDate(int totalDate) {
+		this.totalDate = totalDate;
 	}
-	public int getRestSchedule() {
-		return restSchedule;
+	public int getRestDate() {
+		return restDate;
 	}
-	public void setRestSchedule(int restSchedule) {
-		this.restSchedule = restSchedule;
+	public void setRestDate(int restDate) {
+		this.restDate = restDate;
 	}
-	public String getTaskName() {
-		return taskName;
+	public int getTotalTaskCount() {
+		return totalTaskCount;
 	}
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
+	public void setTotalTaskCount(int totalTaskCount) {
+		this.totalTaskCount = totalTaskCount;
 	}
-	public int getTaskComplete() {
-		return taskComplete;
+	public int getCompleteTaskCount() {
+		return completeTaskCount;
 	}
-	public void setTaskComplete(int taskComplete) {
-		this.taskComplete = taskComplete;
+	public void setCompleteTaskCount(int completeTaskCount) {
+		this.completeTaskCount = completeTaskCount;
+	}
+	public int getRequiredDateForCompleteTask() {
+		return requiredDateForCompleteTask;
+	}
+	public void setRequiredDateForCompleteTask(int requiredDateForCompleteTask) {
+		this.requiredDateForCompleteTask = requiredDateForCompleteTask;
+	}
+	public int getRequiredDateForCompleteTaskPerRestDate() {
+		return requiredDateForCompleteTaskPerRestDate;
+	}
+	public void setRequiredDateForCompleteTaskPerRestDate(int requiredDateForCompleteTaskPerRestDate) {
+		this.requiredDateForCompleteTaskPerRestDate = requiredDateForCompleteTaskPerRestDate;
 	}
 
 }

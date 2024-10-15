@@ -1,39 +1,39 @@
 package DTO;
 
 public class CostDTO {
-	private String companyName = null; // FK(company table, companyName)
-	private int date = 0; // FK(detailcost table, date)
-	private int budgetAllocated = 0;
-	private int budgetUsed = 0;
-	private int budgetRemained = 0;
-	public String getCompanyName() {
-		return companyName;
-	}
-	public void setCompanyName(String companyNameFK) {
-		this.companyName = companyNameFK;
-	}
+	private int date = 0; // PK, 년월(총 4자리 숫자)
+	private int materialCost = 0;
+	private int laborCost = 0;
+	private int indirectCost = 0;
+	private int totalCost = 0; // budget 의 총 지출에 반영
 	public int getDate() {
 		return date;
 	}
 	public void setDate(int date) {
 		this.date = date;
 	}
-	public int getBudgetAllocated() {
-		return budgetAllocated;
+	public int getMaterialCost() {
+		return materialCost;
 	}
-	public void setBudgetAllocated(int budgetAllocated) {
-		this.budgetAllocated = budgetAllocated;
+	public void setMaterialCost(int materialCost) {
+		this.materialCost = materialCost;
 	}
-	public int getBudgetUsed() {
-		return budgetUsed;
+	public int getLaborCost() {
+		return laborCost;
 	}
-	public void setBudgetUsed(int budgetUsed) {
-		this.budgetUsed = budgetUsed;
+	public void setLaborCost(int laborCost) {
+		this.laborCost = laborCost;
 	}
-	public int getBudgetRemained() {
-		return budgetRemained;
+	public int getIndirectCost() {
+		return indirectCost;
 	}
-	public void setBudgetRemained(int budgetRemained) {
-		this.budgetRemained = budgetRemained;
+	public void setIndirectCost(int indirectCost) {
+		this.indirectCost = indirectCost;
+	}
+	public int getTotalCost() {
+		return totalCost;
+	}
+	public void setTotalCost(int totalCost) {
+		this.totalCost = totalCost;
 	}
 }
