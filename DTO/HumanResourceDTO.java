@@ -1,16 +1,30 @@
 package DTO;
 
 public class HumanResourceDTO {
+	private String companyName = null; // FK(company table, companyName)
 	private String participatingWorkforce = null;
+	private String level = null;
 	private int age = 0;
 	private String graduate = null;
 	private String gender = null;
 	private int salary = 0;
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyNameFK) {
+		this.companyName = companyNameFK;
+	}
 	public String getParticipatingWorkforce() {
 		return participatingWorkforce;
 	}
 	public void setParticipatingWorkforce(String participatingWorkforce) {
 		this.participatingWorkforce = participatingWorkforce;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	public int getAge() {
 		return age;
