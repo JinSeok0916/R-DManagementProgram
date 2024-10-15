@@ -1,11 +1,11 @@
 package ProgramStart;
 
-import MainMenu.MainMenu;
+import View.MainFrame;
 
 public class Start {
 
 	public static void main(String[] args) {
-		MainMenu mm = new MainMenu();
+		new MainFrame();
 	}
 
 }
