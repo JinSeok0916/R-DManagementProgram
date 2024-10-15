@@ -2,14 +2,21 @@ package DTO;
 
 public class CostDTO {
 	private String companyName = null; // FK(company table, companyName)
+	private int date = 0; // FK(detailcost table, date)
 	private int budgetAllocated = 0;
-	private int budgetUsed = 0; // FK(detailcost table, totalCost)
+	private int budgetUsed = 0;
 	private int budgetRemained = 0;
 	public String getCompanyName() {
 		return companyName;
 	}
 	public void setCompanyName(String companyNameFK) {
 		this.companyName = companyNameFK;
+	}
+	public int getDate() {
+		return date;
+	}
+	public void setDate(int date) {
+		this.date = date;
 	}
 	public int getBudgetAllocated() {
 		return budgetAllocated;

@@ -1,10 +1,17 @@
 package DTO;
 
 public class DetailCost {
+	private int date = 0; // PK
 	private int materialCost = 0;
 	private int laborCost = 0;
 	private int indirectCost = 0;
-	private int totalCost = 0; // PK
+	private int totalCost = 0;
+	public int getDate() {
+		return date;
+	}
+	public void setDate(int date) {
+		this.date = date;
+	}
 	public int getMaterialCost() {
 		return materialCost;
 	}

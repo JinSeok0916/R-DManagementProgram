@@ -1,15 +1,15 @@
 package DTO;
 
 public class Company {
-	private String companyNamePK = null;
+	private String companyName = null;
 	private String companySize = null;
 	private int totalEmployee = 0;
 	private String loaction = null;
-	public String getCompanyNamePK() {
-		return companyNamePK;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setCompanyNamePK(String companyNamePK) {
-		this.companyNamePK = companyNamePK;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	public String getCompanySize() {
 		return companySize;
