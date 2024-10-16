@@ -17,7 +17,7 @@ import javax.swing.border.LineBorder;
 
 import DAO._DBDAO;
 
-public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
+public class DeleteFrame extends JFrame implements ActionListener, ItemListener{
 	private JPanel panel1 = new JPanel();
 	JLabel p1Label1 = new JLabel("<html><center>R&D Management Program</center></html>");
 	List p1List1 = new List();
@@ -28,30 +28,22 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 	int selNum = 0;
 	_DBDAO DAO = null;
 	
-	public CRUDFrame() {
-		this.setBounds(200,75,865,890);
+	public DeleteFrame() {
+		this.setBounds(325,375,600,300);
 		// 패널 나누기
 		panel1.setLayout(null);
-		p1Label1.setBounds(260,50,400,100);
+		p1Label1.setBounds(140,0,400,50);
 		p1Label1.setFont(new Font("나눔명조",Font.BOLD,25));
 		panel1.add(p1Label1);
-		p1List1.setBounds(175,175,500,450);
-		panel1.add(p1List1);
-		p1btn1.setBounds(175,625,250,50);
-		panel1.add(p1btn1);
-		p1btn2.setBounds(425,625,250,50);
-		panel1.add(p1btn2);
-		p1btn3.setBounds(175,675,500,50);
-		panel1.add(p1btn3);
-		logo.setBounds(25,25,800,800);
-		logo.setIcon(new ImageIcon("imgs/LogoNewNew2.png"));
-		panel1.add(logo);
+		
+//		logo.setBounds(25,25,800,800);
+//		logo.setIcon(new ImageIcon("imgs/LogoNewNew2.png"));
+//		panel1.add(logo);
 		this.add(panel1);
 		
 //		.addActionListener(this);
 		
 		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	
