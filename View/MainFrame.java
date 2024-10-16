@@ -32,11 +32,13 @@ public class MainFrame extends JFrame implements ActionListener, ItemListener{
 		p1Label2.setFont(new Font("나눔명조",Font.BOLD,50));
 		panel1.add(p1Label2);
 		p1btn1.setBounds(225,650,200,100);
+		p1btn1.setFont(new Font("나눔명조",Font.BOLD,20));
 		panel1.add(p1btn1);
 		p1btn2.setBounds(425,650,200,100);
+		p1btn2.setFont(new Font("나눔명조",Font.BOLD,20));
 		panel1.add(p1btn2);
 		logo.setBounds(25,25,800,800);
-		logo.setIcon(new ImageIcon("imgs/LogoNewNew2.png"));
+		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
 		panel1.add(logo);
 		this.add(panel1);
 		
