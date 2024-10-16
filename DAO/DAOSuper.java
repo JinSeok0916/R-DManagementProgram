@@ -26,9 +26,8 @@ public class DAOSuper {
 			con = DriverManager.getConnection(url, userName, password);
 			if (con != null) {
 				System.out.println("커넥션 자원 획득 성공");
-				return true;	// 
-			} else
-				return false;
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
