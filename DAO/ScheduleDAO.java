@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.mariadb.jdbc.internal.com.read.dao.Results;
+
+import DTO.CostDTO;
 
 
 public class ScheduleDAO extends DAOSuper implements _DBDAO{
@@ -124,15 +127,39 @@ public class ScheduleDAO extends DAOSuper implements _DBDAO{
 		}
 	}
 	
-	// 검색하기 - 미완
+
 	@Override
-	public void searchNum(int Num) {
+	public void insert(String companyName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void searchName(String Name) {
+	public ArrayList<CostDTO> list(String companyName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CostDTO listOne(String companyName, int selDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int simpleList(String companyName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void update(String companyName, int selDate, int cost_material, int cost_labor, int cost_expense) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(String companyName) {
 		// TODO Auto-generated method stub
 		
 	}

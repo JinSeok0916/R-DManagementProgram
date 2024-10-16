@@ -21,7 +21,7 @@ public class CompanyDAO extends DAOSuper{
 				pstmt = con.prepareStatement(sqlCompany);
 				pstmt.executeUpdate();
 				String sqlCost = "create table "+companyName+"_cost ("
-						+ "cost_date varchar(8) primary key,"
+						+ "cost_date int(4) primary key,"
 						+ "cost_material int(12),"
 						+ "cost_labor int(12),"
 						+ "cost_expense int(12),"
@@ -32,7 +32,7 @@ public class CompanyDAO extends DAOSuper{
 				con.commit();
 				String sqlBudget = "create table "+companyName+"_budget ("
 						+ "bdg_com_name varchar(30),"
-						+ "bdg_cost_date varchar(8),"
+						+ "bdg_cost_date int(4),"
 						+ "bdg_budgetallocated int(12),"
 						+ "bdg_usingtotalcost int(12),"
 						+ "bdg_remainedcost int(12),"
@@ -74,9 +74,15 @@ public class CompanyDAO extends DAOSuper{
 				pstmt = con.prepareStatement(sqlHumanResource);
 				pstmt.executeUpdate();
 				con.commit();
-				
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e2) {
+					}
+				}
 			}
 		}
 	}

@@ -1,13 +1,16 @@
 package DAO;
 
+import java.util.ArrayList;
+
+import DTO.CostDTO;
+
 public interface _DBDAO {
 	
-	public void insert();
-	public void searchNum(int Num);
-	public void searchName(String Name);
-	public void list();
-	public void simpleList();
-	public void update();
-	public void delete();
+	public void insert(String companyName);
+	public ArrayList<CostDTO> list(String companyName);
+	public CostDTO listOne(String companyName, int selDate);
+	public int simpleList(String companyName);
+	public void update(String companyName, int selDate, int cost_material, int cost_labor, int cost_expense);
+	public void delete(String companyName);
 	
 }
