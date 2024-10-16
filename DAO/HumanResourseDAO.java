@@ -14,48 +14,6 @@ public class HumanResourseDAO extends DAOSuper implements _DBDAO{
 		init();
 	}
 	
-	// 드라이버 로드 코드
-	private void init() {
-		try {
-			Class.forName(driverName);
-			System.out.println("마리아 드라이버 로드 성공");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	// 커넥션 가져오는 공통 코드
-	private boolean con() {
-		try {
-			con = DriverManager.getConnection(url, userName, password);
-			if (con != null) {
-				System.out.println("커넥션 자원 획득 성공");
-			} else
-			return true;	// 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	// 테이블 생성 - 미완
-	public void create() {
-		if (con()) {
-			try {
-				String sql = "create table ?(?,?,?)";
-				PreparedStatement ps = con.prepareStatement(sql);
-				ps.setString(0, sql);
-				ps.setString(0, sql);
-				ps.setString(0, sql);
-				ps.setString(0, sql);
-				ps.executeUpdate();
-				con.commit();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	// insert문 - 미완
 	public void insert() {
 		if (con()) {
