@@ -14,14 +14,16 @@ public class CompanyDAO extends DAOSuper{
 			try {
 				String sqlCompany = "create table "+companyName+"_company ("
 						+ "com_name varchar(30) primary key,"
+						+ "com_establishment varchar(10),"
 						+ "com_size varchar(8) check(com_size in ('중소기업', '중견기업', '대기업')),"
 						+ "com_employee int(5),"
-						+ "com_location varchar(40)"
+						+ "com_location varchar(40),"
+						+ "com_outline varchar(100)"
 						+ ")";
 				pstmt = con.prepareStatement(sqlCompany);
 				pstmt.executeUpdate();
 				String sqlCost = "create table "+companyName+"_cost ("
-						+ "cost_date int(4) primary key,"
+						+ "cost_date varchar(10) primary key,"
 						+ "cost_material int(12),"
 						+ "cost_labor int(12),"
 						+ "cost_expense int(12),"
@@ -32,7 +34,7 @@ public class CompanyDAO extends DAOSuper{
 				con.commit();
 				String sqlBudget = "create table "+companyName+"_budget ("
 						+ "bdg_com_name varchar(30),"
-						+ "bdg_cost_date int(4),"
+						+ "bdg_cost_date varchar(8),"
 						+ "bdg_budgetallocated int(12),"
 						+ "bdg_usingtotalcost int(12),"
 						+ "bdg_remainedcost int(12),"
@@ -66,6 +68,7 @@ public class CompanyDAO extends DAOSuper{
 				String sqlHumanResource = "create table "+companyName+"_humanresource ("
 						+ "hr_com_name varchar(30),"
 						+ "hr_name varchar(8),"
+						+ "hr_idennumber varchar(13) unique,"
 						+ "hr_level varchar(4) check(hr_level in ('초급', '중급', '고급')),"
 						+ "hr_age int(3),"
 						+ "hr_graduate varchar(8),"

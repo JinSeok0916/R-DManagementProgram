@@ -10,7 +10,7 @@ public interface _DBDAO {
 	public ArrayList<CostDTO> list(String companyName);
 	public CostDTO listOne(String companyName, int selDate);
 	public int simpleList(String companyName);
-	public void update(String companyName, int selDate, int cost_material, int cost_labor, int cost_expense);
+	public void update(String companyName, String selDate, int cost_material, int cost_labor, int cost_expense);
 	public void delete(String companyName);
 	
 }

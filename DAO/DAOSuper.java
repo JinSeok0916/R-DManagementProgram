@@ -2,6 +2,10 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+import java.util.List;
+
+import DTO.CostDTO;
 
 public class DAOSuper {
 	public String userName = "root";
@@ -20,7 +24,7 @@ public class DAOSuper {
 		}
 	}
 	
-	// 커넥션 가져오는 공통 코드
+	// 커넥션 가져오는 공통 코드 
 	public boolean con() {
 		try {
 			con = DriverManager.getConnection(url, userName, password);
@@ -33,4 +37,22 @@ public class DAOSuper {
 		}
 		return false;
 	}
+	public void insert(String companyName) {
+		
+	};
+	public ArrayList list(String companyName) {
+		return null;
+	};
+	public Object listOne(String companyName, int selDate) {
+		return null;
+	};
+	public void simpleList(String companyName) {
+		
+	};
+	public void update(String companyName, String selDate, int cost_material, int cost_labor, int cost_expense) {
+		
+	};
+	public void delete(String companyName) {
+		
+	};
 }

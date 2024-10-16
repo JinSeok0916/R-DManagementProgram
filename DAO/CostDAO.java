@@ -8,8 +8,7 @@ import java.util.Scanner;
 
 import DTO.CostDTO;
 
-
-public class CostDAO extends DAOSuper implements _DBDAO{
+public class CostDAO extends DAOSuper{
 	public CostDAO() {
 		init();
 	}
@@ -22,19 +21,18 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 			try {
 				String sql = "insert into "+companyName+"_cost values (?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-//				System.out.println("4자리 숫자(년월)을 입력해주세요.");
-				int cost_date = in.nextInt();
-				in.nextLine();
-				pstmt.setInt(1, cost_date);
-//				System.out.println("원 단위로 입력해주세요.");
+				System.out.println("4자리 숫자(년월)을 입력해주세요.");
+				String cost_date = in.nextLine();
+				pstmt.setString(1, cost_date);
+				System.out.println("원 단위로 입력해주세요.");
 				int cost_material = in.nextInt();
 				in.nextLine();
 				pstmt.setInt(2, cost_material);
-//				System.out.println("원 단위로 입력해주세요.");
+				System.out.println("원 단위로 입력해주세요.");
 				int cost_labor = in.nextInt();
 				in.nextLine();
 				pstmt.setInt(3, cost_labor);
-//				System.out.println("원 단위로 입력해주세요.");
+				System.out.println("원 단위로 입력해주세요.");
 				int cost_expense = in.nextInt();
 				in.nextLine();
 				pstmt.setInt(4, cost_expense);
@@ -55,7 +53,7 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 	}
 	
 	@Override
-	public void update(String companyName, int selDate, int cost_material, int cost_labor, int cost_expense) {
+	public void update(String companyName, String selDate, int cost_material, int cost_labor, int cost_expense) {
 		if (con()) {
 			try {
 				String sql = "update "+companyName+"_cost set"
@@ -69,7 +67,7 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 				pstmt.setInt(2, cost_labor);
 				pstmt.setInt(3, cost_expense);
 				pstmt.setInt(4, cost_material + cost_labor + cost_expense);
-				pstmt.setInt(5, selDate);
+				pstmt.setString(5, selDate);
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -84,29 +82,30 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 		}
 	}
 	
-	// delete문 - 미완
-	public void delete(String companyName) {
-		if (con()) {
+	public void delete(String companyName, String delDate) {
+		if(con()) {
 			try {
-				String sql = "";
-				PreparedStatement ps = con.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();
+				String sql = "delete from "+companyName+"_cost where cost_date = ?";
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, delDate);
+				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {
+				e.printStackTrace();
 			} finally {
-				if (con != null) {
-					try {
+				try {
+					if(con != null) {
 						con.close();
-					} catch (Exception e2) {
 					}
+				} catch (Exception e2) {
+					e2.printStackTrace();
 				}
 			}
 		}
 	}
 	
 	
-	// 리스트 보기 - 미완
-	public ArrayList<CostDTO> list(String companyName) {
+	public ArrayList list(String companyName) {
 		ArrayList<CostDTO> costDTOList = new ArrayList<>();
 		if (con()) {
 			try {
@@ -115,7 +114,7 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					CostDTO costDTO = new CostDTO();
-					costDTO.setDate(rs.getInt("cost_date"));
+					costDTO.setDate(rs.getString("cost_date"));
 					costDTO.setMaterialCost(rs.getInt("cost_material"));
 					costDTO.setLaborCost(rs.getInt("cost_labor"));
 					costDTO.setExpenseCost(rs.getInt("cost_expense"));
@@ -135,7 +134,7 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 		return null;
 	}
 	
-	public CostDTO listOne(String companyName, int selDate) {
+	public Object listOne(String companyName, int selDate) {
 		if(con()) {
 			CostDTO costDTO = new CostDTO();
 			try {
@@ -144,14 +143,13 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 				pstmt.setInt(1, selDate);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
-					costDTO.setDate(rs.getInt("cost_date"));
+					costDTO.setDate(rs.getString("cost_date"));
 					costDTO.setMaterialCost(rs.getInt("cost_material"));
 					costDTO.setLaborCost(rs.getInt("cost_labor"));
 					costDTO.setExpenseCost(rs.getInt("cost_expense"));
 					costDTO.setTotalCost(rs.getInt("cost_total"));
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
 			} finally {
 				if (con != null) {
 					try {
@@ -165,7 +163,7 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 	}
 	
 	// 간략 리스트 보기 - 미완
-	public int simpleList(String companyName) {
+	public void simpleList(String companyName) {
 		int avgTotal = 0;
 		if (con()) {
 			try {
@@ -183,8 +181,8 @@ public class CostDAO extends DAOSuper implements _DBDAO{
 					} catch (Exception e2) {
 					}
 				}
-			} return avgTotal;
-		} return 0;
+			}
+		}
 	}
 
 }
