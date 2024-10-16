@@ -5,7 +5,7 @@ public class TaskDTO {
 	private String taskName = null;
 	private String taskPriority = null;
 	private int taskDate = 0;
-	private boolean taskProgress = null != null;
+	private boolean taskProgress = null != null; // 업무 처리 완료 여부
 	public String getCompanyName() {
 		return companyName;
 	}

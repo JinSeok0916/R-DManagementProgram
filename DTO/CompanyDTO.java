@@ -1,6 +1,6 @@
 package DTO;
 
-public class Company {
+public class CompanyDTO {
 	private String companyName = null;
 	private String companySize = null;
 	private int totalEmployee = 0;

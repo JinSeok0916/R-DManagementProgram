@@ -1,15 +1,15 @@
 package DTO;
 
 public class CostDTO {
-	private int date = 0; // PK, 년월(총 4자리 숫자)
+	private String date = null; // PK, 년월(총 4자리 숫자)
 	private int materialCost = 0;
 	private int laborCost = 0;
 	private int expenseCost = 0;
 	private int totalCost = 0; // budget 의 총 지출에 반영
-	public int getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(int date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public int getMaterialCost() {

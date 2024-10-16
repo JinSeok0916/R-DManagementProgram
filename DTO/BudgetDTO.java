@@ -36,4 +36,5 @@ public class BudgetDTO {
 	public void setRemainedCost(int remainedCost) {
 		this.remainedCost = remainedCost;
 	}
+
 }
