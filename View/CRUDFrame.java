@@ -19,16 +19,17 @@ import DAO._DBDAO;
 
 public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 	private JPanel panel1 = new JPanel();
-	JButton p1Label1 = new JButton("<html><center>R&D Management Program</center></html>");
-	List p1List1 = new List();
+	JButton mainButton = new JButton("<html><center>R&D Management Program</center></html>");
+	List detailList = new List();
 	JButton updateButton = new JButton("선택수정");
 	JButton deleteButton = new JButton("선택삭제");
 	JButton insertButton = new JButton("추가");
 	JButton backButton = new JButton("←");
 	JButton closeButton = new JButton("Ⅹ");
-//	JButton 
-//	JButton
-//	JButton
+	JButton companyButton = new JButton("회사정보");
+	JButton humanResourseButton = new JButton("인력");
+	JButton costButton = new JButton("자금");
+	JButton scheduleButton = new JButton("일정");
 	
 	JLabel logo = new JLabel("");
 	int selNum = 0;
@@ -38,12 +39,12 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 		this.setBounds(200,75,865,890);
 		// 패널 나누기
 		panel1.setLayout(null);
-		p1Label1.setBounds(175,50,400,40);
-		p1Label1.setFont(new Font("나눔명조",Font.BOLD,25));
-		panel1.add(p1Label1);
-		p1List1.setBounds(175,175,500,450);
-		p1List1.setFont(new Font("나눔명조",Font.PLAIN,30));
-		panel1.add(p1List1);
+		mainButton.setBounds(175,135,400,40);
+		mainButton.setFont(new Font("나눔명조",Font.BOLD,25));
+		panel1.add(mainButton);
+		detailList.setBounds(175,215,500,410);
+		detailList.setFont(new Font("나눔명조",Font.PLAIN,25));
+		panel1.add(detailList);
 		updateButton.setBounds(175,625,250,50);
 		updateButton.setFont(new Font("나눔명조",Font.BOLD,15));
 		panel1.add(updateButton);
@@ -53,25 +54,37 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 		insertButton.setBounds(175,675,500,50);
 		insertButton.setFont(new Font("나눔명조",Font.BOLD,15));
 		panel1.add(insertButton);
-		backButton.setBounds(575,50,50,40);
+		backButton.setBounds(575,135,50,40);
 		panel1.add(backButton);
-		closeButton.setBounds(625,50,50,40);
+		closeButton.setBounds(625,135,50,40);
 		panel1.add(closeButton);
-		
-		
-		
-		
+		companyButton.setBounds(175,175,125,40);
+		companyButton.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel1.add(companyButton);
+		humanResourseButton.setBounds(300,175,125,40);
+		humanResourseButton.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel1.add(humanResourseButton);
+		costButton.setBounds(425,175,125,40);
+		costButton.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel1.add(costButton);
+		scheduleButton.setBounds(550,175,125,40);
+		scheduleButton.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel1.add(scheduleButton);
 		logo.setBounds(25,25,800,800);
 		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
 		panel1.add(logo);
 		this.add(panel1);
 		
-		p1Label1.addActionListener(this);
+		mainButton.addActionListener(this);
 		updateButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 		insertButton.addActionListener(this);
 		backButton.addActionListener(this);
 		closeButton.addActionListener(this);
+		companyButton.addActionListener(this);
+		humanResourseButton.addActionListener(this);
+		costButton.addActionListener(this);
+		scheduleButton.addActionListener(this);
 		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -83,10 +96,13 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == updateButton) {
 			// 선택 수정 메서드
+			
 		} else if (e.getSource() == deleteButton) {
 			// 선택 삭제 메서드
+			
 		} else if (e.getSource() == insertButton) {
 			// 추가 메서드
+			
 		} else if (e.getSource() == backButton) {
 			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -94,14 +110,26 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 		} else if (e.getSource() == closeButton) {
 			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		} else if (e.getSource() == p1Label1) {
+		} else if (e.getSource() == mainButton) {
 			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 			new MainFrame();
+		} else if (e.getSource() == companyButton) {
+			// 회사정보 리스트 메서드
+			
+		} else if (e.getSource() == humanResourseButton) {
+			// 인력정보 리스트 메서드
+			
+		} else if (e.getSource() == costButton) {
+			// 비용정보 리스트 메서드
+			
+		} else if (e.getSource() == scheduleButton) {
+			// 일정정보 리스트 메서드
+			
 		}
 	}
 
 	public void itemStateChanged(ItemEvent e) {
-		selNum = p1List1.getSelectedIndex();
+		selNum = detailList.getSelectedIndex();
 	}
 }

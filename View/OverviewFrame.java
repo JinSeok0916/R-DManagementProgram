@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class OverviewFrame extends JFrame implements ActionListener, ItemListener{
+public class OverviewFrame extends JFrame implements ActionListener{
 	private JPanel panel1 = new JPanel();
 	JLabel p1Label1 = new JLabel("R&D Management");
 	JLabel p1Label3 = new JLabel("Program");
@@ -52,12 +52,6 @@ public class OverviewFrame extends JFrame implements ActionListener, ItemListene
 		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

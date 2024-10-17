@@ -65,6 +65,9 @@ public class InsertFrame extends JFrame implements ActionListener, ItemListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == p1btn1) {
 			// 회사추가 메서드
+			
+			this.setVisible(false);
+			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
 	}
 
