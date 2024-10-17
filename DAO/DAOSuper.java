@@ -3,14 +3,12 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.List;
-
-import DTO.CostDTO;
+import java.util.Scanner;
 
 public class DAOSuper {
 	public String userName = "root";
 	public String password = "11111111";
-	public String url = "jdbc:mariadb://localhost:3306/rndproject";
+	public String url = "jdbc:mariadb://192.168.0.12:3306/rndproject";
 	public String driverName = "org.mariadb.jdbc.Driver";
 	public Connection con = null;
 	
@@ -49,10 +47,10 @@ public class DAOSuper {
 	public void simpleList(String companyName) {
 		
 	};
-	public void update(String companyName, String selDate, int cost_material, int cost_labor, int cost_expense) {
+	public void update(String companyName) {
 		
 	};
 	public void delete(String companyName) {
 		
-	};
+	}
 }

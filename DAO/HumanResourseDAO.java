@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import DTO.HumanResourceDTO;
 
-public class HumanResourseDAO extends DAOSuper{
+public class HumanResourseDAO extends DAOSuper {
 	public HumanResourseDAO() {
 		init();
 	}
@@ -19,26 +19,33 @@ public class HumanResourseDAO extends DAOSuper{
 				String sql = "insert into "+companyName+"_humanresource values (?,?,?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, companyName);
+				
 				System.out.println("참여 인력 사원번호");
 				String hr_idennumber = in.nextLine();
 				pstmt.setString(2, hr_idennumber);
+				
 				System.out.println("참여 인력 이름");
 				String hr_name = in.nextLine();
 				pstmt.setString(3, hr_name);
+				
 				System.out.println("참여 인력 레벨");
 				String hr_level = in.nextLine();
 				pstmt.setString(4, hr_level);
+				
 				System.out.println("참여 인력 나이");
 				int hr_age = in.nextInt();
 				in.nextLine();
 				pstmt.setInt(5, hr_age);
+				
 				System.out.println("참여 인력 학력");
 				String hr_graduate = in.nextLine();
 				pstmt.setString(6, hr_graduate);
+				
 				System.out.println("참여 인력 나이");
 				int hr_salary = in.nextInt();
 				in.nextLine();
 				pstmt.setInt(7, hr_salary);
+				
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {
@@ -51,7 +58,7 @@ public class HumanResourseDAO extends DAOSuper{
 				}
 			}
 		}
-	};
+	}
 	public ArrayList list(String companyName) {
 		ArrayList<HumanResourceDTO> hrDTOList = new ArrayList<>();
 		if (con()) {
