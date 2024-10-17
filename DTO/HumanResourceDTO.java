@@ -7,8 +7,8 @@ public class HumanResourceDTO {
 	private String level = null;
 	private int age = 0;
 	private String graduate = null;
-	private String gender = null;
 	private int salary = 0;
+	
 	public String getCompanyName() {
 		return companyName;
 	}
@@ -44,12 +44,6 @@ public class HumanResourceDTO {
 	}
 	public void setGraduate(String graduate) {
 		this.graduate = graduate;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 	public int getSalary() {
 		return salary;

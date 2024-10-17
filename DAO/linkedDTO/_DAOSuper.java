@@ -1,11 +1,11 @@
-package DAO;
+package DAO.linkedDTO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DAOSuper {
+public class _DAOSuper {
 	public String userName = "root";
 	public String password = "11111111";
 	public String url = "jdbc:mariadb://192.168.0.12:3306/rndproject";
@@ -41,11 +41,8 @@ public class DAOSuper {
 	public ArrayList list(String companyName) {
 		return null;
 	};
-	public Object listOne(String companyName, int selDate) {
+	public Object listOne(String companyName) {
 		return null;
-	};
-	public void simpleList(String companyName) {
-		
 	};
 	public void update(String companyName) {
 		

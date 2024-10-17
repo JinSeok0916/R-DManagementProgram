@@ -1,4 +1,4 @@
-package DAO;
+package DAO.linkedDTO;
 
 public class TaskDAO {
 

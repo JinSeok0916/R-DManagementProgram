@@ -1,11 +1,18 @@
 package DTO;
 
 public class CostDTO {
+	private String companyName = null;
 	private String date = null; // PK, 년월(총 4자리 숫자)
 	private int materialCost = 0;
 	private int laborCost = 0;
 	private int expenseCost = 0;
 	private int totalCost = 0; // budget 의 총 지출에 반영
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 	public String getDate() {
 		return date;
 	}

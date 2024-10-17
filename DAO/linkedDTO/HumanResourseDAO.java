@@ -1,4 +1,4 @@
-package DAO;
+package DAO.linkedDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import DTO.HumanResourceDTO;
 
-public class HumanResourseDAO extends DAOSuper {
+public class HumanResourseDAO extends _DAOSuper {
 	public HumanResourseDAO() {
 		init();
 	}
@@ -16,17 +16,18 @@ public class HumanResourseDAO extends DAOSuper {
 		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
-				String sql = "insert into "+companyName+"_humanresource values (?,?,?,?,?,?,?)";
+				String sql = "insert into "+companyName+"_humanresource values (?,?,?,?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, companyName);
 				
-				System.out.println("참여 인력 사원번호");
-				String hr_idennumber = in.nextLine();
-				pstmt.setString(2, hr_idennumber);
+				pstmt.setString(1, companyName);
 				
 				System.out.println("참여 인력 이름");
 				String hr_name = in.nextLine();
-				pstmt.setString(3, hr_name);
+				pstmt.setString(2, hr_name);
+				
+				System.out.println("참여 인력 사원번호");
+				String hr_idennumber = in.nextLine();
+				pstmt.setString(3, hr_idennumber);
 				
 				System.out.println("참여 인력 레벨");
 				String hr_level = in.nextLine();
@@ -59,9 +60,10 @@ public class HumanResourseDAO extends DAOSuper {
 			}
 		}
 	}
-	public ArrayList list(String companyName) {
+	
+	public ArrayList<HumanResourceDTO> list(String companyName) {
 		ArrayList<HumanResourceDTO> hrDTOList = new ArrayList<>();
-		if (con()) {
+		if(con()) {
 			try {
 				String sql = "select * from "+companyName+"_humanresource";
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -87,14 +89,15 @@ public class HumanResourseDAO extends DAOSuper {
 			} return hrDTOList;
 		}
 		return null;
-	};
-	public Object listOne(String companyName, int selIdenNum) {
+	}
+	
+	public Object listOne(String companyName, String selIdenNum) {
 		if(con()) {
 			HumanResourceDTO hrDTO = new HumanResourceDTO();
 			try {
 				String sql = "select * from "+companyName+"_humanresource where hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, selIdenNum);
+				pstmt.setString(1, selIdenNum);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
 					hrDTO.setParticipatingWorkforce(rs.getString("hr_name"));
@@ -116,27 +119,7 @@ public class HumanResourseDAO extends DAOSuper {
 		}
 		return null;
 	};
-	public void simpleList(String companyName) {
-		int totalParticipants = 0;
-		if (con()) {
-			try {
-				String sql = "select count(*) total_participants from "+companyName+"_humanresource";
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();
-				if(rs.next()) {
-					totalParticipants = rs.getInt("total_participants");
-				}
-			} catch (Exception e) {
-			} finally {
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e2) {
-					}
-				}
-			}
-		}
-	};
+	
 	public void update(String companyName, String hr_name, String hr_level, int hr_age, String hr_graduate, int hr_salary, String hr_idennumber) {
 		if (con()) {
 			try {

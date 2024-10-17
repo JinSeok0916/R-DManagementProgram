@@ -1,4 +1,4 @@
-package DAO;
+package DAO.linkedDTO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ import org.mariadb.jdbc.internal.com.read.dao.Results;
 
 import DTO.CostDTO;
 
-public class ScheduleDAO extends DAOSuper{
+public class ScheduleDAO extends _DAOSuper{
 	
 	public ScheduleDAO() {
 		init();

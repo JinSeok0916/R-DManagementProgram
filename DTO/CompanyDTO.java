@@ -2,14 +2,23 @@ package DTO;
 
 public class CompanyDTO {
 	private String companyName = null;
+	private String companyEstablishment = null;
 	private String companySize = null;
 	private int totalEmployee = 0;
-	private String loaction = null;
+	private String companyAddress = null;
+	private String companyIntro = null;
+	
 	public String getCompanyName() {
 		return companyName;
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	public String getCompanyEstablishment() {
+		return companyEstablishment;
+	}
+	public void setCompanyEstablishment(String companyEstablishment) {
+		this.companyEstablishment = companyEstablishment;
 	}
 	public String getCompanySize() {
 		return companySize;
@@ -23,10 +32,16 @@ public class CompanyDTO {
 	public void setTotalEmployee(int totalEmployee) {
 		this.totalEmployee = totalEmployee;
 	}
-	public String getLoaction() {
-		return loaction;
+	public String getCompanyAddress() {
+		return companyAddress;
 	}
-	public void setLoaction(String loaction) {
-		this.loaction = loaction;
+	public void setCompanyAddress(String companyAddress) {
+		this.companyAddress = companyAddress;
+	}
+	public String getCompanyIntro() {
+		return companyIntro;
+	}
+	public void setCompanyIntro(String companyIntro) {
+		this.companyIntro = companyIntro;
 	}
 }

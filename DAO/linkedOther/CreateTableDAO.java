@@ -1,13 +1,17 @@
-package DAO;
+package DAO.linkedOther;
 
 import java.sql.PreparedStatement;
+import java.util.Scanner;
 
-public class CompanyDAO extends DAOSuper{
-	public CompanyDAO() {
+public class CreateTableDAO extends _DAOSuper {
+	public CreateTableDAO() {
 		init();
+		Scanner in = new Scanner(System.in);
+		System.out.println("회사 이름을 입력하시오.");
+		create(in.nextLine());
 	}
-		
-	// 테이블 생성 - 미완
+	
+	// 입력값은 숫자로 하고 출력 시 문자로 받는것 고민 필요....
 	public void create(String companyName) {
 		if (con()) {
 			PreparedStatement pstmt = null;
@@ -17,21 +21,25 @@ public class CompanyDAO extends DAOSuper{
 						+ "com_establishment varchar(10),"
 						+ "com_size varchar(8) check(com_size in ('중소기업', '중견기업', '대기업')),"
 						+ "com_employee int(5),"
-						+ "com_location varchar(40),"
-						+ "com_outline varchar(100)"
+						+ "com_address varchar(40),"
+						+ "com_intro varchar(100)"
 						+ ")";
 				pstmt = con.prepareStatement(sqlCompany);
 				pstmt.executeUpdate();
+				
 				String sqlCost = "create table "+companyName+"_cost ("
+						+ "cost_com_name varchar(30)"
 						+ "cost_date varchar(10) primary key,"
 						+ "cost_material int(12),"
 						+ "cost_labor int(12),"
 						+ "cost_expense int(12),"
 						+ "cost_total int(12)"
+						+ "constraint cost_com_name_"+companyName+" foreign key (cost_com_name) references "+companyName+"_company (com_name),"
 						+ ")";
 				pstmt = con.prepareStatement(sqlCost);
 				pstmt.executeUpdate();
 				con.commit();
+				
 				String sqlBudget = "create table "+companyName+"_budget ("
 						+ "bdg_com_name varchar(30),"
 						+ "bdg_cost_date varchar(8),"
@@ -43,6 +51,7 @@ public class CompanyDAO extends DAOSuper{
 						+ ")";
 				pstmt = con.prepareStatement(sqlBudget);
 				pstmt.executeUpdate();
+				
 				String sqlSchedule = "create table "+companyName+"_schedule ("
 						+ "sch_com_name varchar(30),"
 						+ "sch_totaldate int(4),"
@@ -55,6 +64,7 @@ public class CompanyDAO extends DAOSuper{
 						+ ")";
 				pstmt = con.prepareStatement(sqlSchedule);
 				pstmt.executeUpdate();
+				
 				String sqlTask = "create table "+companyName+"_task ("
 						+ "task_com_name varchar(30),"
 						+ "task_name varchar(20),"
@@ -65,6 +75,7 @@ public class CompanyDAO extends DAOSuper{
 						+ ")";
 				pstmt = con.prepareStatement(sqlTask);
 				pstmt.executeUpdate();
+				
 				String sqlHumanResource = "create table "+companyName+"_humanresource ("
 						+ "hr_com_name varchar(30),"
 						+ "hr_name varchar(8),"
@@ -77,6 +88,7 @@ public class CompanyDAO extends DAOSuper{
 				pstmt = con.prepareStatement(sqlHumanResource);
 				pstmt.executeUpdate();
 				con.commit();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {

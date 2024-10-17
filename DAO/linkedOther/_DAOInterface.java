@@ -1,10 +1,10 @@
-package DAO;
+package DAO.linkedOther;
 
 import java.util.ArrayList;
 
 import DTO.CostDTO;
 
-public interface _DBDAO {
+public interface _DAOInterface {
 	
 	public void insert(String companyName);
 	public ArrayList<CostDTO> list(String companyName);
