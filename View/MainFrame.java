@@ -23,8 +23,10 @@ public class MainFrame extends JFrame implements ActionListener, ItemListener{
 	public MainFrame() {
 		this.setBounds(200,75,865,890);
 		
-		// 패널 나누기
+		// 패널 설정
 		panel1.setLayout(null);
+		
+		// 프로그램 제목
 		p1Label1.setBounds(220,50,1000,100);
 		p1Label1.setFont(new Font("나눔명조",Font.BOLD,50));
 		panel1.add(p1Label1);
