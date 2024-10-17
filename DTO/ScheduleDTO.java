@@ -2,6 +2,7 @@ package DTO;
 
 public class ScheduleDTO {
 	private String companyName = null; // FK(company table, companyName)
+	private String date = null;
 	private int totalDate = 0; // 연구개발에 필요한 총 기간(일)
 	private int restDate = 0;
 	private int totalTaskCount = 0;
@@ -13,6 +14,12 @@ public class ScheduleDTO {
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public int getTotalDate() {
 		return totalDate;

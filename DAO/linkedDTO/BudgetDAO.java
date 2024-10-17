@@ -123,7 +123,7 @@ public class BudgetDAO extends _DAOSuper {
 				String sql = "update "+companyName+"_budget set"
 						+ " bdg_budgetallocated = ?,"
 						+ " bdg_usingtotalcost = ?,"
-						+ " bdg_remainedcost = ?,"
+						+ " bdg_remainedcost = ?"
 						+ " where bdg_cost_date = ?";
 				
 				PreparedStatement pstmt = con.prepareStatement(sql);

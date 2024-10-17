@@ -91,6 +91,7 @@ public class CostDAO extends _DAOSuper {
 		}
 	}
 	
+	@Override
 	public void delete(String companyName, String delDate) {
 		if(con()) {
 			try {
@@ -113,6 +114,7 @@ public class CostDAO extends _DAOSuper {
 		}
 	}
 	
+	@Override
 	public ArrayList<CostDTO> list(String companyName) {
 		ArrayList<CostDTO> costDTOList = new ArrayList<>();
 		if (con()) {
@@ -143,6 +145,7 @@ public class CostDAO extends _DAOSuper {
 		return null;
 	}
 	
+	@Override
 	public Object listOne(String companyName, String selDate) {
 		if(con()) {
 			CostDTO costDTO = new CostDTO();

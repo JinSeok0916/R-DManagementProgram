@@ -59,6 +59,7 @@ public class CompanyDAO extends _DAOSuper{
 		}
 	}
 
+	@Override
 	public ArrayList<CompanyDTO> list() {
 		ArrayList<CompanyDTO> companyDTOList = new ArrayList<>();
 		if (con()) {
@@ -89,6 +90,7 @@ public class CompanyDAO extends _DAOSuper{
 		return null;
 	}
 
+	@Override
 	public Object listOne(String companyName) {
 		if(con()) {
 			CompanyDTO companyDTO = new CompanyDTO();
@@ -126,7 +128,7 @@ public class CompanyDAO extends _DAOSuper{
 						+ " com_size = ?,"
 						+ " com_employee = ?,"
 						+ " com_address = ?,"
-						+ " com_intro = ?,"
+						+ " com_intro = ?"
 						+ " where com_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, com_establishment);

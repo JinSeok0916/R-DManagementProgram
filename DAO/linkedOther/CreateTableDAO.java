@@ -28,13 +28,13 @@ public class CreateTableDAO extends _DAOSuper {
 				pstmt.executeUpdate();
 				
 				String sqlCost = "create table "+companyName+"_cost ("
-						+ "cost_com_name varchar(30)"
+						+ "cost_com_name varchar(30),"
 						+ "cost_date varchar(10) primary key,"
 						+ "cost_material int(12),"
 						+ "cost_labor int(12),"
 						+ "cost_expense int(12),"
-						+ "cost_total int(12)"
-						+ "constraint cost_com_name_"+companyName+" foreign key (cost_com_name) references "+companyName+"_company (com_name),"
+						+ "cost_total int(12),"
+						+ "constraint cost_com_name_"+companyName+" foreign key (cost_com_name) references "+companyName+"_company (com_name)"
 						+ ")";
 				pstmt = con.prepareStatement(sqlCost);
 				pstmt.executeUpdate();
@@ -54,6 +54,7 @@ public class CreateTableDAO extends _DAOSuper {
 				
 				String sqlSchedule = "create table "+companyName+"_schedule ("
 						+ "sch_com_name varchar(30),"
+						+ "sch_date varchar(10),"
 						+ "sch_totaldate int(4),"
 						+ "sch_restdate int(4),"
 						+ "sch_totaltask int(3),"

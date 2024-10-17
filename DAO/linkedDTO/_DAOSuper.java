@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JTextField;
-
 public class _DAOSuper {
 	public String userName = "root";
 	public String password = "11111111";
@@ -39,22 +37,17 @@ public class _DAOSuper {
 	}
 	public void insert(String companyName) {
 		
-	};
+	}
 	public ArrayList list(String companyName) {
 		return null;
-	};
-	public Object listOne(String companyName) {
+	}
+	public Object listOne(String companyName, String publicVar) {
 		return null;
-	};
+	}
 	public void update(String companyName) {
 		
-	};
-	public void delete(String companyName) {
-		
 	}
-
-	public void insert(JTextField companyName) {
-		// TODO Auto-generated method stub
+	public void delete(String companyName, String publicVar) {
 		
 	}
 }

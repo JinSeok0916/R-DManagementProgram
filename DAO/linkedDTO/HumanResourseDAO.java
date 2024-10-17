@@ -12,6 +12,8 @@ public class HumanResourseDAO extends _DAOSuper {
 	public HumanResourseDAO() {
 		init();
 	}
+	
+	@Override
 	public void insert(String companyName) {
 		Scanner in = new Scanner(System.in);
 		if (con()) {
@@ -61,6 +63,7 @@ public class HumanResourseDAO extends _DAOSuper {
 		}
 	}
 	
+	@Override
 	public ArrayList<HumanResourceDTO> list(String companyName) {
 		ArrayList<HumanResourceDTO> hrDTOList = new ArrayList<>();
 		if(con()) {
@@ -91,6 +94,7 @@ public class HumanResourseDAO extends _DAOSuper {
 		return null;
 	}
 	
+	@Override
 	public Object listOne(String companyName, String selIdenNum) {
 		if(con()) {
 			HumanResourceDTO hrDTO = new HumanResourceDTO();
@@ -127,7 +131,7 @@ public class HumanResourseDAO extends _DAOSuper {
 						+ " hr_name = ?,"
 						+ " hr_level = ?,"
 						+ " hr_age = ?,"
-						+ " hr_graduate = ?"
+						+ " hr_graduate = ?,"
 						+ " hr_salary = ?"
 						+ " where hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -149,7 +153,9 @@ public class HumanResourseDAO extends _DAOSuper {
 				}
 			}
 		}
-	};
+	}
+	
+	@Override
 	public void delete(String companyName, String delIdenNum) {
 		if(con()) {
 			try {
