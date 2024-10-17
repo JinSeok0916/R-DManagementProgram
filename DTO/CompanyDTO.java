@@ -1,6 +1,7 @@
 package DTO;
 
 public class CompanyDTO {
+	private String projectName = null;
 	private String companyName = null;
 	private String companyEstablishment = null;
 	private String companySize = null;
@@ -8,6 +9,12 @@ public class CompanyDTO {
 	private String companyAddress = null;
 	private String companyIntro = null;
 	
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 	public String getCompanyName() {
 		return companyName;
 	}

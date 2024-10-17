@@ -60,7 +60,7 @@ public class CompanyDAO extends _DAOSuper{
 	}
 
 	@Override
-	public ArrayList<CompanyDTO> list() {
+	public ArrayList<CompanyDTO> list(String projectName) {
 		ArrayList<CompanyDTO> companyDTOList = new ArrayList<>();
 		if (con()) {
 			try {
@@ -69,7 +69,8 @@ public class CompanyDAO extends _DAOSuper{
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					CompanyDTO companyDTO = new CompanyDTO();
-					companyDTO.setCompanyName(rs.getString("com_company"));
+					companyDTO.setProjectName(rs.getString("com_project_name"));
+					companyDTO.setCompanyName(rs.getString("com_name"));
 					companyDTO.setCompanyEstablishment(rs.getString("com_establishment"));
 					companyDTO.setCompanySize(rs.getString("com_size"));
 					companyDTO.setTotalEmployee(rs.getInt("com_employee"));
@@ -91,7 +92,7 @@ public class CompanyDAO extends _DAOSuper{
 	}
 
 	@Override
-	public Object listOne(String companyName) {
+	public Object listOne(String companyName, String publicvar) {
 		if(con()) {
 			CompanyDTO companyDTO = new CompanyDTO();
 			try {
@@ -152,7 +153,7 @@ public class CompanyDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void delete(String companyName) {
+	public void delete(String companyName, String publicvar) {
 		if(con()) {
 			try {
 				String sql = "delete from company where com_name = ?";
