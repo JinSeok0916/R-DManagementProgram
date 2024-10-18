@@ -1,6 +1,7 @@
 package DTO;
 
 public class HumanResourceDTO {
+	private String projectName = null;
 	private String companyName = null; // FK(company table, companyName)
 	private String participatingWorkforce = null;
 	private String idenNumber = null;
@@ -9,6 +10,12 @@ public class HumanResourceDTO {
 	private String graduate = null;
 	private int salary = 0;
 	
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 	public String getCompanyName() {
 		return companyName;
 	}

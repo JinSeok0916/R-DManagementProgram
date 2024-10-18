@@ -15,37 +15,41 @@ public class CostDAO extends _DAOSuper {
 	
 	
 	@Override
-	public void insert(String companyName) {
+	public void insert(String projectName, String companyName) {
 		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
-				String sql = "insert into "+companyName+"_cost values (?,?,?,?,?,?)";
+				String sql = "insert into cost values (?,?,?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
-				pstmt.setString(1, companyName);
+				pstmt.setString(1, projectName);
+				pstmt.setString(2, companyName);
 				
-				System.out.println("4자리 숫자(년월)을 입력해주세요.");
-				String cost_date = in.nextLine();
-				pstmt.setString(2, cost_date);
+				System.out.println("날짜를 입력하세요.");
+				System.out.println("년도(0000)");
+				String cost_year = in.nextLine();
+				System.out.println("월(00)");
+				String cost_month = in.nextLine();
+				pstmt.setString(3, cost_year + "년" + cost_month + "월");
 				
 				System.out.println("원 단위로 입력해주세요.");
 				int cost_material = in.nextInt();
 				in.nextLine();
-				pstmt.setInt(3, cost_material);
+				pstmt.setInt(4, cost_material);
 				
 				System.out.println("원 단위로 입력해주세요.");
 				int cost_labor = in.nextInt();
 				in.nextLine();
-				pstmt.setInt(4, cost_labor);
+				pstmt.setInt(5, cost_labor);
 				
 				System.out.println("원 단위로 입력해주세요.");
 				int cost_expense = in.nextInt();
 				in.nextLine();
-				pstmt.setInt(5, cost_expense);
+				pstmt.setInt(6, cost_expense);
 				
 				System.out.println("이번달 총 사용 금액");
 				int cost_total = cost_material + cost_labor + cost_expense;
-				pstmt.setInt(6, cost_total);
+				pstmt.setInt(7, cost_total);
 				System.out.println(cost_total);
 				
 				pstmt.executeUpdate();
@@ -62,21 +66,27 @@ public class CostDAO extends _DAOSuper {
 		}
 	}
 	
-	public void update(String companyName, String selDate, int cost_material, int cost_labor, int cost_expense) {
+	@Override
+	public void update(String projectName, String companyName, String selDate) {
+		CostDTO cDTO = (CostDTO) listOne(projectName, companyName, selDate);
 		if (con()) {
 			try {
-				String sql = "update "+companyName+"_cost set"
+				String sql = "update cost set"
+						+ " cost_date = ?,"
 						+ " cost_material = ?,"
 						+ " cost_labor = ?,"
 						+ " cost_expense = ?,"
 						+ " cost_total = ?"
-						+ " where cost_date = ?";
+						+ " where cost_project_name = ?, cost_com_name = ?, cost_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, cost_material);
-				pstmt.setInt(2, cost_labor);
-				pstmt.setInt(3, cost_expense);
-				pstmt.setInt(4, cost_material + cost_labor + cost_expense);
-				pstmt.setString(5, selDate);
+				pstmt.setString(1, cDTO.getDate());
+				pstmt.setInt(2, cDTO.getMaterialCost());
+				pstmt.setInt(3, cDTO.getLaborCost());
+				pstmt.setInt(4, cDTO.getExpenseCost());
+				pstmt.setInt(5, cDTO.getMaterialCost() + cDTO.getLaborCost() + cDTO.getExpenseCost());
+				pstmt.setString(6, projectName);
+				pstmt.setString(7, companyName);
+				pstmt.setString(8, selDate);
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -92,12 +102,14 @@ public class CostDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public void delete(String companyName, String delDate) {
+	public void delete(String projectName, String companyName, String delDate) {
 		if(con()) {
 			try {
-				String sql = "delete from "+companyName+"_cost where cost_date = ?";
+				String sql = "delete from cost where cost_project_name = ?, cost_com_name = ?, cost_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, delDate);
+				pstmt.setString(1, projectName);
+				pstmt.setString(2, companyName);
+				pstmt.setString(3, delDate);
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {
@@ -115,15 +127,18 @@ public class CostDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public ArrayList<CostDTO> list(String companyName) {
+	public ArrayList<CostDTO> list(String projectName, String companyName) {
 		ArrayList<CostDTO> costDTOList = new ArrayList<>();
 		if (con()) {
 			try {
-				String sql = "select * from "+companyName+"_cost";
+				String sql = "select * from cost where cost_project_name = ?, cost_com_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, projectName);
+				pstmt.setString(2, companyName);
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					CostDTO costDTO = new CostDTO();
+					costDTO.setCompanyName(rs.getString("cost_project_company"));
 					costDTO.setCompanyName(rs.getString("cost_com_company"));
 					costDTO.setDate(rs.getString("cost_date"));
 					costDTO.setMaterialCost(rs.getInt("cost_material"));
@@ -146,16 +161,19 @@ public class CostDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public Object listOne(String companyName, String selDate) {
+	public Object listOne(String projectName, String companyName, String selDate) {
 		if(con()) {
 			CostDTO costDTO = new CostDTO();
 			try {
-				String sql = "select * from "+companyName+"_cost where cost_date = ?";
+				String sql = "select * from cost  where cost_project_name = ?, cost_com_name = ?, cost_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, selDate);
+				pstmt.setString(1, projectName);
+				pstmt.setString(2, companyName);
+				pstmt.setString(3, selDate);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
-					costDTO.setCompanyName(rs.getString("cost_com_name"));
+					costDTO.setCompanyName(rs.getString("cost_project_company"));
+					costDTO.setCompanyName(rs.getString("cost_com_company"));
 					costDTO.setDate(rs.getString("cost_date"));
 					costDTO.setMaterialCost(rs.getInt("cost_material"));
 					costDTO.setLaborCost(rs.getInt("cost_labor"));
@@ -174,27 +192,5 @@ public class CostDAO extends _DAOSuper {
 		}
 		return null;
 	}
-	
-//	public void simpleList(String companyName) {
-//		int avgTotal = 0;
-//		if (con()) {
-//			try {
-//				String sql = "select avg(cost_total) lastmonth_avg from "+companyName+"_cost";
-//				PreparedStatement pstmt = con.prepareStatement(sql);
-//				ResultSet rs = pstmt.executeQuery();
-//				if(rs.next()) {
-//					avgTotal = rs.getInt("lastmonth_avg");
-//				}
-//			} catch (Exception e) {
-//			} finally {
-//				if (con != null) {
-//					try {
-//						con.close();
-//					} catch (Exception e2) {
-//					}
-//				}
-//			}
-//		}
-//	}
 
 }

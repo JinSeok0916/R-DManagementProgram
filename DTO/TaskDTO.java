@@ -1,11 +1,19 @@
 package DTO;
 
 public class TaskDTO {
+	private String projectName = null;
 	private String companyName = null; // FK(company table, companyName)
 	private String taskName = null;
 	private String taskPriority = null;
 	private int taskDate = 0;
 	private boolean taskProgress = null != null; // 업무 처리 완료 여부
+	
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 	public String getCompanyName() {
 		return companyName;
 	}

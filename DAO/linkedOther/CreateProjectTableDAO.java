@@ -1,18 +1,16 @@
 package DAO.linkedOther;
 
 import java.sql.PreparedStatement;
-import java.util.Scanner;
 
 public class CreateProjectTableDAO extends _DAOSuper{
 	public CreateProjectTableDAO() {
 		init();
-		Scanner in = new Scanner(System.in);
-		System.out.println("프로젝트 이름을 입력하시오.");
-		create(in.nextLine());
+		create();
 	}
 	
 	// 입력값은 숫자로 하고 출력 시 문자로 받는것 고민 필요....
-	public void create(String projectName) {
+	@Override
+	public void create() {
 		if (con()) {
 			PreparedStatement pstmt = null;
 			try {
