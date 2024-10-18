@@ -1,11 +1,11 @@
 package View;
 
 import java.awt.Font;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import DAO.linkedOther.CreateProjectTableDAO;
+import DTO.ProjectDTO;
 
 public class MainFrame extends JFrame implements ActionListener, ItemListener{
 	private JPanel panel = new JPanel();
@@ -24,6 +24,8 @@ public class MainFrame extends JFrame implements ActionListener, ItemListener{
 	JButton manageButton = new JButton("참여기업관리");
 	JButton insertProjectButton = new JButton("사업등록");
 	JLabel logo = new JLabel();
+	int selNum = 0;
+	ProjectDTO project = null;
 	
 	public MainFrame() {
 		this.setBounds(200,75,865,890);
@@ -77,13 +79,13 @@ public class MainFrame extends JFrame implements ActionListener, ItemListener{
 			new OverviewFrame();
 			this.setVisible(false);
 		} else if (e.getSource() == manageButton) {
-			new ManageFrame();
+			new ManageFrame(project.getProjectName());
 			this.setVisible(false);
 		}
 	}
 
 	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
+		selNum = list.getSelectedIndex();
 		
 	}
 }

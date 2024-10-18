@@ -37,7 +37,7 @@ public class ManageFrame extends JFrame implements ActionListener, ItemListener{
 	int hr = 0;
 	ArrayList<String> companyNameList = new ArrayList<>();
 	
-	public ManageFrame() {
+	public ManageFrame(String projectName) {
 		this.setBounds(200,75,865,890);
 		
 		// 패널 설정
