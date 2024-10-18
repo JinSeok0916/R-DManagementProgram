@@ -35,19 +35,19 @@ public class _DAOSuper {
 		}
 		return false;
 	}
-	public void insert(String companyName) {
+	public void insert(String projectName, String companyName) {
 		
 	}
-	public ArrayList list(String companyName) {
+	public ArrayList list(String projectName, String companyName) {
 		return null;
 	}
-	public Object listOne(String companyName, String publicVar) {
+	public Object listOne(String projectName, String companyName, String publicVar) {
 		return null;
 	}
-	public void update(String companyName) {
+	public void update(String projectName, String companyName, String publicvar) {
 		
 	}
-	public void delete(String companyName, String publicVar) {
+	public void delete(String projectName, String companyName, String publicVar) {
 		
 	}
 }

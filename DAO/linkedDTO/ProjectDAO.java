@@ -15,7 +15,7 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(String projectName) {
+	public void insert(String projectName, String publicvar) {
 		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
@@ -53,7 +53,7 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public ArrayList<ProjectDTO> list(String projectName) {
+	public ArrayList<ProjectDTO> list(String projectName, String companyName) {
 		ArrayList<ProjectDTO> projectDTOList = new ArrayList<>();
 		if (con()) {
 			try {
@@ -82,7 +82,7 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public Object listOne(String projectName, String publicVar) {
+	public Object listOne(String projectName, String companyName, String publicVar) {
 		if(con()) {
 			ProjectDTO projectDTO = new ProjectDTO();
 			try {
@@ -109,19 +109,23 @@ public class ProjectDAO extends _DAOSuper{
 		return null;
 	}
 
-	public void update(String project_name, int project_date, int project_budget, String project_outline) {
+	@Override
+	public void update(String projectName, String companyName, String publicvar) {
+		ProjectDTO projectDTO = (ProjectDTO) listOne(projectName, null, null);
 		if (con()) {
 			try {
 				String sql = "update project set"
+						+ " project_name = ?,"
 						+ " project_date = ?,"
 						+ " project_budget = ?,"
 						+ " project_outline = ?"
 						+ " where project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, project_date);
-				pstmt.setInt(2, project_budget);
-				pstmt.setString(3, project_outline);
-				pstmt.setString(4, project_name);
+				pstmt.setString(1, projectDTO.getProjectName());
+				pstmt.setInt(2, projectDTO.getProjectDate());
+				pstmt.setInt(3, projectDTO.getProjectBudget());
+				pstmt.setString(4, projectDTO.getProjectOutline());
+				pstmt.setString(5, projectName);
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -137,12 +141,12 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void delete(String project_name, String publicVar) {
+	public void delete(String projectName, String companyName, String publicvar) {
 		if(con()) {
 			try {
 				String sql = "delete from project where project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, project_name);
+				pstmt.setString(1, projectName);
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {

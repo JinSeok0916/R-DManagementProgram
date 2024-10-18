@@ -3,6 +3,7 @@ package DTO;
 public class CompanyDTO {
 	private String projectName = null;
 	private String companyName = null;
+	private int companyBudget = 0; 
 	private String companyEstablishment = null;
 	private String companySize = null;
 	private int totalEmployee = 0;
@@ -20,6 +21,12 @@ public class CompanyDTO {
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	public int getCompanyBudget() {
+		return companyBudget;
+	}
+	public void setCompanyBudget(int companyBudget) {
+		this.companyBudget = companyBudget;
 	}
 	public String getCompanyEstablishment() {
 		return companyEstablishment;
