@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,8 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import DAO.linkedDTO.CompanyDAO;
 import DAO.linkedOther.SummaryDAO;
-import DAO.linkedOther._DAOSuper;
+import DTO.SummaryDTO;
 
 
 
@@ -27,9 +29,13 @@ public class ManageFrame extends JFrame implements ActionListener, ItemListener{
 	JButton deleteButton = new JButton("회사삭제");
 	JButton backButton = new JButton("←");
 	JButton closeButton = new JButton("Ⅹ");
-	JLabel logo = new JLabel("");
-	_DAOSuper DAO = null;
+	JLabel logo = new JLabel();
+	CompanyDAO linkedDAO = new CompanyDAO();
+	SummaryDAO unlinkedDAO = new SummaryDAO();
 	int selNum = 0;
+	int budget = 0;
+	int hr = 0;
+	ArrayList<String> companyNameList = new ArrayList<>();
 	
 	public ManageFrame() {
 		this.setBounds(200,75,865,890);
@@ -49,12 +55,21 @@ public class ManageFrame extends JFrame implements ActionListener, ItemListener{
 		panel1.add(closeButton);
 		
 		// DB에서 꺼낸 리스트 입력
-		DAO = new SummaryDAO();
 		summaryList.setBounds(175,175,500,450);
 		summaryList.setFont(new Font("나눔명조",Font.PLAIN,25));
-//		DAO.budget(getName())
-//		summaryList.add(null);
 		
+//		linkedDAO.list();
+		
+		if (companyNameList != null) {
+			for (int i = 0; i < companyNameList.size(); i++) {
+				SummaryDTO sDTO = new SummaryDTO(); 
+				sDTO.companyName = companyNameList.get(i);
+				sDTO.budget = unlinkedDAO.budget(companyNameList.get(i));
+				sDTO.humanResource = unlinkedDAO.humanResource(companyNameList.get(i));
+				summaryList.add(sDTO.companyName + " / " +sDTO.budget + " / " + sDTO.humanResource);
+			}
+		}
+		summaryList.add("하나도 없음");
 		panel1.add(summaryList);
 		
 		// 회사추가 상세설정 회사삭제 버튼 생성
@@ -91,7 +106,7 @@ public class ManageFrame extends JFrame implements ActionListener, ItemListener{
 	// 각 버튼의 동작 메서드
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == insertButton) {
-			new InsertFrame();
+			new InsertCompanyFrame();
 		} else if (e.getSource() == detailButton) {
 			new CRUDFrame(selNum);
 			this.setVisible(false);

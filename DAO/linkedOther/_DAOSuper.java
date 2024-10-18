@@ -50,4 +50,7 @@ public class _DAOSuper {
 	public void delete(String companyName) {
 		
 	}
+	public void create(String companyName) {
+		
+	}
 }

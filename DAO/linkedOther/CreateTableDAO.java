@@ -6,9 +6,6 @@ import java.util.Scanner;
 public class CreateTableDAO extends _DAOSuper {
 	public CreateTableDAO() {
 		init();
-		Scanner in = new Scanner(System.in);
-		System.out.println("회사 이름을 입력하시오.");
-		create(in.nextLine());
 	}
 	
 	// 입력값은 숫자로 하고 출력 시 문자로 받는것 고민 필요....
