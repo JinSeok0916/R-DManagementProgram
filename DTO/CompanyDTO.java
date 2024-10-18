@@ -58,4 +58,11 @@ public class CompanyDTO {
 	public void setCompanyIntro(String companyIntro) {
 		this.companyIntro = companyIntro;
 	}
+	@Override
+	public String toString() {
+		return "CompanyDTO [companyName=" + companyName + ", companyBudget=" + companyBudget + ", companySize="
+				+ companySize + ", totalEmployee=" + totalEmployee + "]";
+	}
+	
+	
 }

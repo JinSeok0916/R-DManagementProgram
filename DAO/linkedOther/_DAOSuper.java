@@ -3,7 +3,6 @@ package DAO.linkedOther;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class _DAOSuper {
 	public String userName = "root";
@@ -35,25 +34,26 @@ public class _DAOSuper {
 		}
 		return false;
 	}
-	public void insert(String projectName, String companyName) {
+	public void insert(Object object) {
 		
 	}
-	public ArrayList list(String projectName, String companyName) {
+	@SuppressWarnings("rawtypes")
+	public ArrayList list(Object object) {
 		return null;
 	}
-	public Object listOne(String projectName, String companyName) {
+	public Object listOne(Object object) {
 		return null;
 	}
-	public void update(String projectName, String companyName) {
+	public void update(Object object) {
 		
 	}
-	public void delete(String projectName, String companyName) {
+	public void delete(Object object) {
 		
+	}
+	public String search(Object object) {
+		return null;
 	}
 	public void create() {
-		
-	}
-	public void create(String companyName) {
 		
 	}
 }

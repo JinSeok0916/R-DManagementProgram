@@ -29,6 +29,11 @@ public class ProjectDTO {
 	public void setProjectOutline(String projectOutline) {
 		this.projectOutline = projectOutline;
 	}
+	@Override
+	public String toString() {
+		return "ProjectDTO [projectName=" + projectName + ", projectDate=" + projectDate + ", projectBudget="
+				+ projectBudget + "]";
+	}
 	
 	
 }

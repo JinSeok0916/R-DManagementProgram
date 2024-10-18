@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import DTO.ProjectDTO;
-import DTO.TaskDTO;
 
 public class ProjectDAO extends _DAOSuper{
 	public ProjectDAO() {
@@ -15,28 +14,18 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(String projectName, String publicvar) {
+	public void insert(Object object) {
+		ProjectDTO getProjectDTO = (ProjectDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
 				String sql = "insert into project values (?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
-				pstmt.setString(1, projectName);
-				
-				System.out.println("프로젝트 총 기간을 입력하세요.");
-				int project_date = in.nextInt();
-				in.nextLine();
-				pstmt.setInt(2, project_date);
-				
-				System.out.println("프로젝트 총 예산을 입력하세요.");
-				int project_budget = in.nextInt();
-				in.nextLine();
-				pstmt.setInt(3, project_budget);
-				
-				System.out.println("프로젝트 개요를 50자 내로 작성하세요.");
-				String project_outline = in.nextLine();
-				pstmt.setString(4, project_outline);
+				pstmt.setString(1, getProjectDTO.getProjectName());
+				pstmt.setInt(2, getProjectDTO.getProjectDate());
+				pstmt.setInt(3, getProjectDTO.getProjectBudget());
+				pstmt.setString(4, getProjectDTO.getProjectOutline());
 				
 				pstmt.executeUpdate();
 				con.commit();
@@ -50,23 +39,31 @@ public class ProjectDAO extends _DAOSuper{
 				}
 			}
 		}
+		if (in != null) {
+			try {
+				in.close();
+			} catch (Exception e2) {
+			}
+		}
 	}
 
 	@Override
-	public ArrayList<ProjectDTO> list(String projectName, String companyName) {
-		ArrayList<ProjectDTO> projectDTOList = new ArrayList<>();
+	public ArrayList<ProjectDTO> list(Object object) {
+//		null 입력받도록 설정해야한다.
+//		ProjectDTO getProjectDTO = (ProjectDTO) object;
+		ArrayList<ProjectDTO> setProjectDTOList = new ArrayList<>();
 		if (con()) {
 			try {
 				String sql = "select * from project";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
-					ProjectDTO projectDTO = new ProjectDTO();
-					projectDTO.setProjectName(rs.getString("project_name"));
-					projectDTO.setProjectDate(rs.getInt("project_date"));
-					projectDTO.setProjectBudget(rs.getInt("project_budget"));
-					projectDTO.setProjectOutline(rs.getString("project_outline"));
-					projectDTOList.add(projectDTO);
+					ProjectDTO setProjectDTO = new ProjectDTO();
+					setProjectDTO.setProjectName(rs.getString("project_name"));
+					setProjectDTO.setProjectDate(rs.getInt("project_date"));
+					setProjectDTO.setProjectBudget(rs.getInt("project_budget"));
+					setProjectDTO.setProjectOutline(rs.getString("project_outline"));
+					setProjectDTOList.add(setProjectDTO);
 				} 
 			} catch (Exception e) {
 			} finally {
@@ -76,25 +73,26 @@ public class ProjectDAO extends _DAOSuper{
 					} catch (Exception e2) {
 					}
 				}
-			} return projectDTOList;
+			} return setProjectDTOList;
 		}
 		return null;
 	}
 
 	@Override
-	public Object listOne(String projectName, String companyName, String publicVar) {
+	public Object listOne(Object object) {
+		ProjectDTO getProjectDTO = (ProjectDTO) object;
 		if(con()) {
-			ProjectDTO projectDTO = new ProjectDTO();
+			ProjectDTO setProjectDTO = new ProjectDTO();
 			try {
 				String sql = "select * from project where project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
+				pstmt.setString(1, getProjectDTO.getProjectName());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
-					projectDTO.setProjectName(rs.getString("project_name"));
-					projectDTO.setProjectDate(rs.getInt("project_date"));
-					projectDTO.setProjectBudget(rs.getInt("project_budget"));
-					projectDTO.setProjectOutline(rs.getString("project_outline"));
+					setProjectDTO.setProjectName(rs.getString("project_name"));
+					setProjectDTO.setProjectDate(rs.getInt("project_date"));
+					setProjectDTO.setProjectBudget(rs.getInt("project_budget"));
+					setProjectDTO.setProjectOutline(rs.getString("project_outline"));
 				}
 			} catch (Exception e) {
 			} finally {
@@ -104,14 +102,16 @@ public class ProjectDAO extends _DAOSuper{
 					} catch (Exception e2) {
 					}
 				}
-			} return projectDTO;
+			} return setProjectDTO;
 		}
 		return null;
 	}
 
 	@Override
-	public void update(String projectName, String companyName, String publicvar) {
-		ProjectDTO projectDTO = (ProjectDTO) listOne(projectName, null, null);
+	public void update(Object object) {
+		ProjectDTO getProjectDTO = (ProjectDTO) object;
+		listOne(getProjectDTO);
+		ProjectDTO setProjectDTO = new ProjectDTO();
 		if (con()) {
 			try {
 				String sql = "update project set"
@@ -121,11 +121,11 @@ public class ProjectDAO extends _DAOSuper{
 						+ " project_outline = ?"
 						+ " where project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectDTO.getProjectName());
-				pstmt.setInt(2, projectDTO.getProjectDate());
-				pstmt.setInt(3, projectDTO.getProjectBudget());
-				pstmt.setString(4, projectDTO.getProjectOutline());
-				pstmt.setString(5, projectName);
+				pstmt.setString(1, setProjectDTO.getProjectName());
+				pstmt.setInt(2, setProjectDTO.getProjectDate());
+				pstmt.setInt(3, setProjectDTO.getProjectBudget());
+				pstmt.setString(4, setProjectDTO.getProjectOutline());
+				pstmt.setString(5, getProjectDTO.getProjectName());
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -141,12 +141,13 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void delete(String projectName, String companyName, String publicvar) {
+	public void delete(Object object) {
+		ProjectDTO getProjectDTO = (ProjectDTO) object;
 		if(con()) {
 			try {
 				String sql = "delete from project where project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
+				pstmt.setString(1, getProjectDTO.getProjectName());
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {

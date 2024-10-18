@@ -14,41 +14,22 @@ public class HumanResourseDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public void insert(String projectName, String companyName) {
+	public void insert(Object object) {
+		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
 				String sql = "insert into humanresource values (?,?,?,?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				
-				pstmt.setString(1, projectName);
-				pstmt.setString(2, companyName);
-				
-				System.out.println("참여 인력 이름");
-				String hr_name = in.nextLine();
-				pstmt.setString(3, hr_name);
-				
-				System.out.println("참여 인력 사원번호");
-				String hr_idennumber = in.nextLine();
-				pstmt.setString(4, hr_idennumber);
-				
-				System.out.println("참여 인력 레벨");
-				String hr_level = in.nextLine();
-				pstmt.setString(5, hr_level);
-				
-				System.out.println("참여 인력 나이");
-				int hr_age = in.nextInt();
-				in.nextLine();
-				pstmt.setInt(6, hr_age);
-				
-				System.out.println("참여 인력 학력");
-				String hr_graduate = in.nextLine();
-				pstmt.setString(7, hr_graduate);
-				
-				System.out.println("참여 인력 나이");
-				int hr_salary = in.nextInt();
-				in.nextLine();
-				pstmt.setInt(8, hr_salary);
+				pstmt.setString(1, getHumanResourceDTO.getProjectName());
+				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(3, getHumanResourceDTO.getParticipatingWorkforce());
+				pstmt.setString(4, getHumanResourceDTO.getIdenNumber());
+				pstmt.setString(5, getHumanResourceDTO.getLevel());
+				pstmt.setInt(6, getHumanResourceDTO.getAge());
+				pstmt.setString(7, getHumanResourceDTO.getGraduate());
+				pstmt.setInt(8, getHumanResourceDTO.getSalary());
 				
 				pstmt.executeUpdate();
 				con.commit();
@@ -62,29 +43,36 @@ public class HumanResourseDAO extends _DAOSuper {
 				}
 			}
 		}
+		if (in != null) {
+			try {
+				in.close();
+			} catch (Exception e2) {
+			}
+		}
 	}
 	
 	@Override
-	public ArrayList<HumanResourceDTO> list(String projectName, String companyName) {
-		ArrayList<HumanResourceDTO> hrDTOList = new ArrayList<>();
+	public ArrayList<HumanResourceDTO> list(Object object) {
+		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
+		ArrayList<HumanResourceDTO> setHumanResourceDTOList = new ArrayList<>();
 		if(con()) {
 			try {
 				String sql = "select * from humanresource where hr_projet_name = ?, hr_com_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
-				pstmt.setString(2, companyName);
+				pstmt.setString(1, getHumanResourceDTO.getProjectName());
+				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
-					HumanResourceDTO hrDTO = new HumanResourceDTO();
-					hrDTO.setProjectName(rs.getString("hr_project_name"));
-					hrDTO.setCompanyName(rs.getString("hr_com_name"));
-					hrDTO.setParticipatingWorkforce(rs.getString("hr_name"));
-					hrDTO.setIdenNumber(rs.getString("hr_idennumber"));
-					hrDTO.setLevel(rs.getString("hr_level"));
-					hrDTO.setAge(rs.getInt("hr_age"));
-					hrDTO.setGraduate(rs.getString("hr_graduate"));
-					hrDTO.setSalary(rs.getInt("hr_salary"));
-					hrDTOList.add(hrDTO);
+					HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
+					setHumanResourceDTO.setProjectName(rs.getString("hr_project_name"));
+					setHumanResourceDTO.setCompanyName(rs.getString("hr_com_name"));
+					setHumanResourceDTO.setParticipatingWorkforce(rs.getString("hr_name"));
+					setHumanResourceDTO.setIdenNumber(rs.getString("hr_idennumber"));
+					setHumanResourceDTO.setLevel(rs.getString("hr_level"));
+					setHumanResourceDTO.setAge(rs.getInt("hr_age"));
+					setHumanResourceDTO.setGraduate(rs.getString("hr_graduate"));
+					setHumanResourceDTO.setSalary(rs.getInt("hr_salary"));
+					setHumanResourceDTOList.add(setHumanResourceDTO);
 				} 
 			} catch (Exception e) {
 			} finally {
@@ -94,31 +82,32 @@ public class HumanResourseDAO extends _DAOSuper {
 					} catch (Exception e2) {
 					}
 				}
-			} return hrDTOList;
+			} return setHumanResourceDTOList;
 		}
 		return null;
 	}
 	
 	@Override
-	public Object listOne(String projectName, String companyName, String selIdenNum) {
+	public Object listOne(Object object) {
+		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		if(con()) {
-			HumanResourceDTO hrDTO = new HumanResourceDTO();
+			HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
 			try {
 				String sql = "select * from humanresource where hr_projet_name = ?, hr_com_name = ?, hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
-				pstmt.setString(2, companyName);
-				pstmt.setString(3, selIdenNum);
+				pstmt.setString(1, getHumanResourceDTO.getProjectName());
+				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(3, getHumanResourceDTO.getIdenNumber());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
-					hrDTO.setProjectName(rs.getString("hr_project_name"));
-					hrDTO.setCompanyName(rs.getString("hr_com_name"));
-					hrDTO.setParticipatingWorkforce(rs.getString("hr_name"));
-					hrDTO.setIdenNumber(rs.getString("hr_idennumber"));
-					hrDTO.setLevel(rs.getString("hr_level"));
-					hrDTO.setAge(rs.getInt("hr_age"));
-					hrDTO.setGraduate(rs.getString("hr_graduate"));
-					hrDTO.setSalary(rs.getInt("hr_salary"));
+					setHumanResourceDTO.setProjectName(rs.getString("hr_project_name"));
+					setHumanResourceDTO.setCompanyName(rs.getString("hr_com_name"));
+					setHumanResourceDTO.setParticipatingWorkforce(rs.getString("hr_name"));
+					setHumanResourceDTO.setIdenNumber(rs.getString("hr_idennumber"));
+					setHumanResourceDTO.setLevel(rs.getString("hr_level"));
+					setHumanResourceDTO.setAge(rs.getInt("hr_age"));
+					setHumanResourceDTO.setGraduate(rs.getString("hr_graduate"));
+					setHumanResourceDTO.setSalary(rs.getInt("hr_salary"));
 				}
 			} catch (Exception e) {
 			} finally {
@@ -128,15 +117,17 @@ public class HumanResourseDAO extends _DAOSuper {
 					} catch (Exception e2) {
 					}
 				}
-			} return hrDTO;
+			} return setHumanResourceDTO;
 		}
 		return null;
 	};
 	
 	@Override
-	public void update(String projectName, String companyName, String selIdenNum) {
-		HumanResourceDTO hrDTO = (HumanResourceDTO) listOne(projectName, companyName, selIdenNum);
-		if (con()) {
+	public void update(Object object) {
+		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
+		listOne(getHumanResourceDTO);
+		HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
+		if(con()) {
 			try {
 				String sql = "update humanresource set"
 						+ " hr_name = ?,"
@@ -147,15 +138,15 @@ public class HumanResourseDAO extends _DAOSuper {
 						+ " hr_salary = ?"
 						+ " where hr_projet_name = ?, hr_com_name = ?, hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, hrDTO.getParticipatingWorkforce());
-				pstmt.setString(2, hrDTO.getIdenNumber());
-				pstmt.setString(3, hrDTO.getLevel());
-				pstmt.setInt(4, hrDTO.getAge());
-				pstmt.setString(5, hrDTO.getGraduate());
-				pstmt.setInt(6, hrDTO.getSalary());
-				pstmt.setString(7, projectName);
-				pstmt.setString(8, companyName);
-				pstmt.setString(9, selIdenNum);
+				pstmt.setString(1, setHumanResourceDTO.getParticipatingWorkforce());
+				pstmt.setString(2, setHumanResourceDTO.getIdenNumber());
+				pstmt.setString(3, setHumanResourceDTO.getLevel());
+				pstmt.setInt(4, setHumanResourceDTO.getAge());
+				pstmt.setString(5, setHumanResourceDTO.getGraduate());
+				pstmt.setInt(6, setHumanResourceDTO.getSalary());
+				pstmt.setString(7, getHumanResourceDTO.getProjectName());
+				pstmt.setString(8, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(9, getHumanResourceDTO.getIdenNumber());
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -171,14 +162,15 @@ public class HumanResourseDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public void delete(String projectName, String companyName, String delIdenNum) {
+	public void delete(Object object) {
+		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		if(con()) {
 			try {
 				String sql = "delete from humanresource where hr_projet_name = ?, hr_com_name = ?, hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
-				pstmt.setString(2, companyName);
-				pstmt.setString(3, delIdenNum);
+				pstmt.setString(1, getHumanResourceDTO.getProjectName());
+				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(3, getHumanResourceDTO.getIdenNumber());
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {

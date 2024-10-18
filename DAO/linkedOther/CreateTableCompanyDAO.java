@@ -42,18 +42,6 @@ public class CreateTableCompanyDAO extends _DAOSuper {
 				pstmt.executeUpdate();
 				con.commit();
 				
-				String sqlBudget = "create table budget ("
-						+ "bdg_com_name varchar(30),"
-						+ "bdg_cost_date varchar(8),"
-						+ "bdg_usingtotalcost int(12),"
-						+ "bdg_remainedcost int(12),"
-						+ "constraint bdg_project_name foreign key (bdg_project_name) references project (project_name),"
-						+ "constraint bdg_com_name foreign key (bdg_com_name) references company (com_name),"
-						+ "constraint bdg_cost_date foreign key (bdg_cost_date) references cost (cost_date)"
-						+ ")";
-				pstmt = con.prepareStatement(sqlBudget);
-				pstmt.executeUpdate();
-				
 				String sqlSchedule = "create table schedule ("
 						+ "sch_com_name varchar(30),"
 						+ "sch_date varchar(10),"

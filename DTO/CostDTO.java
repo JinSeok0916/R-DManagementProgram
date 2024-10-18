@@ -7,7 +7,7 @@ public class CostDTO {
 	private int materialCost = 0;
 	private int laborCost = 0;
 	private int expenseCost = 0;
-	private int totalCost = 0; // budget 의 총 지출에 반영
+	private int totalCost = materialCost + laborCost + expenseCost; // budget 의 총 지출에 반영
 	
 	public String getProjectName() {
 		return projectName;
@@ -51,4 +51,10 @@ public class CostDTO {
 	public void setTotalCost(int totalCost) {
 		this.totalCost = totalCost;
 	}
+	@Override
+	public String toString() {
+		return "CostDTO [companyName=" + companyName + ", date=" + date + ", materialCost=" + materialCost
+				+ ", laborCost=" + laborCost + ", expenseCost=" + expenseCost + ", totalCost=" + totalCost + "]";
+	}
+	
 }

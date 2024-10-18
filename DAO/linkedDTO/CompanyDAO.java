@@ -7,49 +7,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import DTO.CompanyDTO;
-import DTO.CostDTO;
 
-public class CompanyDAO extends _DAOSuper{
+public class CompanyDAO extends _DAOSuper {
 	public CompanyDAO() {
 		init();
 	}
 
 	@Override
-	public void insert(String projectName, String companyName) {
+	public void insert(Object object) {
+		CompanyDTO getCompanyDTO = (CompanyDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
 				String sql = "insert into company values (?,?,?,?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
-				pstmt.setString(1, projectName);
-				pstmt.setString(2, companyName);
-				
-				System.out.println("프로젝트 할당 예산을 입력하시오.");
-				int com_budget = in.nextInt();
-				in.nextLine();
-				pstmt.setInt(3, com_budget);
-				
-				System.out.println("회사 설립 년도를 작성하시오.(0000년)");
-				String com_establishment = in.nextLine();
-				pstmt.setString(4, com_establishment);
-				
-				System.out.println("회사 규모를 입력해주세요.('중소기업', '중견기업', '대기업')");
-				String com_size = in.nextLine();
-				pstmt.setString(5, com_size);
-				
-				System.out.println("회사 총 사원 수를 입력하시오.");
-				int com_employee = in.nextInt();
-				in.nextLine();
-				pstmt.setInt(6, com_employee);
-				
-				System.out.println("회사 주소를 입력하시오.");
-				String com_address = in.nextLine();
-				pstmt.setString(7, com_address);
-				
-				System.out.println("회사 소개를 간략히 입력하시오.(50자 이내)");
-				String com_intro = in.nextLine();
-				pstmt.setString(8, com_intro);
+				pstmt.setString(1, getCompanyDTO.getProjectName());
+				pstmt.setString(2, getCompanyDTO.getCompanyName());
+				pstmt.setInt(3, getCompanyDTO.getCompanyBudget());
+				pstmt.setString(4, getCompanyDTO.getCompanyEstablishment());
+				pstmt.setString(5, getCompanyDTO.getCompanySize());
+				pstmt.setInt(6, getCompanyDTO.getTotalEmployee());
+				pstmt.setString(7, getCompanyDTO.getCompanyAddress());
+				pstmt.setString(8, getCompanyDTO.getCompanyIntro());
 				
 				pstmt.executeUpdate();
 				con.commit();
@@ -63,16 +43,24 @@ public class CompanyDAO extends _DAOSuper{
 				}
 			}
 		}
+		if (in != null) {
+			try {
+				in.close();
+			} catch (Exception e2) {
+			}
+		}
 	}
 
+
 	@Override
-	public ArrayList<CompanyDTO> list(String projectName, String companyName) {
-		ArrayList<CompanyDTO> companyDTOList = new ArrayList<>();
+	public ArrayList<CompanyDTO> list(Object object) {
+		CompanyDTO getCompanyDTO = (CompanyDTO) object;
+		ArrayList<CompanyDTO> setCompanyDTOList = new ArrayList<>();
 		if (con()) {
 			try {
 				String sql = "select * from company where com_project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
+				pstmt.setString(1, getCompanyDTO.getProjectName());
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					CompanyDTO companyDTO = new CompanyDTO();
@@ -84,7 +72,7 @@ public class CompanyDAO extends _DAOSuper{
 					companyDTO.setTotalEmployee(rs.getInt("com_employee"));
 					companyDTO.setCompanyAddress(rs.getString("com_address"));
 					companyDTO.setCompanyIntro(rs.getString("com_intro"));
-					companyDTOList.add(companyDTO);
+					setCompanyDTOList.add(companyDTO);
 				} 
 			} catch (Exception e) {
 			} finally {
@@ -94,30 +82,31 @@ public class CompanyDAO extends _DAOSuper{
 					} catch (Exception e2) {
 					}
 				}
-			} return companyDTOList;
+			} return setCompanyDTOList;
 		}
 		return null;
 	}
 
 	@Override
-	public Object listOne(String projectName, String companyName, String publicvar) {
+	public Object listOne(Object object) {
+		CompanyDTO getCompanyDTO = (CompanyDTO) object;
 		if(con()) {
-			CompanyDTO companyDTO = new CompanyDTO();
+			CompanyDTO setCompanyDTO = new CompanyDTO();
 			try {
 				String sql = "select * from company where com_project_name = ?, com_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
-				pstmt.setString(2, companyName);
+				pstmt.setString(1, getCompanyDTO.getProjectName());
+				pstmt.setString(2, getCompanyDTO.getCompanyName());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
-					companyDTO.setProjectName(rs.getString("com_project_name"));
-					companyDTO.setCompanyName(rs.getString("com_name"));
-					companyDTO.setCompanyBudget(rs.getInt("com_budget"));
-					companyDTO.setCompanyEstablishment(rs.getString("com_establishment"));
-					companyDTO.setCompanySize(rs.getString("com_size"));
-					companyDTO.setTotalEmployee(rs.getInt("com_employee"));
-					companyDTO.setCompanyAddress(rs.getString("com_address"));
-					companyDTO.setCompanyIntro(rs.getString("com_intro"));
+					setCompanyDTO.setProjectName(rs.getString("com_project_name"));
+					setCompanyDTO.setCompanyName(rs.getString("com_name"));
+					setCompanyDTO.setCompanyBudget(rs.getInt("com_budget"));
+					setCompanyDTO.setCompanyEstablishment(rs.getString("com_establishment"));
+					setCompanyDTO.setCompanySize(rs.getString("com_size"));
+					setCompanyDTO.setTotalEmployee(rs.getInt("com_employee"));
+					setCompanyDTO.setCompanyAddress(rs.getString("com_address"));
+					setCompanyDTO.setCompanyIntro(rs.getString("com_intro"));
 				}
 			} catch (Exception e) {
 			} finally {
@@ -127,14 +116,19 @@ public class CompanyDAO extends _DAOSuper{
 					} catch (Exception e2) {
 					}
 				}
-			} return companyDTO;
+			} return setCompanyDTO;
 		}
 		return null;
 	}
 	
 	@Override
-	public void update(String projectName, String companyName, String publicvar) {
-		CompanyDTO cDTO = (CompanyDTO) listOne(projectName, companyName, null);
+	public void update(Object object) {
+		// 수정하려는 DTO 호출
+		CompanyDTO getCompanyDTO = (CompanyDTO) object;
+		// 수정하려는 DTO 조회
+		listOne(getCompanyDTO);
+		// 수정된 값을 입력받을 DTO 생성
+		CompanyDTO setCompanyDTO = new CompanyDTO();
 		if (con()) {
 			try { 
 				String sql = "update company set"
@@ -146,14 +140,14 @@ public class CompanyDAO extends _DAOSuper{
 						+ " com_intro = ?"
 						+ " where com_project_name = ?, com_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, cDTO.getCompanyBudget());
-				pstmt.setString(2, cDTO.getCompanyEstablishment());
-				pstmt.setString(3, cDTO.getCompanySize());
-				pstmt.setInt(4, cDTO.getTotalEmployee());
-				pstmt.setString(5, cDTO.getCompanyAddress());
-				pstmt.setString(6, cDTO.getCompanyIntro());
-				pstmt.setString(7, cDTO.getProjectName());
-				pstmt.setString(8, cDTO.getCompanyName());
+				pstmt.setInt(1, setCompanyDTO.getCompanyBudget());
+				pstmt.setString(2, setCompanyDTO.getCompanyEstablishment());
+				pstmt.setString(3, setCompanyDTO.getCompanySize());
+				pstmt.setInt(4, setCompanyDTO.getTotalEmployee());
+				pstmt.setString(5, setCompanyDTO.getCompanyAddress());
+				pstmt.setString(6, setCompanyDTO.getCompanyIntro());
+				pstmt.setString(7, getCompanyDTO.getProjectName());
+				pstmt.setString(8, getCompanyDTO.getCompanyName());
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -169,13 +163,14 @@ public class CompanyDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void delete(String projectName, String companyName, String publicVar) {
+	public void delete(Object object) {
+		CompanyDTO getCompanyDTO = (CompanyDTO) object;
 		if(con()) {
 			try {
 				String sql = "delete from company where com_project_name = ?, com_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, projectName);
-				pstmt.setString(2, companyName);
+				pstmt.setString(1, getCompanyDTO.getProjectName());
+				pstmt.setString(2, getCompanyDTO.getCompanyName());
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {

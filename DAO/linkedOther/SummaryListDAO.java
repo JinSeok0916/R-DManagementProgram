@@ -3,8 +3,8 @@ package DAO.linkedOther;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class SummaryDAO extends _DAOSuper {
-	public SummaryDAO() {
+public class SummaryListDAO extends _DAOSuper {
+	public SummaryListDAO() {
 		init();
 	}
 	public int budget(String projectName, String companyName) {

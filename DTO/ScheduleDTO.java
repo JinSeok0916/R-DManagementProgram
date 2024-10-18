@@ -66,5 +66,11 @@ public class ScheduleDTO {
 	public void setRequiredDateForCompleteTaskPerRestDate(int requiredDateForCompleteTaskPerRestDate) {
 		this.requiredDateForCompleteTaskPerRestDate = requiredDateForCompleteTaskPerRestDate;
 	}
+	@Override
+	public String toString() {
+		return "ScheduleDTO [companyName=" + companyName + ", date=" + date + ", totalTaskCount=" + totalTaskCount
+				+ ", completeTaskCount=" + completeTaskCount + ", requiredDateForCompleteTaskPerRestDate="
+				+ requiredDateForCompleteTaskPerRestDate + "]";
+	}
 
 }

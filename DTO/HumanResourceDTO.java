@@ -58,4 +58,11 @@ public class HumanResourceDTO {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
+	@Override
+	public String toString() {
+		return "HumanResourceDTO [companyName=" + companyName + ", participatingWorkforce=" + participatingWorkforce
+				+ ", idenNumber=" + idenNumber + ", level=" + level + ", age=" + age + ", graduate=" + graduate
+				+ ", salary=" + salary + "]";
+	}
+	
 }
