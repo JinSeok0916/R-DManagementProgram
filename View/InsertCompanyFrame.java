@@ -25,7 +25,7 @@ public class InsertCompanyFrame extends JFrame implements ActionListener{
 	int selNum = 0;
 	_DAOSuper DAO = null;
 	
-	public InsertCompanyFrame() {
+	public InsertCompanyFrame(String projectName) {
 		this.setBounds(325,375,600,300);
 		// 패널 나누기
 		panel.setLayout(null);
@@ -34,6 +34,12 @@ public class InsertCompanyFrame extends JFrame implements ActionListener{
 		title.setBounds(140,0,400,50);
 		title.setFont(new Font("나눔명조",Font.BOLD,25));
 		panel.add(title);
+		
+		// 프로젝트 이름
+		JLabel projectTitle = new JLabel(projectName);
+		projectTitle.setBounds(140,0,400,50);
+		projectTitle.setFont(new Font("나눔명조",Font.BOLD,25));
+		panel.add(projectTitle);
 		
 		// 추가할 회사 이름
 		companyName.setBounds(165,100,250,50);

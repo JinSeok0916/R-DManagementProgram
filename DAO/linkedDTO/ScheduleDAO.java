@@ -15,7 +15,7 @@ public class ScheduleDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(Object object) {
+	public void insert(Object object, String p1, String p2) {
 		Scanner in = new Scanner(System.in);
 		ScheduleDTO getScheduleDTO = (ScheduleDTO) object;
 		if (con()) {

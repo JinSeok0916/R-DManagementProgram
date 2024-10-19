@@ -14,7 +14,7 @@ public class HumanResourseDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public void insert(Object object) {
+	public void insert(Object object, String p1, String p2) {
 		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {

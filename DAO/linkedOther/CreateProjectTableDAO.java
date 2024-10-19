@@ -14,7 +14,7 @@ public class CreateProjectTableDAO extends _DAOSuper{
 		if (con()) {
 			PreparedStatement pstmt = null;
 			try {
-				String sqlProject = "create table project ("
+				String sqlProject = "create table if not exists project ("
 						+ "project_name varchar(30) primary key,"
 						+ "project_date int(4),"
 						+ "project_budget int(12),"

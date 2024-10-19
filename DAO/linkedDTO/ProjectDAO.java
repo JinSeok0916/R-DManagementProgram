@@ -14,7 +14,7 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(Object object) {
+	public void insert(Object object, String p1, String p2) {
 		ProjectDTO getProjectDTO = (ProjectDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
@@ -26,7 +26,6 @@ public class ProjectDAO extends _DAOSuper{
 				pstmt.setInt(2, getProjectDTO.getProjectDate());
 				pstmt.setInt(3, getProjectDTO.getProjectBudget());
 				pstmt.setString(4, getProjectDTO.getProjectOutline());
-				
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {
@@ -80,13 +79,13 @@ public class ProjectDAO extends _DAOSuper{
 
 	@Override
 	public Object listOne(Object object) {
-		ProjectDTO getProjectDTO = (ProjectDTO) object;
+//		ProjectDTO getProjectDTO = (ProjectDTO) object;
 		if(con()) {
 			ProjectDTO setProjectDTO = new ProjectDTO();
 			try {
 				String sql = "select * from project where project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, getProjectDTO.getProjectName());
+				pstmt.setObject(1, object);
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
 					setProjectDTO.setProjectName(rs.getString("project_name"));

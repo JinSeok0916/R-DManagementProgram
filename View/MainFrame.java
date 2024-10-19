@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,6 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import DAO.linkedDTO.ProjectDAO;
+import DAO.linkedOther.CreateProjectTableDAO;
+import DAO.linkedOther.CreateTableCompanyDAO;
+import DAO.linkedOther.SummaryListDAO;
 import DTO.ProjectDTO;
 
 public class MainFrame extends JFrame implements ActionListener, ItemListener{
@@ -25,13 +30,41 @@ public class MainFrame extends JFrame implements ActionListener, ItemListener{
 	JButton insertProjectButton = new JButton("사업등록");
 	JLabel logo = new JLabel();
 	int selNum = 0;
-	ProjectDTO project = null;
+	String projectName = null;
+	ProjectDAO pDAO = new ProjectDAO();
+	SummaryListDAO slDAO = new SummaryListDAO();
+	ArrayList<ProjectDTO> plist = new ArrayList<>();
+	int cnt = 0;
 	
 	public MainFrame() {
 		this.setBounds(200,75,865,890);
-		
 		// 패널 설정
 		panel.setLayout(null);
+		
+		MainFrame1();
+		
+		// 바탕로고
+		logo.setBounds(25,25,800,800);
+		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
+		panel.add(logo);
+		this.add(panel);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == insertProjectButton) {
+			new InsertProjectFrame();
+		} else if (e.getSource() == outlineButton) {
+			cnt = 1;
+			new OverviewFrame(projectName);
+		} else if (e.getSource() == manageButton) {
+			new ManageFrame(projectName);
+		}
+	}
+	
+	public void MainFrame1() {
+		CreateProjectTableDAO cptDAO = new CreateProjectTableDAO();
 		
 		// 프로그램 제목
 		title1.setBounds(220,50,1000,100);
@@ -41,9 +74,17 @@ public class MainFrame extends JFrame implements ActionListener, ItemListener{
 		title2.setFont(new Font("나눔명조",Font.BOLD,50));
 		panel.add(title2);
 		
+		
 		// 리스트 목록
 		list.setBounds(175,200,500,425);
 		list.setFont(new Font("나눔명조",Font.BOLD,20));
+		
+		plist = pDAO.list(null);
+		
+		for (int i = 0; i < plist.size(); i++) {
+			list.add(plist.get(i).toString());
+		}
+		
 		panel.add(list);
 		
 		// 버튼 등록
@@ -57,35 +98,16 @@ public class MainFrame extends JFrame implements ActionListener, ItemListener{
 		manageButton.setFont(new Font("나눔명조",Font.BOLD,20));
 		panel.add(manageButton);
 		
-		// 바탕로고
-		logo.setBounds(25,25,800,800);
-		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
-		panel.add(logo);
-		this.add(panel);
-		
 		// 리스너 등록
 		insertProjectButton.addActionListener(this);
 		outlineButton.addActionListener(this);
 		manageButton.addActionListener(this);
-		
-		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		list.addItemListener(this);
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == insertProjectButton) {
-			new InsertProjectFrame();
-		} else if (e.getSource() == outlineButton) {
-			new OverviewFrame();
-			this.setVisible(false);
-		} else if (e.getSource() == manageButton) {
-			new ManageFrame(project.getProjectName());
-			this.setVisible(false);
-		}
-	}
-
 	public void itemStateChanged(ItemEvent e) {
 		selNum = list.getSelectedIndex();
-		
+		projectName = plist.get(selNum).getProjectName();
+		System.out.println(plist.get(selNum).getProjectName());
 	}
 }

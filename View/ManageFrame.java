@@ -15,13 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import DAO.linkedDTO.CompanyDAO;
-import DAO.linkedOther.SummaryDAO;
-import DTO.SummaryDTO;
+import DAO.linkedOther.CreateTableCompanyDAO;
+import DAO.linkedOther.SummaryListDAO;
+import DTO.CompanyDTO;
+import DTO.ProjectDTO;
 
 
 
 public class ManageFrame extends JFrame implements ActionListener, ItemListener{
-	private JPanel panel1 = new JPanel();
+	private JPanel panel = new JPanel();
 	JButton mainButton = new JButton("<html><center>R&D Management Program</center></html>");
 	List summaryList = new List();
 	JButton insertButton = new JButton("회사추가");
@@ -30,64 +32,70 @@ public class ManageFrame extends JFrame implements ActionListener, ItemListener{
 	JButton backButton = new JButton("←");
 	JButton closeButton = new JButton("Ⅹ");
 	JLabel logo = new JLabel();
-	CompanyDAO linkedDAO = new CompanyDAO();
-	SummaryDAO unlinkedDAO = new SummaryDAO();
+	CompanyDAO cDAO = new CompanyDAO();
+	SummaryListDAO unlinkedDAO = new SummaryListDAO();
 	int selNum = 0;
 	int budget = 0;
 	int hr = 0;
 	ArrayList<String> companyNameList = new ArrayList<>();
+	String projectName = null;
+	String companyName = null;
 	
-	public ManageFrame(String projectName) {
+	public ManageFrame(String project) {
+		projectName = project;
+		System.out.println(projectName);
+		CreateTableCompanyDAO ctcDAO = new CreateTableCompanyDAO();
+		
 		this.setBounds(200,75,865,890);
 		
 		// 패널 설정
-		panel1.setLayout(null);
+		panel.setLayout(null);
 		
 		// 기본 설정 버튼
 		mainButton.setBounds(175,135,400,40);
 		mainButton.setFont(new Font("나눔명조",Font.BOLD,25));
-		panel1.add(mainButton);
+		panel.add(mainButton);
 		backButton.setBounds(575,135,50,40);
 		backButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(backButton);
+		panel.add(backButton);
 		closeButton.setBounds(625,135,50,40);
 		closeButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(closeButton);
+		panel.add(closeButton);
 		
 		// DB에서 꺼낸 리스트 입력
 		summaryList.setBounds(175,175,500,450);
 		summaryList.setFont(new Font("나눔명조",Font.PLAIN,25));
 		
-//		linkedDAO.list();
+		for (int i = 0; i < cDAO.list(null).size(); i++) {
+			companyNameList.add(cDAO.list(null).get(i).getCompanyName());
+		}
 		
 		if (companyNameList != null) {
 			for (int i = 0; i < companyNameList.size(); i++) {
-				SummaryDTO sDTO = new SummaryDTO(); 
-				sDTO.companyName = companyNameList.get(i);
-				sDTO.budget = unlinkedDAO.budget(companyNameList.get(i));
-				sDTO.humanResource = unlinkedDAO.humanResource(companyNameList.get(i));
-				summaryList.add(sDTO.companyName + " / " +sDTO.budget + " / " + sDTO.humanResource);
+				CompanyDTO cDTO = new CompanyDTO(); 
+				cDTO.setCompanyName(companyNameList.get(i));
+				summaryList.add(cDTO.getCompanyName());
 			}
 		}
 		summaryList.add("하나도 없음");
-		panel1.add(summaryList);
+		panel.add(summaryList);
 		
 		// 회사추가 상세설정 회사삭제 버튼 생성
 		insertButton.setBounds(175,625,167,50);
 		insertButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(insertButton);
+		panel.add(insertButton);
 		detailButton.setBounds(342,625,167,50);
 		detailButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(detailButton);
+		panel.add(detailButton);
 		deleteButton.setBounds(509,625,166,50);
 		deleteButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(deleteButton);
+		panel.add(deleteButton);
 		
 		// 바탕 로고 생성
 		logo.setBounds(25,25,800,800);
 		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
-		panel1.add(logo);
-		this.add(panel1);
+		panel.add(logo);
+		this.add(panel);
 		
 		// 버튼 리스너 등록
 		mainButton.addActionListener(this);
@@ -106,30 +114,31 @@ public class ManageFrame extends JFrame implements ActionListener, ItemListener{
 	// 각 버튼의 동작 메서드
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == insertButton) {
-			new InsertCompanyFrame();
+			new InsertCompanyFrame(projectName);
+			dispose();
 		} else if (e.getSource() == detailButton) {
-			new CRUDFrame(selNum);
-			this.setVisible(false);
+			new CRUDFrame(projectName, companyName);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+			dispose();
 		} else if (e.getSource() == deleteButton) {
 			// 회사 삭제 메서드
 			
 		} else if (e.getSource() == backButton) {
-			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 			new MainFrame();
+			dispose();
 		} else if (e.getSource() == closeButton) {
-			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+			dispose();
 		} else if (e.getSource() == mainButton) {
-			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 			new MainFrame();
+			dispose();		
 		}
 	}
 
 	public void itemStateChanged(ItemEvent e) {
 		selNum = summaryList.getSelectedIndex();
-		
+		companyName = companyNameList.get(selNum);
 	}
 }

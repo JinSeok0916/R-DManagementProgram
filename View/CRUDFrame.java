@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import DAO.linkedDTO._DAOSuper;
 
 public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
-	private JPanel panel1 = new JPanel();
+	private JPanel panel = new JPanel();
 	JButton mainButton = new JButton("<html><center>R&D Management Program</center></html>");
 	List detailList = new List();
 	JButton updateButton = new JButton("선택수정");
@@ -27,72 +27,68 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 	JButton closeButton = new JButton("Ⅹ");
 	JButton companyButton = new JButton("회사정보");
 	JButton humanResourseButton = new JButton("인력");
-	String [] cost = {"Budget","Cost"};
-	JComboBox costBox = new JComboBox(cost);
+	JButton costButton = new JButton("예산");
 	JButton scheduleButton = new JButton("일정");
 	
 	JLabel logo = new JLabel("");
 	int selNum = 0;
 	_DAOSuper DAO = null;
+	String projectName = null;
 	
-	public CRUDFrame(int selNum) {
+	public CRUDFrame(String pN, String cN) {
+		projectName = pN;
+		
+		
 		// 창 크기 및 위치 조절
 		this.setBounds(200,75,865,890);
 		
-		// 주소값 설정
-		if (selNum == 1) {
-			
-		} else if (selNum == 2) {
-			
-		}
-		
 		// 패널 설정
-		panel1.setLayout(null);
+		panel.setLayout(null);
 		
 		// 기본 버튼 설정
 		mainButton.setBounds(175,135,400,40);
 		mainButton.setFont(new Font("나눔명조",Font.BOLD,25));
-		panel1.add(mainButton);
+		panel.add(mainButton);
 		backButton.setBounds(575,135,50,40);
-		panel1.add(backButton);
+		panel.add(backButton);
 		closeButton.setBounds(625,135,50,40);
-		panel1.add(closeButton);
+		panel.add(closeButton);
 		
 		// 리스트 만들기
 		detailList.setBounds(175,215,500,410);
 		detailList.setFont(new Font("나눔명조",Font.PLAIN,25));
-		panel1.add(detailList);
+		panel.add(detailList);
 		
 		// 원하는 리스트 설정 버튼
 		companyButton.setBounds(175,175,125,40);
 		companyButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(companyButton);
+		panel.add(companyButton);
 		humanResourseButton.setBounds(300,175,125,40);
 		humanResourseButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(humanResourseButton);
-		costBox.setBounds(425,175,125,40);
-		costBox.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(costBox);
+		panel.add(humanResourseButton);
+		costButton.setBounds(425,175,125,40);
+		costButton.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(costButton);
 		scheduleButton.setBounds(550,175,125,40);
 		scheduleButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(scheduleButton);
+		panel.add(scheduleButton);
 		
 		// 수정 삭제 추가 버튼 설정
 		updateButton.setBounds(175,625,250,50);
 		updateButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(updateButton);
+		panel.add(updateButton);
 		deleteButton.setBounds(425,625,250,50);
 		deleteButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(deleteButton);
+		panel.add(deleteButton);
 		insertButton.setBounds(175,675,500,50);
 		insertButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel1.add(insertButton);
+		panel.add(insertButton);
 
 		// 바탕 로고 설정
 		logo.setBounds(25,25,800,800);
 		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
-		panel1.add(logo);
-		this.add(panel1);
+		panel.add(logo);
+		this.add(panel);
 		
 		// 버튼 리스너 설정
 		mainButton.addActionListener(this);
@@ -103,7 +99,7 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 		closeButton.addActionListener(this);
 		companyButton.addActionListener(this);
 		humanResourseButton.addActionListener(this);
-		costBox.addActionListener(this);
+		costButton.addActionListener(this);
 		scheduleButton.addActionListener(this);
 		
 		this.setVisible(true);
@@ -126,7 +122,7 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 		} else if (e.getSource() == backButton) {
 			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-			new ManageFrame();
+			new ManageFrame(projectName);
 		} else if (e.getSource() == closeButton) {
 			this.setVisible(false);
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -140,15 +136,8 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 		} else if (e.getSource() == humanResourseButton) {
 			// 인력정보 리스트 메서드
 			
-		} else if (e.getSource() == costBox) {
-			JComboBox cb = (JComboBox)e.getSource();
-			int index = cb.getSelectedIndex();
-			// 비용정보 리스트 메서드
-			if (index == 1) {
-				
-			} else if (index == 2) {
-				
-			}
+		} else if (e.getSource() == costButton) {
+			// 예산정보 리스트 메서드
 			
 		} else if (e.getSource() == scheduleButton) {
 			// 일정정보 리스트 메서드
@@ -157,6 +146,5 @@ public class CRUDFrame extends JFrame implements ActionListener, ItemListener{
 	}
 
 	public void itemStateChanged(ItemEvent e) {
-		selNum = detailList.getSelectedIndex();
 	}
 }

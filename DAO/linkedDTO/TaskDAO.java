@@ -14,7 +14,7 @@ public class TaskDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(Object object) {
+	public void insert(Object object, String p1, String p2) {
 		TaskDTO getTaskDTO = (TaskDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {

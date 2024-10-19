@@ -106,20 +106,17 @@ public class InsertProjectFrame extends JFrame implements ActionListener, KeyLis
 			DTO.setProjectName(projectName.getText());
 			DTO.setProjectDate(Integer.valueOf(projectDate.getText()));
 			DTO.setProjectBudget(Integer.valueOf(projectBudget.getText()));
-			DTO.setProjectOutline(projectName.getText());
-//			DAO.insert(DTO);
-			
-			this.setVisible(false);
-			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+			DTO.setProjectOutline(projectOutline.getText());
+			DAO.insert(DTO, null, null);
+//			new MainFrame();
+			dispose();
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if (e.getSource() == projectName || e.getSource() == projectDate || e.getSource() == projectBudget || e.getSource() == projectOutline) {
-			if (e.getSource() == projectName || e.getSource() == projectDate || e.getSource() == projectBudget || e.getSource() == projectOutline) {
-				checkButton.setEnabled(true);
-			}
+			checkButton.setEnabled(true);
 		}
 	}
 

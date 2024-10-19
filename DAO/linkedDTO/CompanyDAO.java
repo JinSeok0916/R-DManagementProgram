@@ -13,8 +13,8 @@ public class CompanyDAO extends _DAOSuper {
 		init();
 	}
 
-	@Override
-	public void insert(Object object) {
+//	@Override
+	public void insert(Object object, String p1, String p2) {
 		CompanyDTO getCompanyDTO = (CompanyDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
@@ -22,7 +22,7 @@ public class CompanyDAO extends _DAOSuper {
 				String sql = "insert into company values (?,?,?,?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
-				pstmt.setString(1, getCompanyDTO.getProjectName());
+				pstmt.setString(1, p1);
 				pstmt.setString(2, getCompanyDTO.getCompanyName());
 				pstmt.setInt(3, getCompanyDTO.getCompanyBudget());
 				pstmt.setString(4, getCompanyDTO.getCompanyEstablishment());

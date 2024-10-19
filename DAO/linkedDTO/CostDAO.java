@@ -15,7 +15,7 @@ public class CostDAO extends _DAOSuper {
 	
 	
 	@Override
-	public void insert(Object object) {
+	public void insert(Object object, String p1, String p2) {
 		CostDTO getCostDTO = (CostDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
