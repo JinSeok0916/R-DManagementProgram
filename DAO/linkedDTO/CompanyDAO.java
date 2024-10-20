@@ -47,13 +47,12 @@ public class CompanyDAO extends _DAOSuper {
 
 	@Override
 	public ArrayList<CompanyDTO> list(Object object) {
-		CompanyDTO getCompanyDTO = (CompanyDTO) object;
 		ArrayList<CompanyDTO> setCompanyDTOList = new ArrayList<>();
 		if (con()) {
 			try {
 				String sql = "select * from company where com_project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, getCompanyDTO.getProjectName());
+				pstmt.setObject(1, object);
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					CompanyDTO companyDTO = new CompanyDTO();

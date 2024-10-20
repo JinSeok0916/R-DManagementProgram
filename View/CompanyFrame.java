@@ -35,7 +35,7 @@ public class CompanyFrame extends JFrame{
 	int selNum = 0;
 	String projectName = null;
 	String companyName = null;
-	ArrayList<CompanyDTO> companyNameList = cDAO.list(projectName);
+	ArrayList<CompanyDTO> companyNameList = null;
 	
 	public void setCompanyFrame(String pN, JPanel panel1) {
 		projectName = pN;
@@ -76,6 +76,7 @@ public class CompanyFrame extends JFrame{
 	// 회사이름 리스트 띄우기
 	public void loadCompanyList() {
 		companyList.removeAll();
+		companyNameList = cDAO.list(projectName);
 		for (int i = 0; i < companyNameList.size(); i++) {
 			companyList.add(companyNameList.get(i).toString());
 		}

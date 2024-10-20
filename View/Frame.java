@@ -4,12 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import DAO.linkedDTO.CompanyDAO;
 import DAO.linkedDTO.ProjectDAO;
@@ -59,10 +63,15 @@ public class Frame extends JFrame implements ActionListener, ItemListener{
 		loadLogo();
 		
 		// 모든 Frame 리스너 등록
+		
 		projectFrame.insertProjectButton.addActionListener(this);
 		projectFrame.outlineButton.addActionListener(this);
 		projectFrame.companyButton.addActionListener(this);
 		projectFrame.projectList.addItemListener(this);
+		
+		if (projectName == null) {
+			projectFrame.outlineButton.setEnabled(false);
+		}
 		
 		this.add(panel);
 		this.repaint();
@@ -122,8 +131,9 @@ public class Frame extends JFrame implements ActionListener, ItemListener{
 	public void itemStateChanged(ItemEvent e) {
 		if (frameNum == 1) {
 			selNum = projectFrame.projectList.getSelectedIndex();
+			projectFrame.projectNameList = pDAO.list(null);
 			projectName = projectFrame.projectNameList.get(selNum).getProjectName();
-			System.out.println(projectName);
+			projectFrame.outlineButton.setEnabled(true);
 		} else if (frameNum == 2) {
 			selNum = companyFrame.companyList.getSelectedIndex();
 			companyName = companyFrame.companyNameList.get(selNum).getCompanyName();
@@ -168,4 +178,5 @@ public class Frame extends JFrame implements ActionListener, ItemListener{
 		panel.add(logo);
 		this.add(panel);
 	}
+
 }
