@@ -16,7 +16,6 @@ public class CompanyDAO extends _DAOSuper {
 //	@Override
 	public void insert(Object object, String p1, String p2) {
 		CompanyDTO getCompanyDTO = (CompanyDTO) object;
-		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
 				String sql = "insert into company values (?,?,?,?,?,?,?,?)";
@@ -41,12 +40,6 @@ public class CompanyDAO extends _DAOSuper {
 					} catch (Exception e2) {
 					}
 				}
-			}
-		}
-		if (in != null) {
-			try {
-				in.close();
-			} catch (Exception e2) {
 			}
 		}
 	}

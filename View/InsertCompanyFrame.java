@@ -22,7 +22,7 @@ import DTO.CompanyDTO;
 public class InsertCompanyFrame extends JFrame implements ActionListener{
 	JPanel panel = new JPanel();
 	Frame frame = new Frame();
-	JLabel title = new JLabel("R&D Management Program");
+	JLabel title = new JLabel();
 	List list = new List();
 	JButton checkButton = new JButton("확인");
 	JLabel companyNameTag = new JLabel("회사명");
@@ -43,80 +43,82 @@ public class InsertCompanyFrame extends JFrame implements ActionListener{
 	CompanyFrame companyFrame = null;
 	
 	int selNum = 0;
-	_DAOSuper DAO = null;
+	CompanyDAO cDAO = new CompanyDAO();
 	
 	public InsertCompanyFrame(String pName, CompanyFrame cFrame, Frame frame1) {
 		frame = frame1;
 		projectName = pName;
 		companyFrame = cFrame;
-		this.setBounds(325,375,600,300);
+		this.setBounds(325,0,600,700);
 		// 패널 나누기
 		panel.setLayout(null);
 		
-		// 프로젝트 이름
-		projectNameTag.setBounds(50,125,100,50);
-		projectNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(projectNameTag);
-		projectName.setBounds(175,125,400,50);
-		projectName.setFont(new Font("나눔명조",Font.BOLD,15));
-		projectName.setBorder(new LineBorder(Color.black));
-		panel.add(projectName);
+		// 프로젝트 제목
+		title.setText(projectName);
+		System.out.println(projectName);
+		title.setBounds(150,25,400,50);
+		title.setFont(new Font("나눔명조",Font.BOLD,25));
+		panel.add(title);
 		
-		projectNameTag.setBounds(50,125,100,50);
-		projectNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(projectNameTag);
-		projectName.setBounds(175,125,400,50);
-		projectName.setFont(new Font("나눔명조",Font.BOLD,15));
-		projectName.setBorder(new LineBorder(Color.black));
-		panel.add(projectName);
-		
-		projectNameTag.setBounds(50,125,100,50);
-		projectNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(projectNameTag);
-		projectName.setBounds(175,125,400,50);
-		projectName.setFont(new Font("나눔명조",Font.BOLD,15));
-		projectName.setBorder(new LineBorder(Color.black));
-		panel.add(projectName);
-		
-		projectNameTag.setBounds(50,125,100,50);
-		projectNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(projectNameTag);
-		projectName.setBounds(175,125,400,50);
-		projectName.setFont(new Font("나눔명조",Font.BOLD,15));
-		projectName.setBorder(new LineBorder(Color.black));
-		panel.add(projectName);
-		
-		projectNameTag.setBounds(50,125,100,50);
-		projectNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(projectNameTag);
-		projectName.setBounds(175,125,400,50);
-		projectName.setFont(new Font("나눔명조",Font.BOLD,15));
-		projectName.setBorder(new LineBorder(Color.black));
-		panel.add(projectName);
-		
-		projectNameTag.setBounds(50,125,100,50);
-		projectNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(projectNameTag);
-		projectName.setBounds(175,125,400,50);
-		projectName.setFont(new Font("나눔명조",Font.BOLD,15));
-		projectName.setBorder(new LineBorder(Color.black));
-		panel.add(projectName);
-		
-		projectNameTag.setBounds(50,125,100,50);
-		projectNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(projectNameTag);
-		projectName.setBounds(175,125,400,50);
-		projectName.setFont(new Font("나눔명조",Font.BOLD,15));
-		projectName.setBorder(new LineBorder(Color.black));
-		panel.add(projectName);
-		
-		// 추가할 회사 이름
-		companyName.setBounds(165,100,250,50);
-		companyName.setFont(new Font("나눔명조",Font.BOLD,20));
+		// 회사 이름
+		companyNameTag.setBounds(35,100,100,25);
+		companyNameTag.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(companyNameTag);
+		companyName.setBounds(135,100,350,25);
+		companyName.setFont(new Font("나눔명조",Font.BOLD,15));
+		companyName.setBorder(new LineBorder(Color.black));
 		panel.add(companyName);
 		
+		companyBudgetTag.setBounds(35,150,100,25);
+		companyBudgetTag.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(companyBudgetTag);
+		companyBudget.setBounds(135,150,350,25);
+		companyBudget.setFont(new Font("나눔명조",Font.BOLD,15));
+		companyBudget.setBorder(new LineBorder(Color.black));
+		panel.add(companyBudget);
+		
+		companyEstablishmentTag.setBounds(35,200,100,25);
+		companyEstablishmentTag.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(companyEstablishmentTag);
+		companyEstablishment.setBounds(135,200,350,25);
+		companyEstablishment.setFont(new Font("나눔명조",Font.BOLD,15));
+		companyEstablishment.setBorder(new LineBorder(Color.black));
+		panel.add(companyEstablishment);
+		
+		companySizeTag.setBounds(35,250,100,25);
+		companySizeTag.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(companySizeTag);
+		companySize.setBounds(135,250,350,25);
+		companySize.setFont(new Font("나눔명조",Font.BOLD,15));
+		companySize.setBorder(new LineBorder(Color.black));
+		panel.add(companySize);
+		
+		totalEmployeeTag.setBounds(35,300,100,25);
+		totalEmployeeTag.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(totalEmployeeTag);
+		totalEmployee.setBounds(135,300,350,25);
+		totalEmployee.setFont(new Font("나눔명조",Font.BOLD,15));
+		totalEmployee.setBorder(new LineBorder(Color.black));
+		panel.add(totalEmployee);
+		
+		companyAddressTag.setBounds(35,350,100,25);
+		companyAddressTag.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(companyAddressTag);
+		companyAddress.setBounds(135,350,350,25);
+		companyAddress.setFont(new Font("나눔명조",Font.BOLD,15));
+		companyAddress.setBorder(new LineBorder(Color.black));
+		panel.add(companyAddress);
+		
+		companyIntroTag.setBounds(35,400,100,25);
+		companyIntroTag.setFont(new Font("나눔명조",Font.BOLD,15));
+		panel.add(companyIntroTag);
+		companyIntro.setBounds(135,400,350,150);
+		companyIntro.setFont(new Font("나눔명조",Font.BOLD,15));
+		companyIntro.setBorder(new LineBorder(Color.black));
+		panel.add(companyIntro);
+		
 		// 확인 버튼
-		checkButton.setBounds(240,175,100,30);
+		checkButton.setBounds(240,575,100,30);
 		checkButton.setFont(new Font("나눔명조",Font.BOLD,15));
 		panel.add(checkButton);
 		
@@ -138,7 +140,7 @@ public class InsertCompanyFrame extends JFrame implements ActionListener{
 			DTO.setTotalEmployee(Integer.parseInt(totalEmployee.getText()));
 			DTO.setCompanyAddress(companyAddress.getText());
 			DTO.setCompanyIntro(companyIntro.getText());
-			DAO.insert(DTO, projectName, null);
+			cDAO.insert(DTO, projectName, null);
 			companyFrame.companyList.add(DTO.toString());
 			dispose();
 		}
