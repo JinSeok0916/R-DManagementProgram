@@ -21,6 +21,7 @@ public class OverviewFrame extends JFrame implements ActionListener{
 	JLabel logo = new JLabel();
 	String outline = null;
 	ProjectDAO pDAO = new ProjectDAO();
+	Frame mainFrame = null;
 	
 	public OverviewFrame(String projectName) {
 		this.setBounds(200,75,865,890);
@@ -49,15 +50,12 @@ public class OverviewFrame extends JFrame implements ActionListener{
 		mainButton.addActionListener(this);
 		
 		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mainButton) {
-			this.setVisible(false);
-			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-			new MainFrame();
+			dispose();
 		}
 		
 	}

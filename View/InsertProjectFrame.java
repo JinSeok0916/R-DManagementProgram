@@ -34,8 +34,13 @@ public class InsertProjectFrame extends JFrame implements ActionListener, KeyLis
 	JLabel projectOutlineTag = new JLabel("프로젝트 개요");
 	JTextArea projectOutline = new JTextArea();
 	ProjectDAO DAO = new ProjectDAO();
+	ProjectFrame projectFrame = null;
+	Frame frame = null;
 	
-	public InsertProjectFrame() {
+	public InsertProjectFrame(ProjectFrame pFrame, Frame frame1) {
+		projectFrame = pFrame;
+		frame = frame1;
+		
 		this.setBounds(250,150,765,765);
 		// 패널 나누기
 		panel.setLayout(null);
@@ -94,9 +99,6 @@ public class InsertProjectFrame extends JFrame implements ActionListener, KeyLis
 		this.setVisible(true);
 		
 		checkButton.setEnabled(false);
-		if (!projectName.getText().equals("") && !projectDate.getText().equals("") && !projectBudget.getText().equals("") && !projectOutline.getText().equals("")) {
-//			checkButton.setEnabled(true);
-		}		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -108,7 +110,7 @@ public class InsertProjectFrame extends JFrame implements ActionListener, KeyLis
 			DTO.setProjectBudget(Integer.valueOf(projectBudget.getText()));
 			DTO.setProjectOutline(projectOutline.getText());
 			DAO.insert(DTO, null, null);
-//			new MainFrame();
+			projectFrame.projectList.add(DTO.toString());
 			dispose();
 		}
 	}

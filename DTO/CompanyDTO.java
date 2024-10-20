@@ -60,8 +60,8 @@ public class CompanyDTO {
 	}
 	@Override
 	public String toString() {
-		return "CompanyDTO [companyName=" + companyName + ", companyBudget=" + companyBudget + ", companySize="
-				+ companySize + ", totalEmployee=" + totalEmployee + "]";
+		return "Name=" + companyName + ", Budget=" + companyBudget + ", Size="
+				+ companySize + ", totalEmployee=" + totalEmployee;
 	}
 	
 	
