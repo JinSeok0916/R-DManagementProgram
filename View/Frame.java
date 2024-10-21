@@ -53,7 +53,7 @@ public class Frame extends JFrame implements ActionListener, ItemListener{
 		// 창 크기 및 위치 조절
 		this.setBounds(200,75,865,890);
 		
-		// 패널 초기화
+		// 패널 초기화fg
 		panel.removeAll();
 		
 		// 메인 패널 Layout 설정
