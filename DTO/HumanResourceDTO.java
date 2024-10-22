@@ -2,7 +2,7 @@ package DTO;
 
 public class HumanResourceDTO {
 	private String projectName = null;
-	private String companyName = null; // FK(company table, companyName)
+	private String organizationName = null; // FK(company table, companyName)
 	private String participatingWorkforce = null;
 	private String idenNumber = null;
 	private String level = null;
@@ -16,11 +16,11 @@ public class HumanResourceDTO {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	public String getCompanyName() {
-		return companyName;
+	public String getOrganizationName() {
+		return organizationName;
 	}
-	public void setCompanyName(String companyNameFK) {
-		this.companyName = companyNameFK;
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 	public String getParticipatingWorkforce() {
 		return participatingWorkforce;
@@ -60,7 +60,7 @@ public class HumanResourceDTO {
 	}
 	@Override
 	public String toString() {
-		return "HumanResourceDTO [companyName=" + companyName + ", participatingWorkforce=" + participatingWorkforce
+		return "HumanResourceDTO [companyName=" + organizationName + ", participatingWorkforce=" + participatingWorkforce
 				+ ", idenNumber=" + idenNumber + ", level=" + level + ", age=" + age + ", graduate=" + graduate
 				+ ", salary=" + salary + "]";
 	}

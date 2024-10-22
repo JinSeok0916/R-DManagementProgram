@@ -2,7 +2,7 @@ package DTO;
 
 public class TaskDTO {
 	private String projectName = null;
-	private String companyName = null; // FK(company table, companyName)
+	private String organizationName = null; // FK(company table, companyName)
 	private String taskName = null;
 	private String taskPriority = null;
 	private int taskDate = 0;
@@ -14,11 +14,11 @@ public class TaskDTO {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	public String getCompanyName() {
-		return companyName;
+	public String getOrganizationName() {
+		return organizationName;
 	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 	public String getTaskName() {
 		return taskName;
@@ -44,4 +44,11 @@ public class TaskDTO {
 	public void setTaskProgress(boolean taskProgress) {
 		this.taskProgress = taskProgress;
 	}
+	@Override
+	public String toString() {
+		return "TaskDTO [projectName=" + projectName + ", organizationName=" + organizationName + ", taskName="
+				+ taskName + ", taskPriority=" + taskPriority + ", taskDate=" + taskDate + ", taskProgress="
+				+ taskProgress + "]";
+	}
+	
 }

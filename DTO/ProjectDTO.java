@@ -31,8 +31,8 @@ public class ProjectDTO {
 	}
 	@Override
 	public String toString() {
-		return "Name=" + projectName + ", Date=" + projectDate + ", Budget="
-				+ projectBudget;
+		return "ProjectDTO [projectName=" + projectName + ", projectDate=" + projectDate + ", projectBudget="
+				+ projectBudget + "]";
 	}
 	
 	

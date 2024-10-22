@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import DTO.ParticipatingOrganizationDTO;
 import DTO.TaskDTO;
 
 public class TaskDAO extends _DAOSuper{
@@ -14,7 +15,7 @@ public class TaskDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(Object object, String p1, String p2) {
+	public void insert(Object object, String projectName, String companyName) {
 		TaskDTO getTaskDTO = (TaskDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
@@ -23,7 +24,7 @@ public class TaskDAO extends _DAOSuper{
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
 				pstmt.setString(1, getTaskDTO.getProjectName());
-				pstmt.setString(2, getTaskDTO.getCompanyName());
+				pstmt.setString(2, getTaskDTO.getOrganizationName());
 				pstmt.setString(3, getTaskDTO.getTaskName());
 				pstmt.setString(4, getTaskDTO.getTaskPriority());
 				pstmt.setInt(5, getTaskDTO.getTaskDate());
@@ -59,19 +60,19 @@ public class TaskDAO extends _DAOSuper{
 
 	@Override
 	public ArrayList<TaskDTO> list(Object object) {
-		TaskDTO getTaskDTO = (TaskDTO) object;
+		ParticipatingOrganizationDTO getParticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
 		ArrayList<TaskDTO> setTaskDTOList = new ArrayList<>();
 		if (con()) {
 			try {
-				String sql = "select * from task where task_project_name = ?, task_com_name = ?";
+				String sql = "select * from task where task_project_name = ? and task_org_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, getTaskDTO.getProjectName());
-				pstmt.setString(2, getTaskDTO.getCompanyName());
+				pstmt.setString(1, getParticipatingOrganizationDTO.getProjectName());
+				pstmt.setString(2, getParticipatingOrganizationDTO.getOrganizationName());
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					TaskDTO setTaskDTO = new TaskDTO();
-					setTaskDTO.setCompanyName(rs.getString("task_project_name"));
-					setTaskDTO.setCompanyName(rs.getString("task_com_name"));
+					setTaskDTO.setProjectName(rs.getString("task_project_name"));
+					setTaskDTO.setOrganizationName(rs.getString("task_org_name"));
 					setTaskDTO.setTaskName(rs.getString("task_name"));
 					setTaskDTO.setTaskPriority(rs.getString("task_priority"));
 					setTaskDTO.setTaskDate(rs.getInt("task_date"));
@@ -97,15 +98,15 @@ public class TaskDAO extends _DAOSuper{
 		if(con()) {
 			TaskDTO setTaskDTO = new TaskDTO();
 			try {
-				String sql = "select * from task where task_project_name = ?, task_com_name = ?, task_name = ?";
+				String sql = "select * from task where task_project_name = ? and task_com_name = ? and task_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getTaskDTO.getProjectName());
-				pstmt.setString(2, getTaskDTO.getCompanyName());
+				pstmt.setString(2, getTaskDTO.getOrganizationName());
 				pstmt.setString(3, getTaskDTO.getTaskName());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
-					setTaskDTO.setCompanyName(rs.getString("task_project_name"));
-					setTaskDTO.setCompanyName(rs.getString("task_com_name"));
+					setTaskDTO.setProjectName(rs.getString("task_project_name"));
+					setTaskDTO.setOrganizationName(rs.getString("task_org_name"));
 					setTaskDTO.setTaskName(rs.getString("task_name"));
 					setTaskDTO.setTaskPriority(rs.getString("task_priority"));
 					setTaskDTO.setTaskDate(rs.getInt("task_date"));
@@ -125,9 +126,9 @@ public class TaskDAO extends _DAOSuper{
 	}
 	@Override
 	public void update(Object object) {
-		TaskDTO getTaskDTO = (TaskDTO) object;
-		listOne(getTaskDTO);
-		TaskDTO setTaskDTO = new TaskDTO();
+		TaskDTO setTaskDTO = (TaskDTO) object;
+//		listOne(getTaskDTO);
+//		TaskDTO setTaskDTO = new TaskDTO();
 		if (con()) {
 			try {
 				String sql = "update task set"
@@ -135,15 +136,15 @@ public class TaskDAO extends _DAOSuper{
 						+ " task_priority = ?,"
 						+ " task_date = ?,"
 						+ " task_progress = ?"
-						+ " where task_project_name = ?, task_com_name = ?, task_name = ?";
+						+ " where task_project_name = ? and task_com_name = ? and task_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, setTaskDTO.getTaskName());
 				pstmt.setString(2, setTaskDTO.getTaskPriority());
 				pstmt.setInt(3, setTaskDTO.getTaskDate());
 				pstmt.setBoolean(4, setTaskDTO.isTaskProgress());
-				pstmt.setString(5, getTaskDTO.getProjectName());
-				pstmt.setString(6, getTaskDTO.getCompanyName());
-				pstmt.setString(7, getTaskDTO.getTaskName());
+				pstmt.setString(5, setTaskDTO.getProjectName());
+				pstmt.setString(6, setTaskDTO.getOrganizationName());
+				pstmt.setString(7, setTaskDTO.getTaskName());
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -163,10 +164,10 @@ public class TaskDAO extends _DAOSuper{
 		TaskDTO getTaskDTO = (TaskDTO) object;
 		if(con()) {
 			try {
-				String sql = "delete from task where task_project_name = ?, task_com_name = ?, task_name = ?";
+				String sql = "delete from task where task_project_name = ? and task_org_name = ? and task_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getTaskDTO.getProjectName());
-				pstmt.setString(2, getTaskDTO.getCompanyName());
+				pstmt.setString(2, getTaskDTO.getOrganizationName());
 				pstmt.setString(3, getTaskDTO.getTaskName());
 				pstmt.executeUpdate();
 				con.commit();

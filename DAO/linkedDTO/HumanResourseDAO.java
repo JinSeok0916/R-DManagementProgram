@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import DTO.HumanResourceDTO;
+import DTO.ParticipatingOrganizationDTO;
 
 public class HumanResourseDAO extends _DAOSuper {
 	public HumanResourseDAO() {
@@ -14,7 +15,7 @@ public class HumanResourseDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public void insert(Object object, String p1, String p2) {
+	public void insert(Object object, String projectName, String companyName) {
 		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
@@ -23,7 +24,7 @@ public class HumanResourseDAO extends _DAOSuper {
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				
 				pstmt.setString(1, getHumanResourceDTO.getProjectName());
-				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(2, getHumanResourceDTO.getOrganizationName());
 				pstmt.setString(3, getHumanResourceDTO.getParticipatingWorkforce());
 				pstmt.setString(4, getHumanResourceDTO.getIdenNumber());
 				pstmt.setString(5, getHumanResourceDTO.getLevel());
@@ -53,19 +54,19 @@ public class HumanResourseDAO extends _DAOSuper {
 	
 	@Override
 	public ArrayList<HumanResourceDTO> list(Object object) {
-		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
+		ParticipatingOrganizationDTO getParticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
 		ArrayList<HumanResourceDTO> setHumanResourceDTOList = new ArrayList<>();
 		if(con()) {
 			try {
-				String sql = "select * from humanresource where hr_projet_name = ?, hr_com_name = ?";
+				String sql = "select * from humanresource where hr_projet_name = ? and hr_org_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, getHumanResourceDTO.getProjectName());
-				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(1, getParticipatingOrganizationDTO.getProjectName());
+				pstmt.setString(2, getParticipatingOrganizationDTO.getOrganizationName());
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
 					setHumanResourceDTO.setProjectName(rs.getString("hr_project_name"));
-					setHumanResourceDTO.setCompanyName(rs.getString("hr_com_name"));
+					setHumanResourceDTO.setOrganizationName(rs.getString("hr_org_name"));
 					setHumanResourceDTO.setParticipatingWorkforce(rs.getString("hr_name"));
 					setHumanResourceDTO.setIdenNumber(rs.getString("hr_idennumber"));
 					setHumanResourceDTO.setLevel(rs.getString("hr_level"));
@@ -93,15 +94,15 @@ public class HumanResourseDAO extends _DAOSuper {
 		if(con()) {
 			HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
 			try {
-				String sql = "select * from humanresource where hr_projet_name = ?, hr_com_name = ?, hr_idennumber = ?";
+				String sql = "select * from humanresource where hr_projet_name = ? and hr_org_name = ? and hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getHumanResourceDTO.getProjectName());
-				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(2, getHumanResourceDTO.getOrganizationName());
 				pstmt.setString(3, getHumanResourceDTO.getIdenNumber());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
 					setHumanResourceDTO.setProjectName(rs.getString("hr_project_name"));
-					setHumanResourceDTO.setCompanyName(rs.getString("hr_com_name"));
+					setHumanResourceDTO.setOrganizationName(rs.getString("hr_org_name"));
 					setHumanResourceDTO.setParticipatingWorkforce(rs.getString("hr_name"));
 					setHumanResourceDTO.setIdenNumber(rs.getString("hr_idennumber"));
 					setHumanResourceDTO.setLevel(rs.getString("hr_level"));
@@ -124,9 +125,9 @@ public class HumanResourseDAO extends _DAOSuper {
 	
 	@Override
 	public void update(Object object) {
-		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
-		listOne(getHumanResourceDTO);
-		HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
+		HumanResourceDTO setHumanResourceDTO = (HumanResourceDTO) object;
+//		listOne(getHumanResourceDTO);
+//		HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
 		if(con()) {
 			try {
 				String sql = "update humanresource set"
@@ -136,7 +137,7 @@ public class HumanResourseDAO extends _DAOSuper {
 						+ " hr_age = ?,"
 						+ " hr_graduate = ?,"
 						+ " hr_salary = ?"
-						+ " where hr_projet_name = ?, hr_com_name = ?, hr_idennumber = ?";
+						+ " where hr_projet_name = ? and hr_org_name = ? and hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, setHumanResourceDTO.getParticipatingWorkforce());
 				pstmt.setString(2, setHumanResourceDTO.getIdenNumber());
@@ -144,9 +145,9 @@ public class HumanResourseDAO extends _DAOSuper {
 				pstmt.setInt(4, setHumanResourceDTO.getAge());
 				pstmt.setString(5, setHumanResourceDTO.getGraduate());
 				pstmt.setInt(6, setHumanResourceDTO.getSalary());
-				pstmt.setString(7, getHumanResourceDTO.getProjectName());
-				pstmt.setString(8, getHumanResourceDTO.getCompanyName());
-				pstmt.setString(9, getHumanResourceDTO.getIdenNumber());
+				pstmt.setString(7, setHumanResourceDTO.getProjectName());
+				pstmt.setString(8, setHumanResourceDTO.getOrganizationName());
+				pstmt.setString(9, setHumanResourceDTO.getIdenNumber());
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -166,10 +167,10 @@ public class HumanResourseDAO extends _DAOSuper {
 		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		if(con()) {
 			try {
-				String sql = "delete from humanresource where hr_projet_name = ?, hr_com_name = ?, hr_idennumber = ?";
+				String sql = "delete from humanresource where hr_projet_name = ? and hr_org_name = ? and hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getHumanResourceDTO.getProjectName());
-				pstmt.setString(2, getHumanResourceDTO.getCompanyName());
+				pstmt.setString(2, getHumanResourceDTO.getOrganizationName());
 				pstmt.setString(3, getHumanResourceDTO.getIdenNumber());
 				pstmt.executeUpdate();
 				con.commit();

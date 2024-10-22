@@ -34,7 +34,7 @@ public class _DAOSuper {
 		}
 		return false;
 	}
-	public void insert(Object object, String p1, String p2) {
+	public void insert(Object object, String projectName, String organizationName) {
 		
 	}
 	

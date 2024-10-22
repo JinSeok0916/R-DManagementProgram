@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import DTO.ParticipatingOrganizationDTO;
 import DTO.ScheduleDTO;
 
 public class ScheduleDAO extends _DAOSuper{
@@ -15,7 +16,7 @@ public class ScheduleDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(Object object, String p1, String p2) {
+	public void insert(Object object, String projectName, String companyName) {
 		Scanner in = new Scanner(System.in);
 		ScheduleDTO getScheduleDTO = (ScheduleDTO) object;
 		if (con()) {
@@ -24,7 +25,7 @@ public class ScheduleDAO extends _DAOSuper{
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
 				pstmt.setString(1, getScheduleDTO.getProjectName());
-				pstmt.setString(2, getScheduleDTO.getCompanyName());
+				pstmt.setString(2, getScheduleDTO.getOrganizationName());
 				pstmt.setString(3, getScheduleDTO.getDate());
 				
 				// 입력값을 받지 못하도록 설정
@@ -42,10 +43,10 @@ public class ScheduleDAO extends _DAOSuper{
 				
 				// 입력값을 받지 못하도록 설정
 				int totalTaskCount = 0;
-				String sql_rf = "select count(*) total_task from task where task_project_name = ?, task_com_name = ?";
+				String sql_rf = "select count(*) total_task from task where task_project_name = ? and task_org_name = ?";
 				PreparedStatement pstmt_rf = con.prepareStatement(sql_rf);
 				pstmt_rf.setString(1, getScheduleDTO.getProjectName());
-				pstmt_rf.setString(2, getScheduleDTO.getCompanyName());
+				pstmt_rf.setString(2, getScheduleDTO.getOrganizationName());
 				ResultSet rs_rf = pstmt_rf.executeQuery();
 				if(rs_rf.next()) {
 					totalTaskCount = rs_rf.getInt("total_task");
@@ -54,10 +55,10 @@ public class ScheduleDAO extends _DAOSuper{
 				
 				// 입력값을 받지 못하도록 설정
 				int completeTaskCount = 0;
-				String sql_rf1 = "select count(*) completeTask from task where task_project_name = ?, task_com_name = ?, task_progress = '완료'";
+				String sql_rf1 = "select count(*) completeTask from task where task_project_name = ? and task_org_name = ? and task_progress = '완료'";
 				PreparedStatement pstmt_rf1 = con.prepareStatement(sql_rf1);
 				pstmt_rf1.setString(1, getScheduleDTO.getProjectName());
-				pstmt_rf1.setString(2, getScheduleDTO.getCompanyName());
+				pstmt_rf1.setString(2, getScheduleDTO.getOrganizationName());
 				ResultSet rs_rf1 = pstmt_rf1.executeQuery();
 				if(rs_rf1.next()) {
 					completeTaskCount = rs_rf1.getInt("completeTask");
@@ -66,10 +67,10 @@ public class ScheduleDAO extends _DAOSuper{
 				
 				// 입력값을 받지 못하도록 설정
 				int requiredDateForCompleteTask = 0;
-				String sql_rf2 = "select sum(task_date) requiredDate from task where task_project_name = ?, task_com_name = ?, task_progress = '미완료'";
+				String sql_rf2 = "select sum(task_date) requiredDate from task where task_project_name = ? and task_com_name = ? and task_progress = '미완료'";
 				PreparedStatement pstmt_rf2 = con.prepareStatement(sql_rf2);
 				pstmt_rf2.setString(1, getScheduleDTO.getProjectName());
-				pstmt_rf2.setString(2, getScheduleDTO.getCompanyName());
+				pstmt_rf2.setString(2, getScheduleDTO.getOrganizationName());
 				ResultSet rs2 = pstmt_rf2.executeQuery();
 				if(rs2.next()) {
 					completeTaskCount = rs2.getInt("requiredDate");
@@ -101,19 +102,19 @@ public class ScheduleDAO extends _DAOSuper{
 
 	@Override
 	public ArrayList<ScheduleDTO> list(Object object) {
-		ScheduleDTO getScheduleDTO = (ScheduleDTO) object;
+		ParticipatingOrganizationDTO getParticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
 		ArrayList<ScheduleDTO> setScheduleDTOList = new ArrayList<>();
 		if (con()) {
 			try {
-				String sql = "select * from schedule where sch_project_name = ?, sch_com_name = ?";
+				String sql = "select * from schedule where sch_project_name = ? and sch_org_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, getScheduleDTO.getProjectName());
-				pstmt.setString(2, getScheduleDTO.getCompanyName());
+				pstmt.setString(1, getParticipatingOrganizationDTO.getProjectName());
+				pstmt.setString(2, getParticipatingOrganizationDTO.getOrganizationName());
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					ScheduleDTO setScheduleDTO = new ScheduleDTO();
 					setScheduleDTO.setProjectName(rs.getString("sch_project_name"));
-					setScheduleDTO.setCompanyName(rs.getString("sch_com_name"));
+					setScheduleDTO.setOrganizationName(rs.getString("sch_org_name"));
 					setScheduleDTO.setDate(rs.getString("sch_date"));
 					setScheduleDTO.setTotalDate(rs.getInt("sch_totaldate"));
 					setScheduleDTO.setRestDate(rs.getInt("sch_restdate"));
@@ -142,15 +143,15 @@ public class ScheduleDAO extends _DAOSuper{
 		if(con()) {
 			ScheduleDTO setScheduleDTO = new ScheduleDTO();
 			try {
-				String sql = "select * from schedule where sch_project_name = ?, sch_com_name = ?, sch_date = ?";
+				String sql = "select * from schedule where sch_project_name = ? and sch_com_name = ? and sch_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getScheduleDTO.getProjectName());
-				pstmt.setString(2, getScheduleDTO.getCompanyName());
+				pstmt.setString(2, getScheduleDTO.getOrganizationName());
 				pstmt.setString(3, getScheduleDTO.getDate());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
 					setScheduleDTO.setProjectName(rs.getString("sch_project_name"));
-					setScheduleDTO.setCompanyName(rs.getString("sch_com_name"));
+					setScheduleDTO.setOrganizationName(rs.getString("sch_org_name"));
 					setScheduleDTO.setDate(rs.getString("sch_date"));
 					setScheduleDTO.setTotalDate(rs.getInt("sch_totaldate"));
 					setScheduleDTO.setRestDate(rs.getInt("sch_restdate"));
@@ -174,9 +175,9 @@ public class ScheduleDAO extends _DAOSuper{
 	
 	@Override
 	public void update(Object object) {
-		ScheduleDTO getScheduleDTO = (ScheduleDTO) object;
-		listOne(getScheduleDTO);
-		ScheduleDTO setscheduleDTO = new ScheduleDTO();
+		ScheduleDTO setScheduleDTO = (ScheduleDTO) object;
+//		listOne(getScheduleDTO);
+//		ScheduleDTO setscheduleDTO = new ScheduleDTO();
 		if (con()) {
 			try {
 				String sql = "update schedule set"
@@ -186,18 +187,18 @@ public class ScheduleDAO extends _DAOSuper{
 						+ " sch_completetask = ?,"
 						+ " sch_requireddateforcompletetask = ?,"
 						+ " sch_ratio = ?"
-						+ " where sch_project_name = ?, sch_com_name = ?, sch_date = ?";
+						+ " where sch_project_name = ? and sch_org_name = ? and sch_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, setscheduleDTO.getDate());
-				pstmt.setInt(2, setscheduleDTO.getTotalDate());
-				pstmt.setInt(3, setscheduleDTO.getRestDate());
-				pstmt.setInt(4, setscheduleDTO.getTotalTaskCount());
-				pstmt.setInt(5, setscheduleDTO.getCompleteTaskCount());
-				pstmt.setInt(6, setscheduleDTO.getRequiredDateForCompleteTask());
-				pstmt.setInt(7, setscheduleDTO.getRequiredDateForCompleteTaskPerRestDate());
-				pstmt.setString(8, getScheduleDTO.getProjectName());
-				pstmt.setString(9, getScheduleDTO.getCompanyName());
-				pstmt.setString(10, getScheduleDTO.getDate());
+				pstmt.setString(1, setScheduleDTO.getDate());
+				pstmt.setInt(2, setScheduleDTO.getTotalDate());
+				pstmt.setInt(3, setScheduleDTO.getRestDate());
+				pstmt.setInt(4, setScheduleDTO.getTotalTaskCount());
+				pstmt.setInt(5, setScheduleDTO.getCompleteTaskCount());
+				pstmt.setInt(6, setScheduleDTO.getRequiredDateForCompleteTask());
+				pstmt.setInt(7, setScheduleDTO.getRequiredDateForCompleteTaskPerRestDate());
+				pstmt.setString(8, setScheduleDTO.getProjectName());
+				pstmt.setString(9, setScheduleDTO.getOrganizationName());
+				pstmt.setString(10, setScheduleDTO.getDate());
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
@@ -220,7 +221,7 @@ public class ScheduleDAO extends _DAOSuper{
 				String sql = "delete from schedulewhere sch_project_name = ?, sch_com_name = ?, sch_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getScheduleDTO.getProjectName());
-				pstmt.setString(2, getScheduleDTO.getCompanyName());
+				pstmt.setString(2, getScheduleDTO.getOrganizationName());
 				pstmt.setString(3, getScheduleDTO.getDate());
 				pstmt.executeUpdate();
 				con.commit();

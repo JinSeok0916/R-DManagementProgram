@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import DTO.CostDTO;
+import DTO.ParticipatingOrganizationDTO;
 
 public class CostDAO extends _DAOSuper {
 	public CostDAO() {
@@ -15,7 +16,7 @@ public class CostDAO extends _DAOSuper {
 	
 	
 	@Override
-	public void insert(Object object, String p1, String p2) {
+	public void insert(Object object, String projectName, String companyName) {
 		CostDTO getCostDTO = (CostDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
@@ -24,12 +25,12 @@ public class CostDAO extends _DAOSuper {
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
 				pstmt.setString(1, getCostDTO.getProjectName());
-				pstmt.setString(2, getCostDTO.getCompanyName());
+				pstmt.setString(2, getCostDTO.getOrganizationName());
 				pstmt.setString(3, getCostDTO.getDate());
-				pstmt.setInt(4, getCostDTO.getMaterialCost());
-				pstmt.setInt(5, getCostDTO.getLaborCost());
-				pstmt.setInt(6, getCostDTO.getExpenseCost());
-				pstmt.setInt(7, getCostDTO.getTotalCost());
+				pstmt.setLong(4, getCostDTO.getMaterialCost());
+				pstmt.setLong(5, getCostDTO.getLaborCost());
+				pstmt.setLong(6, getCostDTO.getExpenseCost());
+				pstmt.setLong(7, getCostDTO.getTotalCost());
 				
 				pstmt.executeUpdate();
 				con.commit();
@@ -53,9 +54,9 @@ public class CostDAO extends _DAOSuper {
 	
 	@Override
 	public void update(Object object) {
-		CostDTO getCostDTO = (CostDTO) object;
-		listOne(getCostDTO);
-		CostDTO setCostDTO = new CostDTO();
+		CostDTO setCostDTO = (CostDTO) object;
+//		listOne(getCostDTO);
+//		CostDTO setCostDTO = new CostDTO();
 		if (con()) {
 			try {
 				String sql = "update cost set"
@@ -64,16 +65,16 @@ public class CostDAO extends _DAOSuper {
 						+ " cost_labor = ?,"
 						+ " cost_expense = ?,"
 						+ " cost_total = ?"
-						+ " where cost_project_name = ?, cost_com_name = ?, cost_date = ?";
+						+ " where cost_project_name = ? and cost_org_name = ? and cost_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, setCostDTO.getDate());
-				pstmt.setInt(2, setCostDTO.getMaterialCost());
-				pstmt.setInt(3, setCostDTO.getLaborCost());
-				pstmt.setInt(4, setCostDTO.getExpenseCost());
-				pstmt.setInt(5, setCostDTO.getTotalCost());
-				pstmt.setString(6, getCostDTO.getProjectName());
-				pstmt.setString(7, getCostDTO.getCompanyName());
-				pstmt.setString(8, getCostDTO.getDate());
+				pstmt.setLong(2, setCostDTO.getMaterialCost());
+				pstmt.setLong(3, setCostDTO.getLaborCost());
+				pstmt.setLong(4, setCostDTO.getExpenseCost());
+				pstmt.setLong(5, setCostDTO.getTotalCost());
+				pstmt.setString(6, setCostDTO.getProjectName());
+				pstmt.setString(7, setCostDTO.getOrganizationName());
+				pstmt.setString(8, setCostDTO.getDate());
 				
 				pstmt.executeUpdate();
 				con.commit();
@@ -93,10 +94,10 @@ public class CostDAO extends _DAOSuper {
 		CostDTO getCostDTO = (CostDTO) object;
 		if(con()) {
 			try {
-				String sql = "delete from cost where cost_project_name = ?, cost_com_name = ?, cost_date = ?";
+				String sql = "delete from cost where cost_project_name = ? and cost_com_name = ? and cost_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getCostDTO.getProjectName());
-				pstmt.setString(2, getCostDTO.getCompanyName());
+				pstmt.setString(2, getCostDTO.getOrganizationName());
 				pstmt.setString(3, getCostDTO.getDate());
 				pstmt.executeUpdate();
 				con.commit();
@@ -116,19 +117,19 @@ public class CostDAO extends _DAOSuper {
 	
 	@Override
 	public ArrayList<CostDTO> list(Object object) {
-		CostDTO getCostDTO = (CostDTO) object;
+		ParticipatingOrganizationDTO getParticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
 		ArrayList<CostDTO> setCostDTOList = new ArrayList<>();
 		if (con()) {
 			try {
-				String sql = "select * from cost where cost_project_name = ?, cost_com_name = ?";
+				String sql = "select * from cost where cost_project_name = ? and cost_org_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, getCostDTO.getProjectName());
-				pstmt.setString(2, getCostDTO.getCompanyName());
+				pstmt.setString(1, getParticipatingOrganizationDTO.getProjectName());
+				pstmt.setString(2, getParticipatingOrganizationDTO.getOrganizationName());
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					CostDTO setCostDTO = new CostDTO();
-					setCostDTO.setCompanyName(rs.getString("cost_project_company"));
-					setCostDTO.setCompanyName(rs.getString("cost_com_company"));
+					setCostDTO.setProjectName(rs.getString("cost_project_company"));
+					setCostDTO.setOrganizationName(rs.getString("cost_org_company"));
 					setCostDTO.setDate(rs.getString("cost_date"));
 					setCostDTO.setMaterialCost(rs.getInt("cost_material"));
 					setCostDTO.setLaborCost(rs.getInt("cost_labor"));
@@ -155,15 +156,15 @@ public class CostDAO extends _DAOSuper {
 		if(con()) {
 			CostDTO setCostDTO = new CostDTO();
 			try {
-				String sql = "select * from cost  where cost_project_name = ?, cost_com_name = ?, cost_date = ?";
+				String sql = "select * from cost  where cost_project_name = ? and cost_com_name = ? and cost_date = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getCostDTO.getProjectName());
-				pstmt.setString(2, getCostDTO.getCompanyName());
+				pstmt.setString(2, getCostDTO.getOrganizationName());
 				pstmt.setString(3, getCostDTO.getDate());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
-					setCostDTO.setCompanyName(rs.getString("cost_project_company"));
-					setCostDTO.setCompanyName(rs.getString("cost_com_company"));
+					setCostDTO.setProjectName(rs.getString("cost_project_company"));
+					setCostDTO.setOrganizationName(rs.getString("cost_org_company"));
 					setCostDTO.setDate(rs.getString("cost_date"));
 					setCostDTO.setMaterialCost(rs.getInt("cost_material"));
 					setCostDTO.setLaborCost(rs.getInt("cost_labor"));

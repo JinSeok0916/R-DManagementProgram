@@ -2,7 +2,7 @@ package DTO;
 
 public class ScheduleDTO {
 	private String projectName = null;
-	private String companyName = null; // FK(company table, companyName)
+	private String organizationName = null; // FK(company table, companyName)
 	private String date = null;
 	private int totalDate = 0; // 연구개발에 필요한 총 기간(일)
 	private int restDate = 0;
@@ -18,11 +18,11 @@ public class ScheduleDTO {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	public String getCompanyName() {
-		return companyName;
+	public String getOrganizationName() {
+		return organizationName;
 	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 	public String getDate() {
 		return date;
@@ -68,7 +68,7 @@ public class ScheduleDTO {
 	}
 	@Override
 	public String toString() {
-		return "ScheduleDTO [companyName=" + companyName + ", date=" + date + ", totalTaskCount=" + totalTaskCount
+		return "ScheduleDTO [organizationName=" + organizationName + ", date=" + date + ", totalTaskCount=" + totalTaskCount
 				+ ", completeTaskCount=" + completeTaskCount + ", requiredDateForCompleteTaskPerRestDate="
 				+ requiredDateForCompleteTaskPerRestDate + "]";
 	}

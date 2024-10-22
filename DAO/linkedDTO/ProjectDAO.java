@@ -14,7 +14,7 @@ public class ProjectDAO extends _DAOSuper{
 	}
 
 	@Override
-	public void insert(Object object, String p1, String p2) {
+	public void insert(Object object, String projectName, String companyName) {
 		ProjectDTO getProjectDTO = (ProjectDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {
@@ -26,6 +26,7 @@ public class ProjectDAO extends _DAOSuper{
 				pstmt.setInt(2, getProjectDTO.getProjectDate());
 				pstmt.setInt(3, getProjectDTO.getProjectBudget());
 				pstmt.setString(4, getProjectDTO.getProjectOutline());
+				
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (Exception e) {
@@ -79,13 +80,13 @@ public class ProjectDAO extends _DAOSuper{
 
 	@Override
 	public Object listOne(Object object) {
-//		ProjectDTO getProjectDTO = (ProjectDTO) object;
+		ProjectDTO getProjectDTO = (ProjectDTO) object;
 		if(con()) {
 			ProjectDTO setProjectDTO = new ProjectDTO();
 			try {
 				String sql = "select * from project where project_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setObject(1, object);
+				pstmt.setString(1, getProjectDTO.getProjectName());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
 					setProjectDTO.setProjectName(rs.getString("project_name"));
@@ -108,9 +109,9 @@ public class ProjectDAO extends _DAOSuper{
 
 	@Override
 	public void update(Object object) {
-		ProjectDTO getProjectDTO = (ProjectDTO) object;
-		listOne(getProjectDTO);
-		ProjectDTO setProjectDTO = new ProjectDTO();
+		ProjectDTO setProjectDTO = (ProjectDTO) object;
+//		listOne(getProjectDTO);
+//		ProjectDTO setProjectDTO = new ProjectDTO();
 		if (con()) {
 			try {
 				String sql = "update project set"
@@ -124,7 +125,7 @@ public class ProjectDAO extends _DAOSuper{
 				pstmt.setInt(2, setProjectDTO.getProjectDate());
 				pstmt.setInt(3, setProjectDTO.getProjectBudget());
 				pstmt.setString(4, setProjectDTO.getProjectOutline());
-				pstmt.setString(5, getProjectDTO.getProjectName());
+				pstmt.setString(5, setProjectDTO.getProjectName());
 //				System.out.println(pstmt);
 				pstmt.executeUpdate();
 				con.commit();
