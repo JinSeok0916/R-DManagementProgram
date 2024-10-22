@@ -1,12 +1,13 @@
 package ProgramStart;
 
-import View.Frame;
+import View.StartView.MainFrame;
 
 public class Start {
 
 	public static void main(String[] args) {
-		Frame frame = new Frame();
-		frame.projectFrame();
+		
+		new MainFrame();
+		
 	}
 
 }

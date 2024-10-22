@@ -45,7 +45,7 @@ public class _DAOSuper {
 	public Object listOne(Object object) {
 		return null;
 	}
-	public void update(Object object) {
+	public void update(Object object1, Object object2) {
 		
 	}
 	public void delete(Object object) {

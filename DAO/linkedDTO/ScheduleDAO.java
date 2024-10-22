@@ -173,8 +173,8 @@ public class ScheduleDAO extends _DAOSuper{
 	}
 	
 	@Override
-	public void update(Object object) {
-		ScheduleDTO getScheduleDTO = (ScheduleDTO) object;
+	public void update(Object object1, Object object2) {
+		ScheduleDTO getScheduleDTO = (ScheduleDTO) object1;
 		listOne(getScheduleDTO);
 		ScheduleDTO setscheduleDTO = new ScheduleDTO();
 		if (con()) {

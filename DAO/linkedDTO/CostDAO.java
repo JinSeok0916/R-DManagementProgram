@@ -52,8 +52,8 @@ public class CostDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public void update(Object object) {
-		CostDTO getCostDTO = (CostDTO) object;
+	public void update(Object object1, Object object2) {
+		CostDTO getCostDTO = (CostDTO) object1;
 		listOne(getCostDTO);
 		CostDTO setCostDTO = new CostDTO();
 		if (con()) {

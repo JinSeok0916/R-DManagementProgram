@@ -124,8 +124,8 @@ public class TaskDAO extends _DAOSuper{
 		return null;
 	}
 	@Override
-	public void update(Object object) {
-		TaskDTO getTaskDTO = (TaskDTO) object;
+	public void update(Object object1, Object object2) {
+		TaskDTO getTaskDTO = (TaskDTO) object1;
 		listOne(getTaskDTO);
 		TaskDTO setTaskDTO = new TaskDTO();
 		if (con()) {

@@ -123,8 +123,8 @@ public class HumanResourseDAO extends _DAOSuper {
 	};
 	
 	@Override
-	public void update(Object object) {
-		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
+	public void update(Object object1, Object object2) {
+		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object1;
 		listOne(getHumanResourceDTO);
 		HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
 		if(con()) {

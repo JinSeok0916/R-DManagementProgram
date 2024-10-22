@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import DTO.CompanyDTO;
 
@@ -114,9 +113,9 @@ public class CompanyDAO extends _DAOSuper {
 	}
 	
 	@Override
-	public void update(Object object) {
+	public void update(Object object1, Object object2) {
 		// 수정하려는 DTO 호출
-		CompanyDTO getCompanyDTO = (CompanyDTO) object;
+		CompanyDTO getCompanyDTO = (CompanyDTO) object1;
 		// 수정하려는 DTO 조회
 		listOne(getCompanyDTO);
 		// 수정된 값을 입력받을 DTO 생성

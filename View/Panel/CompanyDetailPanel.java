@@ -1,5 +1,6 @@
-package View;
+package View.Panel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.List;
 import java.awt.event.ActionEvent;
@@ -9,15 +10,12 @@ import java.awt.event.ItemListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import DAO.linkedDTO._DAOSuper;
+import View.StartView.MainFrame;
 
-public class DetailFrame extends JFrame implements ActionListener, ItemListener{
-	JPanel panel = null;
+public class CompanyDetailPanel extends JPanel implements ActionListener, ItemListener {
 	JButton mainButton = new JButton("<html><center>R&D Management Program</center></html>");
 	List detailList = new List();
 	JButton updateButton = new JButton("선택수정");
@@ -29,66 +27,63 @@ public class DetailFrame extends JFrame implements ActionListener, ItemListener{
 	JButton humanResourseButton = new JButton("인력");
 	JButton costButton = new JButton("예산");
 	JButton scheduleButton = new JButton("일정");
-	
-	JLabel logo = new JLabel("");
-	int selNum = 0;
-	_DAOSuper DAO = null;
 	String projectName = null;
 	String companyName = null;
+	MainFrame mainFrame = null;
 	
-	
-	public void setDetailFrame(String pN, String cN, JPanel panel1) {
-		projectName = pN;
-		companyName = cN;
-		panel = panel1;
-		
+	JLabel logo = new JLabel("",JLabel.CENTER);
+
+	public CompanyDetailPanel(MainFrame mf) {
+		mainFrame = mf;
 		// 패널 설정
-		panel.setLayout(null);
+		this.setLayout(null);
+		
+		this.setBounds(0,0,800,800);
+		
+		this.setBackground(new Color(255,255,255,0));
+		
+		this.setAlignmentX(CENTER_ALIGNMENT);
 		
 		// 기본 버튼 설정
 		mainButton.setBounds(175,135,400,40);
 		mainButton.setFont(new Font("나눔명조",Font.BOLD,25));
-		panel.add(mainButton);
+		this.add(mainButton);
 		backButton.setBounds(575,135,50,40);
-		panel.add(backButton);
+		this.add(backButton);
 		closeButton.setBounds(625,135,50,40);
-		panel.add(closeButton);
+		this.add(closeButton);
 		
 		// 리스트 만들기
 		detailList.setBounds(175,215,500,410);
 		detailList.setFont(new Font("나눔명조",Font.PLAIN,25));
-		panel.add(detailList);
+		this.add(detailList);
 		
 		// 원하는 리스트 설정 버튼
 		companyButton.setBounds(175,175,125,40);
 		companyButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(companyButton);
+		this.add(companyButton);
 		humanResourseButton.setBounds(300,175,125,40);
 		humanResourseButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(humanResourseButton);
+		this.add(humanResourseButton);
 		costButton.setBounds(425,175,125,40);
 		costButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(costButton);
+		this.add(costButton);
 		scheduleButton.setBounds(550,175,125,40);
 		scheduleButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(scheduleButton);
+		this.add(scheduleButton);
 		
 		// 수정 삭제 추가 버튼 설정
 		updateButton.setBounds(175,625,250,50);
 		updateButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(updateButton);
+		this.add(updateButton);
 		deleteButton.setBounds(425,625,250,50);
 		deleteButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(deleteButton);
+		this.add(deleteButton);
 		insertButton.setBounds(175,675,500,50);
 		insertButton.setFont(new Font("나눔명조",Font.BOLD,15));
-		panel.add(insertButton);
-
-		// 바탕 로고 설정
-		logo.setBounds(25,25,800,800);
-		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
-		panel.add(logo);
-		this.add(panel);
+		this.add(insertButton);
+		
+		loadLogo();
 		
 		// 버튼 리스너 설정
 		mainButton.addActionListener(this);
@@ -103,12 +98,15 @@ public class DetailFrame extends JFrame implements ActionListener, ItemListener{
 		scheduleButton.addActionListener(this);
 		
 		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	
-	
-	
-	
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == updateButton) {
 			// 선택 수정 메서드
@@ -120,16 +118,11 @@ public class DetailFrame extends JFrame implements ActionListener, ItemListener{
 			// 추가 메서드
 			
 		} else if (e.getSource() == backButton) {
-			this.setVisible(false);
-			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-			new CompanyFrame();
+
 		} else if (e.getSource() == closeButton) {
-			this.setVisible(false);
-			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 		} else if (e.getSource() == mainButton) {
-			this.setVisible(false);
-			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-			new Frame();
+
 		} else if (e.getSource() == companyButton) {
 			// 회사정보 리스트 메서드
 			
@@ -144,7 +137,20 @@ public class DetailFrame extends JFrame implements ActionListener, ItemListener{
 			
 		}
 	}
-
-	public void itemStateChanged(ItemEvent e) {
+	
+	void loadLogo() {
+		logo.setBounds(15,40,850,800);
+		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
+		this.add(logo);
 	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	
+	
 }
