@@ -10,13 +10,9 @@ import DTO.ParticipatingOrganizationDTO;
 import DTO.ScheduleDTO;
 
 public class ScheduleDAO extends _DAOSuper{
-	
-	public ScheduleDAO() {
-		init();
-	}
 
 	@Override
-	public void insert(Object object, String projectName, String companyName) {
+	public void insert(Object object) {
 		Scanner in = new Scanner(System.in);
 		ScheduleDTO getScheduleDTO = (ScheduleDTO) object;
 		if (con()) {

@@ -10,12 +10,9 @@ import DTO.ParticipatingOrganizationDTO;
 import DTO.ProjectDTO;
 
 public class ParticipatingOrganizationDAO extends _DAOSuper{
-	public ParticipatingOrganizationDAO() {
-		init();
-	}
 
 	@Override
-	public void insert(Object object, String projectName, String organizationName) {
+	public void insert(Object object) {
 		ParticipatingOrganizationDTO getparticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {

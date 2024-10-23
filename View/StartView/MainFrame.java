@@ -1,15 +1,18 @@
 package View.StartView;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import DAO.linkedOther.CreateBasicTableDAO;
+import DAO.linkedOther.CreateDetailTableDAO;
 import View.Panel.CompanyDetailPanel;
 import View.Panel.CompanyPanel;
 import View.Panel.MainPanel;
 import View.Panel.ProjectPanel;
 
 public class MainFrame extends JFrame{
+	CreateBasicTableDAO CBTDAO = new CreateBasicTableDAO();
+	CreateDetailTableDAO CDTDAO = new CreateDetailTableDAO();
 	MainPanel mainPanel = new MainPanel(this);
 	ProjectPanel projectPanel = new ProjectPanel(this);
 	CompanyPanel companyPanel = new CompanyPanel(this);
@@ -45,19 +48,18 @@ public class MainFrame extends JFrame{
 			this.setVisible(true);
 			this.add(projectPanel);
 		} else if (panel.equals("CompanyPanel")) {
-			companyPanel.setProjectName(projectPanel.getProjectName());
+			companyPanel.setProjectDTO(projectPanel.getProjectDTO());
 			this.remove(mainPanel);
 			this.remove(projectPanel);
 			this.remove(companyPanel);
 			this.remove(companyDetailPanel);
-			companyPanel.loadCompanyList();
+			companyPanel.loadParticipatingOrganization();
 			companyPanel.loadLogo();
 			this.setVisible(false);
 			this.setVisible(true);
 			this.add(companyPanel);
 		} else if (panel.equals("CompanyDetailPanel")) {
-			companyDetailPanel.setProjectName(companyPanel.getProjectName());
-			companyDetailPanel.setCompanyName(companyPanel.getCompanyName());
+			companyDetailPanel.setParticipatingOrganizationDTO(companyPanel.getParticipatingOrganizationDTO());
 			this.remove(mainPanel);
 			this.remove(projectPanel);
 			this.remove(companyPanel);

@@ -10,12 +10,9 @@ import DTO.ParticipatingOrganizationDTO;
 import DTO.TaskDTO;
 
 public class TaskDAO extends _DAOSuper{
-	public TaskDAO() {
-		init();
-	}
 
 	@Override
-	public void insert(Object object, String projectName, String companyName) {
+	public void insert(Object object) {
 		TaskDTO getTaskDTO = (TaskDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {

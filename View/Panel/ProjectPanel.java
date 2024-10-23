@@ -30,7 +30,7 @@ public class ProjectPanel extends JPanel implements ActionListener, ItemListener
 	JButton insertProjectButton = new JButton("사업등록");
 	JButton updateProjectButton = new JButton("사업수정");
 	JButton deleteProjectButton = new JButton("사업삭제");
-	private String projectName = null;
+	private ProjectDTO projectDTO = null;
 	int selNum = 0;
 	MainFrame mainFrame = null;
 	ProjectCRUD projectCRUD = null;
@@ -115,7 +115,6 @@ public class ProjectPanel extends JPanel implements ActionListener, ItemListener
 		pDAO = new ProjectDAO();
 		projectList.removeAll();
 		projectNameList = pDAO.list(null);
-		this.remove(projectList);
 		for (int i = 0; i < projectNameList.size(); i++) {
 			projectList.add(projectNameList.get(i).toString());
 		}
@@ -127,15 +126,15 @@ public class ProjectPanel extends JPanel implements ActionListener, ItemListener
 			mainFrame.select("CompanyPanel");
 		} else if (e.getSource() == insertProjectButton) {
 			projectCRUD = new ProjectCRUD();
-			projectCRUD.ProjectInsert(mainFrame);
+			projectCRUD.projectInsert(mainFrame);
 		} else if (e.getSource() == updateProjectButton) {
 			projectCRUD = new ProjectCRUD();
-			projectCRUD.ProjectUpdate(projectNameList.get(selNum), mainFrame);
+			projectCRUD.projectUpdate(projectNameList.get(selNum), mainFrame);
 		} else if (e.getSource() == deleteProjectButton) {
 			pDAO.delete(projectNameList.get(selNum));
 			mainFrame.select("ProjectPanel");
 		} else if (e.getSource() == outlineButton) {
-			new ProjectOutLine(projectName);
+			new ProjectOutLine(projectDTO);
 		} else if (e.getSource() == backButton) {
 			mainFrame.select("MainPanel");
 		} else if (e.getSource() == closeButton) {
@@ -147,23 +146,31 @@ public class ProjectPanel extends JPanel implements ActionListener, ItemListener
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		projectDTO = new ProjectDTO();
 		selNum = projectList.getSelectedIndex();
+		System.out.println(selNum);
 		projectNameList = pDAO.list(null);
-		projectName = projectNameList.get(selNum).getProjectName();
+		System.out.println(projectNameList.toString());
+		projectDTO = projectNameList.get(selNum);
+		System.out.println(projectDTO.toString());
 		updateProjectButton.setEnabled(true);
 		deleteProjectButton.setEnabled(true);
 		outlineButton.setEnabled(true);
 		companyButton.setEnabled(true);
 	}
 	
+	public ProjectDTO getProjectDTO() {
+		return projectDTO;
+	}
+
+	public void setProjectDTO(ProjectDTO projectDTO) {
+		this.projectDTO = projectDTO;
+	}
+
 	public void loadLogo() {
 		logo.setBounds(15,40,850,800);
 		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
 		this.add(logo);
-	}
-
-	public String getProjectName() {
-		return projectName;
 	}
 }
 

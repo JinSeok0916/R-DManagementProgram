@@ -3,8 +3,7 @@ package DAO.linkedOther;
 import java.sql.PreparedStatement;
 
 public class CreateDetailTableDAO extends _DAOSuper {
-	public CreateDetailTableDAO(String projectName) {
-		init();
+	public CreateDetailTableDAO() {
 		create();
 	}
 	
@@ -14,7 +13,7 @@ public class CreateDetailTableDAO extends _DAOSuper {
 		if (con()) {
 			PreparedStatement pstmt = null;
 			try {
-				String sqlParticipatingOrganization = "create table participatingorganization ("
+				String sqlParticipatingOrganization = "create table if not exists participatingorganization ("
 						+ "porg_project_name varchar(30),"
 						+ "porg_org_name varchar(30),"
 						+ "porg_budget bigint(12),"
@@ -24,7 +23,7 @@ public class CreateDetailTableDAO extends _DAOSuper {
 				pstmt = con.prepareStatement(sqlParticipatingOrganization);
 				pstmt.executeUpdate();
 				
-				String sqlCost = "create table cost ("
+				String sqlCost = "create table if not exists cost ("
 						+ "cost_project_name varchar(30),"
 						+ "cost_org_name varchar(30),"
 						+ "cost_date varchar(10) primary key,"
@@ -39,7 +38,7 @@ public class CreateDetailTableDAO extends _DAOSuper {
 				pstmt.executeUpdate();
 				con.commit();
 				
-				String sqlSchedule = "create table schedule ("
+				String sqlSchedule = "create table if not exists schedule ("
 						+ "sch_project_name varchar(30),"
 						+ "sch_org_name varchar(30),"
 						+ "sch_date varchar(10),"
@@ -55,7 +54,7 @@ public class CreateDetailTableDAO extends _DAOSuper {
 				pstmt = con.prepareStatement(sqlSchedule);
 				pstmt.executeUpdate();
 				
-				String sqlTask = "create table task ("
+				String sqlTask = "create table if not exists task ("
 						+ "task_project_name varchar(30),"
 						+ "task_org_name varchar(30),"
 						+ "task_name varchar(20),"
@@ -68,7 +67,7 @@ public class CreateDetailTableDAO extends _DAOSuper {
 				pstmt = con.prepareStatement(sqlTask);
 				pstmt.executeUpdate();
 				
-				String sqlHumanResource = "create table humanresource ("
+				String sqlHumanResource = "create table if not exists humanresource ("
 						+ "hr_project_name varchar(30),"
 						+ "hr_org_name varchar(30),"
 						+ "hr_name varchar(8),"

@@ -53,7 +53,7 @@ public class ProjectCRUD extends JFrame implements ActionListener, KeyListener{
 		insertProjectOutline.addKeyListener(this);
 	}
 	
-	public void ProjectInsert(MainFrame mf) {
+	public void projectInsert(MainFrame mf) {
 		mainFrame = mf;
 		
 		panel.removeAll();
@@ -119,7 +119,7 @@ public class ProjectCRUD extends JFrame implements ActionListener, KeyListener{
 		this.setVisible(true);
 	}
 	
-	public void ProjectUpdate(ProjectDTO project, MainFrame mf) {
+	public void projectUpdate(ProjectDTO project, MainFrame mf) {
 		mainFrame = mf;
 		
 		panel.removeAll();
@@ -150,6 +150,7 @@ public class ProjectCRUD extends JFrame implements ActionListener, KeyListener{
 		insertProjectName.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		insertProjectName.setBorder(new LineBorder(Color.black));
 		panel.add(insertProjectName);
+		insertProjectName.setEnabled(false);
 		
 		projectDateTag.setBounds(50,200,100,50);
 		projectDateTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
@@ -190,6 +191,7 @@ public class ProjectCRUD extends JFrame implements ActionListener, KeyListener{
 		this.setVisible(true);
 	}
 	
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == insertButton) {
 			// 프로젝트추가 메서드
@@ -209,7 +211,7 @@ public class ProjectCRUD extends JFrame implements ActionListener, KeyListener{
 			updateDTO.setProjectDate(Integer.valueOf(insertProjectDate.getText()));
 			updateDTO.setProjectBudget(Integer.valueOf(insertProjectBudget.getText()));
 			updateDTO.setProjectOutline(insertProjectOutline.getText());
-			DAO.update(DTO, updateDTO);
+			DAO.update(updateDTO);
 			dispose();
 			mainFrame.select("ProjectPanel");
 		}

@@ -8,13 +8,10 @@ import java.util.Scanner;
 
 import DTO.OrganizationDTO;
 
-public class OrganizatinoDAO extends _DAOSuper {
-	public OrganizatinoDAO() {
-		init();
-	}
+public class OrganizationDAO extends _DAOSuper {
 
 	@Override
-	public void insert(Object object, String projectName, String organizationName) {
+	public void insert(Object object) {
 		OrganizationDTO getOrganizationDTO = (OrganizationDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {

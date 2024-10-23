@@ -10,12 +10,9 @@ import DTO.HumanResourceDTO;
 import DTO.ParticipatingOrganizationDTO;
 
 public class HumanResourseDAO extends _DAOSuper {
-	public HumanResourseDAO() {
-		init();
-	}
 	
 	@Override
-	public void insert(Object object, String projectName, String companyName) {
+	public void insert(Object object) {
 		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {

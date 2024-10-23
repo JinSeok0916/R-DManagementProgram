@@ -10,13 +10,9 @@ import DTO.CostDTO;
 import DTO.ParticipatingOrganizationDTO;
 
 public class CostDAO extends _DAOSuper {
-	public CostDAO() {
-		init();
-	}
-	
 	
 	@Override
-	public void insert(Object object, String projectName, String companyName) {
+	public void insert(Object object) {
 		CostDTO getCostDTO = (CostDTO) object;
 		Scanner in = new Scanner(System.in);
 		if (con()) {

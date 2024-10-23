@@ -11,16 +11,6 @@ public class _DAOSuper {
 	public String driverName = "org.mariadb.jdbc.Driver";
 	public Connection con = null;
 	
-	// 드라이버 로드 코드
-	public void init() {
-		try {
-			Class.forName(driverName);
-			System.out.println("마리아 드라이버 로드 성공");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	// 커넥션 가져오는 공통 코드 
 	public boolean con() {
 		try {
@@ -34,7 +24,7 @@ public class _DAOSuper {
 		}
 		return false;
 	}
-	public void insert(Object object, String projectName, String organizationName) {
+	public void insert(Object object) {
 		
 	}
 	

@@ -14,23 +14,25 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import DAO.linkedDTO.CompanyDAO;
-import DTO.CompanyDTO;
+import DAO.linkedDTO.ParticipatingOrganizationDAO;
+import DTO.ParticipatingOrganizationDTO;
+import DTO.ProjectDTO;
+import View.PopUpWindow.CompanyCRUD;
 import View.StartView.MainFrame;
 
 public class CompanyPanel extends JPanel implements ActionListener, ItemListener{
-	List companyList = new List();
-	JButton insertButton = new JButton("회사추가");
-	JButton detailButton = new JButton("상세설정");
-	JButton deleteButton = new JButton("회사삭제");
+	List participatingOrganizationList = new List();
 	JButton mainButton = new JButton("R&D Management Program");
 	JButton backButton = new JButton("←");
 	JButton closeButton = new JButton("Ⅹ");
-	CompanyDAO cDAO = null;
+	JButton insertButton = new JButton("회사추가");
+	JButton detailButton = new JButton("상세설정");
+	JButton deleteButton = new JButton("회사삭제");
+	ParticipatingOrganizationDAO poDAO = null;
+	private ProjectDTO projectDTO = null;
+	private ParticipatingOrganizationDTO participatingOrganizationDTO = null;
 	int selNum = 0;
-	private String projectName = null;
-	private String companyName = null;
-	ArrayList<CompanyDTO> companyNameList = null;
+	ArrayList<ParticipatingOrganizationDTO> participatingOrganizationNameList = null;
 	MainFrame mainFrame = null;
 	
 	JLabel logo = new JLabel("",JLabel.CENTER);
@@ -58,10 +60,8 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 		this.add(closeButton);
 		
 		// DB에서 꺼낸 리스트 입력
-		companyList.setBounds(175,175,500,450);
-		companyList.setFont(new Font("맑은 고딕",Font.PLAIN,25));
-		
-//		loadCompanyList();
+		participatingOrganizationList.setBounds(175,175,500,450);
+		participatingOrganizationList.setFont(new Font("맑은 고딕",Font.BOLD,20));
 		
 		// 회사추가 상세설정 회사삭제 버튼 생성
 		insertButton.setBounds(175,625,167,50);
@@ -74,42 +74,45 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 		deleteButton.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		this.add(deleteButton);
 		
-//		loadLogo();
-		
 		insertButton.addActionListener(this);
 		detailButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 		mainButton.addActionListener(this);
 		backButton.addActionListener(this);
 		closeButton.addActionListener(this);
+		participatingOrganizationList.addItemListener(this);
 		
 		this.setVisible(true);
 	}
 
-	public void loadCompanyList() {
-		cDAO = new CompanyDAO();
-		companyList.removeAll();
-		companyNameList = cDAO.list(projectName);
-		for (int i = 0; i < companyNameList.size(); i++) {
-			companyList.add(companyNameList.get(i).toString());
+	public void loadParticipatingOrganization() {
+		poDAO = new ParticipatingOrganizationDAO();
+		participatingOrganizationList.removeAll();
+		participatingOrganizationNameList = poDAO.list(projectDTO);
+		System.out.println(participatingOrganizationNameList.toString());
+		for (int i = 0; i < participatingOrganizationNameList.size(); i++) {
+			participatingOrganizationList.add(participatingOrganizationNameList.get(i).toString());
 		}
-		this.add(companyList);
+		this.add(participatingOrganizationList);
 	}
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		selNum = companyList.getSelectedIndex();
-		companyName = companyNameList.get(selNum).getCompanyName();		
+		selNum = participatingOrganizationList.getSelectedIndex();
+		participatingOrganizationDTO = participatingOrganizationNameList.get(selNum);
+		System.out.println(participatingOrganizationDTO.getProjectName());
+		System.out.println(participatingOrganizationDTO.getOrganizationName());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == insertButton) {
-
+			new CompanyCRUD().orgInsert(mainFrame);;
 		} else if (e.getSource() == detailButton) {
 			mainFrame.select("CompanyDetailPanel");
 		} else if (e.getSource() == deleteButton) {
-			
+			poDAO.delete(participatingOrganizationNameList.get(selNum));
+			mainFrame.select("CompanyPanel");
 		} else if (e.getSource() == backButton) {
 			mainFrame.select("ProjectPanel");
 		} else if (e.getSource() == closeButton) {
@@ -118,28 +121,26 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 			mainFrame.select("MainPanel");
 		}
 	}
-	
+
+	public ProjectDTO getProjectDTO() {
+		return projectDTO;
+	}
+
+	public void setProjectDTO(ProjectDTO projectDTO) {
+		this.projectDTO = projectDTO;
+	}
+
+	public ParticipatingOrganizationDTO getParticipatingOrganizationDTO() {
+		return participatingOrganizationDTO;
+	}
+
+	public void setParticipatingOrganizationDTO(ParticipatingOrganizationDTO participatingOrganizationDTO) {
+		this.participatingOrganizationDTO = participatingOrganizationDTO;
+	}
+
 	public void loadLogo() {
 		logo.setBounds(15,40,850,800);
 		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
 		this.add(logo);
 	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-	
-	
 }
