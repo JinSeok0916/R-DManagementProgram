@@ -71,10 +71,4 @@ public class MainFrame extends JFrame{
 			dispose();
 		}
 	}
-	
-//	public void loadLogo() {
-//		logo.setBounds(15,40,850,800);
-//		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
-//		this.add(logo);
-//	}
 }

@@ -139,7 +139,7 @@ public class ParticipatingOrganizationDAO extends _DAOSuper{
 		ParticipatingOrganizationDTO getParticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
 		if(con()) {
 			try {
-				String sql = "delete from organization where porg_project_name = ? and porg_org_name = ?";
+				String sql = "delete from participatingorganization where porg_project_name = ? and porg_org_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getParticipatingOrganizationDTO.getProjectName());
 				pstmt.setString(2, getParticipatingOrganizationDTO.getOrganizationName());

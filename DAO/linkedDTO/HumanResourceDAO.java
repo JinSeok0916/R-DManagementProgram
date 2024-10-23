@@ -9,7 +9,7 @@ import java.util.Scanner;
 import DTO.HumanResourceDTO;
 import DTO.ParticipatingOrganizationDTO;
 
-public class HumanResourseDAO extends _DAOSuper {
+public class HumanResourceDAO extends _DAOSuper {
 	
 	@Override
 	public void insert(Object object) {

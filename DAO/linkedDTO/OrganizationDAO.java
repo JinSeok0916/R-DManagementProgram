@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import DTO.OrganizationDTO;
+import DTO.ParticipatingOrganizationDTO;
 
 public class OrganizationDAO extends _DAOSuper {
 
@@ -16,7 +17,7 @@ public class OrganizationDAO extends _DAOSuper {
 		Scanner in = new Scanner(System.in);
 		if (con()) {
 			try {
-				String sql = "insert into company values (?,?,?,?,?,?)";
+				String sql = "insert into organization values (?,?,?,?,?,?)";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 		
 				pstmt.setString(1, getOrganizationDTO.getOrganizationName());
@@ -80,13 +81,14 @@ public class OrganizationDAO extends _DAOSuper {
 
 	@Override
 	public Object listOne(Object object) {
-		OrganizationDTO getOrganizationDTO = (OrganizationDTO) object;
+		ParticipatingOrganizationDTO getParticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
+		System.out.println(getParticipatingOrganizationDTO.getOrganizationName());
 		if(con()) {
 			OrganizationDTO setOrganizationDTO = new OrganizationDTO();
 			try {
-				String sql = "select * from company where org_name = ?";
+				String sql = "select * from organization where org_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, getOrganizationDTO.getOrganizationName());
+				pstmt.setString(1, getParticipatingOrganizationDTO.getOrganizationName());
 				ResultSet rs = pstmt.executeQuery();
 				if(rs.next()) {
 					setOrganizationDTO.setOrganizationName(rs.getString("org_name"));

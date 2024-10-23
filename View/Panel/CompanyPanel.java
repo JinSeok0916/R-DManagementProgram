@@ -15,9 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import DAO.linkedDTO.ParticipatingOrganizationDAO;
+import DTO.OrganizationDTO;
 import DTO.ParticipatingOrganizationDTO;
 import DTO.ProjectDTO;
-import View.PopUpWindow.CompanyCRUD;
+import View.PopUpWindow.CompanyDetailCRUD;
 import View.StartView.MainFrame;
 
 public class CompanyPanel extends JPanel implements ActionListener, ItemListener{
@@ -30,7 +31,7 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 	JButton deleteButton = new JButton("회사삭제");
 	ParticipatingOrganizationDAO poDAO = null;
 	private ProjectDTO projectDTO = null;
-	private ParticipatingOrganizationDTO participatingOrganizationDTO = null;
+	private ParticipatingOrganizationDTO porgDTO = null;
 	int selNum = 0;
 	ArrayList<ParticipatingOrganizationDTO> participatingOrganizationNameList = null;
 	MainFrame mainFrame = null;
@@ -91,7 +92,7 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 		participatingOrganizationNameList = poDAO.list(projectDTO);
 		System.out.println(participatingOrganizationNameList.toString());
 		for (int i = 0; i < participatingOrganizationNameList.size(); i++) {
-			participatingOrganizationList.add(participatingOrganizationNameList.get(i).toString());
+			participatingOrganizationList.add("프로젝트명 : "+participatingOrganizationNameList.get(i).getProjectName()+" / 회사명 : "+participatingOrganizationNameList.get(i).getOrganizationName());
 		}
 		this.add(participatingOrganizationList);
 	}
@@ -99,19 +100,17 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		selNum = participatingOrganizationList.getSelectedIndex();
-		participatingOrganizationDTO = participatingOrganizationNameList.get(selNum);
-		System.out.println(participatingOrganizationDTO.getProjectName());
-		System.out.println(participatingOrganizationDTO.getOrganizationName());
+		porgDTO = participatingOrganizationNameList.get(selNum);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == insertButton) {
-			new CompanyCRUD().orgInsert(mainFrame);;
+			new CompanyDetailCRUD(mainFrame, porgDTO).porgInsert();
 		} else if (e.getSource() == detailButton) {
 			mainFrame.select("CompanyDetailPanel");
 		} else if (e.getSource() == deleteButton) {
-			poDAO.delete(participatingOrganizationNameList.get(selNum));
+			poDAO.delete(porgDTO);
 			mainFrame.select("CompanyPanel");
 		} else if (e.getSource() == backButton) {
 			mainFrame.select("ProjectPanel");
@@ -131,11 +130,11 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 	}
 
 	public ParticipatingOrganizationDTO getParticipatingOrganizationDTO() {
-		return participatingOrganizationDTO;
+		return porgDTO;
 	}
 
 	public void setParticipatingOrganizationDTO(ParticipatingOrganizationDTO participatingOrganizationDTO) {
-		this.participatingOrganizationDTO = participatingOrganizationDTO;
+		this.porgDTO = participatingOrganizationDTO;
 	}
 
 	public void loadLogo() {

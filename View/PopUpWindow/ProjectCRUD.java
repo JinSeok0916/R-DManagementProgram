@@ -141,7 +141,7 @@ public class ProjectCRUD extends JFrame implements ActionListener, KeyListener{
 		title.setFont(new Font("맑은 고딕",Font.BOLD,25));
 		panel.add(title);
 		
-		// 등록할 프로젝트 이름, 기한, 예산, 개요
+		// 수정할 프로젝트 이름, 기한, 예산, 개요
 		projectNameTag.setBounds(50,125,100,50);
 		projectNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(projectNameTag);
@@ -201,7 +201,7 @@ public class ProjectCRUD extends JFrame implements ActionListener, KeyListener{
 			insertDTO.setProjectDate(Integer.valueOf(insertProjectDate.getText()));
 			insertDTO.setProjectBudget(Integer.valueOf(insertProjectBudget.getText()));
 			insertDTO.setProjectOutline(insertProjectOutline.getText());
-			DAO.insert(insertDTO, null, null);
+			DAO.insert(insertDTO);
 			dispose();
 			mainFrame.select("ProjectPanel");
 		} else if (e.getSource() == updateButton) {
