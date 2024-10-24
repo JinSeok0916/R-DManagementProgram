@@ -106,7 +106,7 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == insertButton) {
-			new CompanyDetailCRUD(mainFrame, porgDTO).porgInsert();
+			new CompanyDetailCRUD(mainFrame, porgDTO).porgInsert(projectDTO);
 		} else if (e.getSource() == detailButton) {
 			mainFrame.select("CompanyDetailPanel");
 		} else if (e.getSource() == deleteButton) {

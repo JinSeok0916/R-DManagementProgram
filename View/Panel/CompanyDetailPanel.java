@@ -120,6 +120,7 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 		humanResourseButton.addActionListener(this);
 		costButton.addActionListener(this);
 		scheduleButton.addActionListener(this);
+		taskButton.addActionListener(this);
 		detailList.addItemListener(this);
 		
 		this.setVisible(true);

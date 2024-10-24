@@ -33,7 +33,7 @@ import DTO.TaskDTO;
 import View.StartView.MainFrame;
 
 public class CompanyDetailCRUD extends JFrame implements ActionListener, ItemListener{
-private JPanel panel = new JPanel();
+	private JPanel panel = new JPanel();
 	private JButton porgInsertButton = new JButton("확인");
 	private JButton orgInsertButton = new JButton("확인");
 	private JButton costInsertButton = new JButton("확인");
@@ -51,8 +51,8 @@ private JPanel panel = new JPanel();
 	private JTextArea data8 = new JTextArea();
 	private JTextArea data9 = new JTextArea();
 	
-	private JLabel projectNameTag = new JLabel("프로젝트명");
-	private JLabel orgNameTag = new JLabel("회사명");
+	private JLabel projectNameTag = new JLabel("프로젝트명(수정불가)");
+	private JLabel orgNameTag = new JLabel("회사명(수정불가)");
 	private JLabel budgetTag = new JLabel("예산");
 	
 	private JLabel estTag = new JLabel("설립연도");
@@ -85,7 +85,7 @@ private JPanel panel = new JPanel();
 	private JLabel taskName = new JLabel("업무명");
 	private JLabel taskPriority = new JLabel("우선도");
 	private JLabel taskDate = new JLabel("업무처리 필요일수");
-	private JLabel taskProgress = new JLabel("업무 수행 여부");
+	private JLabel taskProgress = new JLabel("업무수행여부(true/false)");
 	
 	private _DAOSuper DAO = null;
 	
@@ -95,6 +95,7 @@ private JPanel panel = new JPanel();
 	ArrayList<OrganizationDTO> organizationNameList = null;
 	ParticipatingOrganizationDTO porgDTO = null;
 	OrganizationDTO orgDTO = null;
+	ProjectDTO projectDTO= null;
 	Object DTO = null;
 	
 	int selNum = 0;
@@ -111,7 +112,8 @@ private JPanel panel = new JPanel();
 		organizationList.addItemListener(this);
 	}
 	
-	public void porgInsert() {
+	public void porgInsert(Object DTO) {
+		projectDTO = (ProjectDTO) DTO;
 		
 		panel.removeAll();
 		this.setVisible(false);
@@ -136,7 +138,7 @@ private JPanel panel = new JPanel();
 		projectNameTag.setBounds(50,250,175,25);
 		projectNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(projectNameTag);
-		data1.setText(porgDTO.getProjectName());
+		data1.setText(projectDTO.getProjectName());
 		data1.setBounds(250,250,400,25);
 		data1.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data1.setBorder(new LineBorder(Color.black));
@@ -189,61 +191,63 @@ private JPanel panel = new JPanel();
 		panel.add(title);
 		
 		// 등록할 회사 이름, 설립연도, 규모, 직원수, 주소, 개요
-		orgNameTag.setBounds(50,100,100,25);
+		orgNameTag.setBounds(50,100,175,25);
 		orgNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(orgNameTag);
 		data1.setText(((OrganizationDTO) DTO).getOrganizationName());
-		data1.setBounds(175,100,400,25);
+		data1.setBounds(250,100,400,25);
 		data1.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data1.setBorder(new LineBorder(Color.black));
 		panel.add(data1);
 		
 		data1.setEnabled(false);
 		
-		estTag.setBounds(50,150,100,25);
+		estTag.setBounds(50,150,175,25);
 		estTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(estTag);
 		data2.setText(((OrganizationDTO) DTO).getOrganizationEstablishment());
-		data2.setBounds(175,150,400,25);
+		data2.setBounds(250,150,400,25);
 		data2.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data2.setBorder(new LineBorder(Color.black));
 		panel.add(data2);
 		
-		typeTag.setBounds(50,200,100,25);
+		typeTag.setBounds(50,200,175,25);
 		typeTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(typeTag);
 		data3.setText(((OrganizationDTO) DTO).getOrganizationType());
-		data3.setBounds(175,200,400,25);
+		data3.setBounds(250,200,400,25);
 		data3.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data3.setBorder(new LineBorder(Color.black));
 		panel.add(data3);
 		
-		employeeTag.setBounds(50,250,100,25);
+		employeeTag.setBounds(50,250,175,25);
 		employeeTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(employeeTag);
 		data4.setText(String.valueOf(((OrganizationDTO) DTO).getOrganizationTotalEmployee()));
-		data4.setBounds(175,250,400,25);
+		data4.setBounds(250,250,400,25);
 		data4.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data4.setBorder(new LineBorder(Color.black));
 		panel.add(data4);
 		
-		addressTag.setBounds(50,300,100,25);
+		addressTag.setBounds(50,300,175,25);
 		addressTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(addressTag);
 		data5.setText(((OrganizationDTO) DTO).getOrganizationAddress());
-		data5.setBounds(175,300,400,25);
+		data5.setBounds(250,300,400,25);
 		data5.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data5.setBorder(new LineBorder(Color.black));
 		panel.add(data5);
 		
-		introTag.setBounds(50,350,100,25);
+		introTag.setBounds(50,350,175,25);
 		introTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(introTag);
 		data6.setText(((OrganizationDTO) DTO).getOrganizationIntro());
-		data6.setBounds(175,350,400,25);
+		data6.setBounds(250,350,400,100);
 		data6.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data6.setBorder(new LineBorder(Color.black));
 		panel.add(data6);
+		
+		data6.setLineWrap(true);
 		
 		// 확인 버튼
 		orgInsertButton.setBounds(310,625,100,30);
@@ -271,69 +275,68 @@ private JPanel panel = new JPanel();
 		panel.add(title);
 		
 		// 등록할 예산 이름, 날짜, 재료비, 노무비, 경비, 총액
-		projectNameTag.setBounds(50,100,100,25);
+		projectNameTag.setBounds(50,100,175,25);
 		projectNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(projectNameTag);
 		data1.setText(porgDTO.getProjectName());
-		data1.setBounds(175,100,400,25);
+		data1.setBounds(250,100,400,25);
 		data1.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data1.setBorder(new LineBorder(Color.black));
 		panel.add(data1);
 		
-		data1.setEnabled(false);
-		
-		orgNameTag.setBounds(50,150,100,25);
+		orgNameTag.setBounds(50,150,175,25);
 		orgNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(orgNameTag);
 		data2.setText(((CostDTO) DTO).getOrganizationName());
-		data2.setBounds(175,150,400,25);
+		data2.setBounds(250,150,400,25);
 		data2.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data2.setBorder(new LineBorder(Color.black));
 		panel.add(data2);
 		
 		data1.setEnabled(false);
+		data2.setEnabled(false);
 		
-		costDateTag.setBounds(50,200,100,25);
+		costDateTag.setBounds(50,200,175,25);
 		costDateTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(costDateTag);
 		data3.setText(((CostDTO) DTO).getDate());
-		data3.setBounds(175,200,400,25);
+		data3.setBounds(250,200,400,25);
 		data3.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data3.setBorder(new LineBorder(Color.black));
 		panel.add(data3);
 		
-		costMaterialTag.setBounds(50,250,100,25);
+		costMaterialTag.setBounds(50,250,175,25);
 		costMaterialTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(costMaterialTag);
 		data4.setText(String.valueOf(((CostDTO) DTO).getMaterialCost()));
-		data4.setBounds(175,250,400,25);
+		data4.setBounds(250,250,400,25);
 		data4.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data4.setBorder(new LineBorder(Color.black));
 		panel.add(data4);
 		
-		costLaborTag.setBounds(50,300,100,25);
+		costLaborTag.setBounds(50,300,175,25);
 		costLaborTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(costLaborTag);
 		data5.setText(String.valueOf(((CostDTO) DTO).getLaborCost()));
-		data5.setBounds(175,300,400,25);
+		data5.setBounds(250,300,400,25);
 		data5.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data5.setBorder(new LineBorder(Color.black));
 		panel.add(data5);
 		
-		costExpenseTag.setBounds(50,350,100,25);
+		costExpenseTag.setBounds(50,350,175,25);
 		costExpenseTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(costExpenseTag);
-		data6.setText("");
-		data6.setBounds(175,350,400,25);
+		data6.setText(String.valueOf(((CostDTO) DTO).getExpenseCost()));
+		data6.setBounds(250,350,400,25);
 		data6.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data6.setBorder(new LineBorder(Color.black));
 		panel.add(data6);
 		
-		costTotalTag.setBounds(50,400,100,25);
+		costTotalTag.setBounds(50,400,175,25);
 		costTotalTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(costTotalTag);
-		data7.setText("");
-		data7.setBounds(175,400,400,25);
+		data7.setText(String.valueOf(((CostDTO) DTO).getTotalCost()));
+		data7.setBounds(250,400,400,25);
 		data7.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data7.setBorder(new LineBorder(Color.black));
 		panel.add(data7);
@@ -364,74 +367,77 @@ private JPanel panel = new JPanel();
 		panel.add(title);
 		
 		// 등록할 직원 프로젝트명, 회사명, 이름, 사번, 등급, 나이, 학력, 연봉
-		projectNameTag.setBounds(50,100,100,25);
+		projectNameTag.setBounds(50,100,175,25);
 		projectNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(projectNameTag);
 		data1.setText(porgDTO.getProjectName());
-		data1.setBounds(175,100,400,25);
+		data1.setBounds(250,100,400,25);
 		data1.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data1.setBorder(new LineBorder(Color.black));
 		panel.add(data1);
 		
-		orgNameTag.setBounds(50,150,100,25);
+		orgNameTag.setBounds(50,150,175,25);
 		orgNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(orgNameTag);
-		data2.setText("");
-		data2.setBounds(175,150,400,25);
+		data2.setText(((HumanResourceDTO) DTO).getOrganizationName());
+		data2.setBounds(250,150,400,25);
 		data2.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data2.setBorder(new LineBorder(Color.black));
 		panel.add(data2);
 		
-		hrNameTag.setBounds(50,200,100,25);
+		data1.setEnabled(false);
+		data2.setEnabled(false);
+		
+		hrNameTag.setBounds(50,200,175,25);
 		hrNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(hrNameTag);
-		data3.setText("");
-		data3.setBounds(175,200,400,25);
+		data3.setText(((HumanResourceDTO) DTO).getParticipatingWorkforce());
+		data3.setBounds(250,200,400,25);
 		data3.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data3.setBorder(new LineBorder(Color.black));
 		panel.add(data3);
 		
-		hrIdenNumTag.setBounds(50,250,100,25);
+		hrIdenNumTag.setBounds(50,250,175,25);
 		hrIdenNumTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(hrIdenNumTag);
-		data4.setText("");
-		data4.setBounds(175,250,400,25);
+		data4.setText(((HumanResourceDTO) DTO).getIdenNumber());
+		data4.setBounds(250,250,400,25);
 		data4.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data4.setBorder(new LineBorder(Color.black));
 		panel.add(data4);
 		
-		hrLevelTag.setBounds(50,300,100,25);
+		hrLevelTag.setBounds(50,300,175,25);
 		hrLevelTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(hrLevelTag);
-		data5.setText("");
-		data5.setBounds(175,300,400,25);
+		data5.setText(((HumanResourceDTO) DTO).getLevel());
+		data5.setBounds(250,300,400,25);
 		data5.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data5.setBorder(new LineBorder(Color.black));
 		panel.add(data5);
 
-		hrAgeTag.setBounds(50,350,100,25);
+		hrAgeTag.setBounds(50,350,175,25);
 		hrAgeTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(hrAgeTag);
-		data6.setText("");
-		data6.setBounds(175,350,400,25);
+		data6.setText(String.valueOf(((HumanResourceDTO) DTO).getAge()));
+		data6.setBounds(250,350,400,25);
 		data6.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data6.setBorder(new LineBorder(Color.black));
 		panel.add(data6);
 		
-		hrGraduateTag.setBounds(50,400,100,25);
+		hrGraduateTag.setBounds(50,400,175,25);
 		hrGraduateTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(hrGraduateTag);
-		data7.setText("");
-		data7.setBounds(175,400,400,25);
+		data7.setText(((HumanResourceDTO) DTO).getGraduate());
+		data7.setBounds(250,400,400,25);
 		data7.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data7.setBorder(new LineBorder(Color.black));
 		panel.add(data7);
 		
-		hrSalaryTag.setBounds(50,450,100,25);
+		hrSalaryTag.setBounds(50,450,175,25);
 		hrSalaryTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(hrSalaryTag);
-		data8.setText("");
-		data8.setBounds(175,450,400,25);
+		data8.setText(String.valueOf(((HumanResourceDTO) DTO).getSalary()));
+		data8.setBounds(250,450,400,25);
 		data8.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data8.setBorder(new LineBorder(Color.black));
 		panel.add(data8);
@@ -462,83 +468,86 @@ private JPanel panel = new JPanel();
 		panel.add(title);
 		
 		// 등록할 일정 날짜, 총일수, 남은일수, 총업무, 완료한 업무, 잔여업무 처리소요일수, 진척도
-		projectNameTag.setBounds(50,100,100,25);
+		projectNameTag.setBounds(50,100,175,25);
 		projectNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(projectNameTag);
 		data1.setText(porgDTO.getProjectName());
-		data1.setBounds(175,100,400,25);
+		data1.setBounds(250,100,400,25);
 		data1.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data1.setBorder(new LineBorder(Color.black));
 		panel.add(data1);
 		
-		orgNameTag.setBounds(50,150,100,25);
+		data1.setEnabled(false);
+		data2.setEnabled(false);
+		
+		orgNameTag.setBounds(50,150,175,25);
 		orgNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(orgNameTag);
 		data2.setText(String.valueOf(((ScheduleDTO)DTO).getOrganizationName()));
-		data2.setBounds(175,150,400,25);
+		data2.setBounds(250,150,400,25);
 		data2.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data2.setBorder(new LineBorder(Color.black));
 		panel.add(data2);
 		
-		schDate.setBounds(50,200,100,25);
+		schDate.setBounds(50,200,175,25);
 		schDate.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(schDate);
 		data3.setText(String.valueOf(((ScheduleDTO)DTO).getDate()));
-		data3.setBounds(175,200,400,25);
+		data3.setBounds(250,200,400,25);
 		data3.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data3.setBorder(new LineBorder(Color.black));
 		panel.add(data3);
 		
-		schTotalDate.setBounds(50,250,100,25);
+		schTotalDate.setBounds(50,250,175,25);
 		schTotalDate.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(schTotalDate);
 		data4.setText(String.valueOf(((ScheduleDTO)DTO).getTotalDate()));
-		data4.setBounds(175,250,400,25);
+		data4.setBounds(250,250,400,25);
 		data4.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data4.setBorder(new LineBorder(Color.black));
 		panel.add(data4);
 		
-		schRestDate.setBounds(50,300,100,25);
+		schRestDate.setBounds(50,300,175,25);
 		schRestDate.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(schRestDate);
 		data5.setText(String.valueOf(((ScheduleDTO)DTO).getRestDate()));
-		data5.setBounds(175,300,400,25);
+		data5.setBounds(250,300,400,25);
 		data5.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data5.setBorder(new LineBorder(Color.black));
 		panel.add(data5);
 		
-		schTotalTask.setBounds(50,350,100,25);
+		schTotalTask.setBounds(50,350,175,25);
 		schTotalTask.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(schTotalTask);
 		data6.setText(String.valueOf(((ScheduleDTO)DTO).getTotalTaskCount()));
-		data6.setBounds(175,350,400,25);
+		data6.setBounds(250,350,400,25);
 		data6.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data6.setBorder(new LineBorder(Color.black));
 		panel.add(data6);
 		
-		schCompleteTask.setBounds(50,400,100,25);
+		schCompleteTask.setBounds(50,400,175,25);
 		schCompleteTask.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(schCompleteTask);
 		data7.setText(String.valueOf(((ScheduleDTO)DTO).getCompleteTaskCount()));
-		data7.setBounds(175,400,400,25);
+		data7.setBounds(250,400,400,25);
 		data7.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data7.setBorder(new LineBorder(Color.black));
 		panel.add(data7);
 		
-		schRDFCT.setBounds(50,450,100,25);
+		schRDFCT.setBounds(50,450,175,25);
 		schRDFCT.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(schRDFCT);
 		data8.setText(String.valueOf(((ScheduleDTO)DTO).getRequiredDateForCompleteTask()));
-		data8.setBounds(175,450,400,25);
+		data8.setBounds(250,450,400,25);
 		data8.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data8.setBorder(new LineBorder(Color.black));
 		panel.add(data8);
 		
-		schRatio.setBounds(50,500,100,25);
+		schRatio.setBounds(50,500,175,25);
 		schRatio.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(schRatio);
 		data9.setText(String.valueOf(((ScheduleDTO)DTO).getRequiredDateForCompleteTaskPerRestDate()));
-		data9.setBounds(175,500,400,25);
+		data9.setBounds(250,500,400,25);
 		data9.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data9.setBorder(new LineBorder(Color.black));
 		panel.add(data9);
@@ -569,56 +578,59 @@ private JPanel panel = new JPanel();
 		panel.add(title);
 		
 		// 등록할 업무 프로젝트명, 회사명, 업무명, 우선도, 업무처리 필요일수, 업무 수행 여부
-		projectNameTag.setBounds(50,100,100,25);
+		projectNameTag.setBounds(50,100,175,25);
 		projectNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(projectNameTag);
 		data1.setText(porgDTO.getProjectName());
-		data1.setBounds(175,100,400,25);
+		data1.setBounds(250,100,400,25);
 		data1.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data1.setBorder(new LineBorder(Color.black));
 		panel.add(data1);
 		
-		orgNameTag.setBounds(50,150,100,25);
+		orgNameTag.setBounds(50,150,175,25);
 		orgNameTag.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(orgNameTag);
-		data2.setText("");
-		data2.setBounds(175,150,400,25);
+		data2.setText(((TaskDTO)DTO).getOrganizationName());
+		data2.setBounds(250,150,400,25);
 		data2.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data2.setBorder(new LineBorder(Color.black));
 		panel.add(data2);
 		
-		taskName.setBounds(50,200,100,25);
+		data1.setEnabled(false);
+		data2.setEnabled(false);
+		
+		taskName.setBounds(50,200,175,25);
 		taskName.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(taskName);
-		data3.setText("");
-		data3.setBounds(175,200,400,25);
+		data3.setText(((TaskDTO)DTO).getTaskName());
+		data3.setBounds(250,200,400,25);
 		data3.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data3.setBorder(new LineBorder(Color.black));
 		panel.add(data3);
 		
-		taskPriority.setBounds(50,250,100,25);
+		taskPriority.setBounds(50,250,175,25);
 		taskPriority.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(taskPriority);
-		data4.setText("");
-		data4.setBounds(175,250,400,25);
+		data4.setText(((TaskDTO)DTO).getTaskPriority());
+		data4.setBounds(250,250,400,25);
 		data4.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data4.setBorder(new LineBorder(Color.black));
 		panel.add(data4);
 
-		taskDate.setBounds(50,300,100,25);
+		taskDate.setBounds(50,300,175,25);
 		taskDate.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(taskDate);
-		data5.setText("");
-		data5.setBounds(175,300,400,25);
+		data5.setText(String.valueOf(((TaskDTO)DTO).getTaskDate()));
+		data5.setBounds(250,300,400,25);
 		data5.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data5.setBorder(new LineBorder(Color.black));
 		panel.add(data5);
 		
-		taskProgress.setBounds(50,350,100,25);
+		taskProgress.setBounds(50,350,175,25);
 		taskProgress.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		panel.add(taskProgress);
-		data6.setText("");
-		data6.setBounds(175,350,400,25);
+		data6.setText(String.valueOf(((TaskDTO)DTO).isTaskProgress()));
+		data6.setBounds(250,350,400,25);
 		data6.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		data6.setBorder(new LineBorder(Color.black));
 		panel.add(data6);

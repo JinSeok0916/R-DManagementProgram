@@ -55,7 +55,7 @@ public class HumanResourceDAO extends _DAOSuper {
 		ArrayList<HumanResourceDTO> setHumanResourceDTOList = new ArrayList<>();
 		if(con()) {
 			try {
-				String sql = "select * from humanresource where hr_projet_name = ? and hr_org_name = ?";
+				String sql = "select * from humanresource where hr_project_name = ? and hr_org_name = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getParticipatingOrganizationDTO.getProjectName());
 				pstmt.setString(2, getParticipatingOrganizationDTO.getOrganizationName());
@@ -91,7 +91,7 @@ public class HumanResourceDAO extends _DAOSuper {
 		if(con()) {
 			HumanResourceDTO setHumanResourceDTO = new HumanResourceDTO();
 			try {
-				String sql = "select * from humanresource where hr_projet_name = ? and hr_org_name = ? and hr_idennumber = ?";
+				String sql = "select * from humanresource where hr_project_name = ? and hr_org_name = ? and hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getHumanResourceDTO.getProjectName());
 				pstmt.setString(2, getHumanResourceDTO.getOrganizationName());
@@ -164,7 +164,7 @@ public class HumanResourceDAO extends _DAOSuper {
 		HumanResourceDTO getHumanResourceDTO = (HumanResourceDTO) object;
 		if(con()) {
 			try {
-				String sql = "delete from humanresource where hr_projet_name = ? and hr_org_name = ? and hr_idennumber = ?";
+				String sql = "delete from humanresource where hr_project_name = ? and hr_org_name = ? and hr_idennumber = ?";
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, getHumanResourceDTO.getProjectName());
 				pstmt.setString(2, getHumanResourceDTO.getOrganizationName());

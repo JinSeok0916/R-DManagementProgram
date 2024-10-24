@@ -30,7 +30,7 @@ public class ProjectPanel extends JPanel implements ActionListener, ItemListener
 	JButton updateProjectButton = new JButton("사업수정");
 	JButton deleteProjectButton = new JButton("사업삭제");
 	JButton outlineButton = new JButton("사업개요");
-	JButton insertOrganizationButton = new JButton("기업등록");
+	JButton insertOrganizationButton = new JButton("기업등록·수정·삭제");
 	JButton companyButton = new JButton("참여기업관리");
 	private ProjectDTO projectDTO = null;
 	int selNum = 0;

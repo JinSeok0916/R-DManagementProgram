@@ -124,13 +124,14 @@ public class CostDAO extends _DAOSuper {
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					CostDTO setCostDTO = new CostDTO();
-					setCostDTO.setProjectName(rs.getString("cost_project_company"));
-					setCostDTO.setOrganizationName(rs.getString("cost_org_company"));
+					setCostDTO.setProjectName(rs.getString("cost_project_name"));
+					setCostDTO.setOrganizationName(rs.getString("cost_org_name"));
 					setCostDTO.setDate(rs.getString("cost_date"));
 					setCostDTO.setMaterialCost(rs.getInt("cost_material"));
 					setCostDTO.setLaborCost(rs.getInt("cost_labor"));
 					setCostDTO.setExpenseCost(rs.getInt("cost_expense"));
 					setCostDTO.setTotalCost(rs.getInt("cost_total"));
+					System.out.println(setCostDTO.toString());
 					setCostDTOList.add(setCostDTO);
 				} 
 			} catch (Exception e) {

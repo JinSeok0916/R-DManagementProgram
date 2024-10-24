@@ -40,7 +40,7 @@ public class MainPanel extends JPanel implements ActionListener{
 		this.add(title);
 		
 		// 시작 버튼
-		startButton.setBounds(340,500,200,50);
+		startButton.setBounds(340,700,200,50);
 		startButton.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		this.add(startButton);
 		
