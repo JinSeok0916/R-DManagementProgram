@@ -131,7 +131,6 @@ public class CostDAO extends _DAOSuper {
 					setCostDTO.setLaborCost(rs.getInt("cost_labor"));
 					setCostDTO.setExpenseCost(rs.getInt("cost_expense"));
 					setCostDTO.setTotalCost(rs.getInt("cost_total"));
-					System.out.println(setCostDTO.toString());
 					setCostDTOList.add(setCostDTO);
 				} 
 			} catch (Exception e) {

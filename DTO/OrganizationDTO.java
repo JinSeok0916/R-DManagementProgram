@@ -46,10 +46,10 @@ public class OrganizationDTO {
 	}
 	@Override
 	public String toString() {
-		return "OrganizationDTO [organizationName=" + organizationName + ", organizationEstablishment="
-				+ organizationEstablishment + ", organizationType=" + organizationType + ", organizationTotalEmployee="
-				+ organizationTotalEmployee + ", organizationAddress=" + organizationAddress + ", organizationIntro="
-				+ organizationIntro + "]";
+		return "회사명 = " + organizationName + ", 설립연도 = "
+				+ organizationEstablishment + ", 규모 = " + organizationType + ", 직원수 = "
+				+ organizationTotalEmployee + ", 주소 = " + organizationAddress + ", 회사소개 = "
+				+ organizationIntro;
 	}
 
 	

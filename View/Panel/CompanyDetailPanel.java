@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,7 +32,8 @@ import View.StartView.MainFrame;
 public class CompanyDetailPanel extends JPanel implements ActionListener, ItemListener {
 	JButton mainButton = new JButton("<html><center>R&D Management Program</center></html>");
 	List detailList = new List();
-	JButton CRUDButton = new JButton("선택수정");
+	JButton insertButton = new JButton("추가");
+	JButton UDButton = new JButton("선택수정");
 	JButton backButton = new JButton("←");
 	JButton closeButton = new JButton("Ⅹ");
 	JButton companyButton = new JButton("회사정보");
@@ -107,13 +109,17 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 		this.add(taskButton);
 		
 		// 수정 삭제 추가 버튼 설정
-		CRUDButton.setBounds(175,625,500,50);
-		CRUDButton.setFont(new Font("맑은 고딕",Font.BOLD,15));
-		this.add(CRUDButton);
+		insertButton.setBounds(175,625,250,50);
+		insertButton.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		this.add(insertButton);
+		UDButton.setBounds(425,625,250,50);
+		UDButton.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		this.add(UDButton);
 		
 		// 버튼 리스너 설정
+		insertButton.addActionListener(this);
 		mainButton.addActionListener(this);
-		CRUDButton.addActionListener(this);
+		UDButton.addActionListener(this);
 		backButton.addActionListener(this);
 		closeButton.addActionListener(this);
 		companyButton.addActionListener(this);
@@ -122,6 +128,12 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 		scheduleButton.addActionListener(this);
 		taskButton.addActionListener(this);
 		detailList.addItemListener(this);
+		
+		loadLogo();
+		
+		if (insertNum <= 1) {
+			insertButton.setEnabled(false);
+		}
 		
 		this.setVisible(true);
 	}
@@ -135,8 +147,10 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == CRUDButton) {
-			new CompanyDetailCRUD(mainFrame, porgDTO).selectInsert(insertNum, DTO);
+		if (e.getSource() == UDButton) {
+			new CompanyDetailCRUD(mainFrame, porgDTO).select(insertNum, DTO);
+		} else if (e.getSource() == insertButton) {
+			new CompanyDetailCRUD(mainFrame, porgDTO).select(insertNum+4, DTO);
 		} else if (e.getSource() == backButton) {
 			mainFrame.select("CompanyPanel");
 		} else if (e.getSource() == closeButton) {
@@ -149,6 +163,7 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 			DTO = (OrganizationDTO)DAO.listOne(porgDTO);
 			detailList.add(DTO.toString());
 			insertNum = 1;
+			insertButton.setEnabled(false);
 		} else if (e.getSource() == costButton) {
 			// 예산정보 리스트 메서드
 			DAO = new CostDAO();
@@ -159,6 +174,7 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 				detailList.add(costList.get(i).toString());
 			}
 			insertNum = 2;
+			insertButton.setEnabled(true);
 		} else if (e.getSource() == humanResourseButton) {
 			// 인력정보 리스트 메서드
 			DAO = new HumanResourceDAO();
@@ -169,6 +185,7 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 				detailList.add(humanResourseList.get(i).toString());
 			}
 			insertNum = 3;
+			insertButton.setEnabled(true);
 		} else if (e.getSource() == scheduleButton) {
 			// 일정정보 리스트 메서드
 			DAO = new ScheduleDAO();
@@ -179,6 +196,7 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 				detailList.add(scheduleList.get(i).toString());
 			}
 			insertNum = 4;
+			insertButton.setEnabled(true);
 		} else if (e.getSource() == taskButton) {
 			// 일정정보 리스트 메서드
 			DAO = new TaskDAO();
@@ -189,6 +207,7 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 				detailList.add(taskList.get(i).toString());
 			}
 			insertNum = 5;
+			insertButton.setEnabled(true);
 		}
 	}
 
@@ -198,6 +217,12 @@ public class CompanyDetailPanel extends JPanel implements ActionListener, ItemLi
 
 	public void setParticipatingOrganizationDTO(ParticipatingOrganizationDTO participatingOrganizationDTO) {
 		this.porgDTO = participatingOrganizationDTO;
+	}
+	
+	public void loadLogo() {
+		logo.setBounds(15,40,850,800);
+		logo.setIcon(new ImageIcon("src/LogoNewNew2.png"));
+		this.add(logo);
 	}
 	
 //	public void loadCompanyDetailList() {

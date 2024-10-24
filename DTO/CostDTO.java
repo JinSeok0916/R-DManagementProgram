@@ -53,8 +53,8 @@ public class CostDTO {
 	}
 	@Override
 	public String toString() {
-		return "CostDTO [organizationName=" + organizationName + ", date=" + date + ", materialCost=" + materialCost
-				+ ", laborCost=" + laborCost + ", expenseCost=" + expenseCost + ", totalCost=" + totalCost + "]";
+		return "날짜 = " + date + ", 재료비 = " + materialCost
+				+ ", 노무비 = " + laborCost + ", 경비 = " + expenseCost + ", 총액 = " + totalCost;
 	}
 	
 }

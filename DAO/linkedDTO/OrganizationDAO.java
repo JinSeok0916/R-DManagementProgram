@@ -82,7 +82,6 @@ public class OrganizationDAO extends _DAOSuper {
 	@Override
 	public Object listOne(Object object) {
 		ParticipatingOrganizationDTO getParticipatingOrganizationDTO = (ParticipatingOrganizationDTO) object;
-		System.out.println(getParticipatingOrganizationDTO.getOrganizationName());
 		if(con()) {
 			OrganizationDTO setOrganizationDTO = new OrganizationDTO();
 			try {

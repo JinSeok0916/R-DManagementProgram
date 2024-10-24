@@ -90,7 +90,6 @@ public class CompanyPanel extends JPanel implements ActionListener, ItemListener
 		poDAO = new ParticipatingOrganizationDAO();
 		participatingOrganizationList.removeAll();
 		participatingOrganizationNameList = poDAO.list(projectDTO);
-		System.out.println(participatingOrganizationNameList.toString());
 		for (int i = 0; i < participatingOrganizationNameList.size(); i++) {
 			participatingOrganizationList.add("프로젝트명 : "+participatingOrganizationNameList.get(i).getProjectName()+" / 회사명 : "+participatingOrganizationNameList.get(i).getOrganizationName());
 		}

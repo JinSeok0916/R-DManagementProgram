@@ -68,9 +68,10 @@ public class ScheduleDTO {
 	}
 	@Override
 	public String toString() {
-		return "ScheduleDTO [organizationName=" + organizationName + ", date=" + date + ", totalTaskCount=" + totalTaskCount
-				+ ", completeTaskCount=" + completeTaskCount + ", requiredDateForCompleteTaskPerRestDate="
-				+ requiredDateForCompleteTaskPerRestDate + "]";
+		return "날짜 = " + date + ", 총 일수 = " + totalDate + ", 남은 일수 = " + restDate + ", 총 업무 = "
+				+ totalTaskCount + ", 완료한 업무 = " + completeTaskCount + ", 잔여업무 처리소요일수 = "
+				+ requiredDateForCompleteTask + ", 진척도 = "
+				+ requiredDateForCompleteTaskPerRestDate;
 	}
 
 }

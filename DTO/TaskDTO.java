@@ -46,9 +46,8 @@ public class TaskDTO {
 	}
 	@Override
 	public String toString() {
-		return "TaskDTO [projectName=" + projectName + ", organizationName=" + organizationName + ", taskName="
-				+ taskName + ", taskPriority=" + taskPriority + ", taskDate=" + taskDate + ", taskProgress="
-				+ taskProgress + "]";
+		return "업무명 = "+ taskName + ", 우선도 = " + taskPriority + ", 업무처리 필요일수 = "
+				+ taskDate + ", 업무수행여부(true/false) = "+ taskProgress;
 	}
 	
 }

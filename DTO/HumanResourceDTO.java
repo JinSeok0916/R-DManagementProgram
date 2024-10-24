@@ -60,9 +60,9 @@ public class HumanResourceDTO {
 	}
 	@Override
 	public String toString() {
-		return "HumanResourceDTO [companyName=" + organizationName + ", participatingWorkforce=" + participatingWorkforce
-				+ ", idenNumber=" + idenNumber + ", level=" + level + ", age=" + age + ", graduate=" + graduate
-				+ ", salary=" + salary + "]";
+		return "이름 = " + participatingWorkforce
+				+ ", 사번 = " + idenNumber + ", 등급 = " + level + ", 나이  = " + age + ", 학력 = " + graduate
+				+ ", 연봉 = " + salary;
 	}
 	
 }
