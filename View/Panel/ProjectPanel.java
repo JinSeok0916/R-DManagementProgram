@@ -114,6 +114,7 @@ public class ProjectPanel extends JPanel implements ActionListener, ItemListener
 		projectNameList = pDAO.list(null);
 		for (int i = 0; i < projectNameList.size(); i++) {
 			projectList.add((i+1) + "번 프로젝트 : " + projectNameList.get(i).getProjectName());
+			System.out.println(i);
 		}
 		this.add(projectList);
 	}

@@ -21,7 +21,7 @@ public class ProjectDAO extends _DAOSuper{
 		
 				pstmt.setString(1, getProjectDTO.getProjectName());
 				pstmt.setInt(2, getProjectDTO.getProjectDate());
-				pstmt.setInt(3, getProjectDTO.getProjectBudget());
+				pstmt.setLong(3, getProjectDTO.getProjectBudget());
 				pstmt.setString(4, getProjectDTO.getProjectOutline());
 				
 				pstmt.executeUpdate();
@@ -58,7 +58,7 @@ public class ProjectDAO extends _DAOSuper{
 					ProjectDTO setProjectDTO = new ProjectDTO();
 					setProjectDTO.setProjectName(rs.getString("project_name"));
 					setProjectDTO.setProjectDate(rs.getInt("project_date"));
-					setProjectDTO.setProjectBudget(rs.getInt("project_budget"));
+					setProjectDTO.setProjectBudget(rs.getLong("project_budget"));
 					setProjectDTO.setProjectOutline(rs.getString("project_outline"));
 					setProjectDTOList.add(setProjectDTO);
 				} 
@@ -70,7 +70,8 @@ public class ProjectDAO extends _DAOSuper{
 					} catch (Exception e2) {
 					}
 				}
-			} return setProjectDTOList;
+			}
+			return setProjectDTOList;
 		}
 		return null;
 	}
@@ -120,7 +121,7 @@ public class ProjectDAO extends _DAOSuper{
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, setProjectDTO.getProjectName());
 				pstmt.setInt(2, setProjectDTO.getProjectDate());
-				pstmt.setInt(3, setProjectDTO.getProjectBudget());
+				pstmt.setLong(3, setProjectDTO.getProjectBudget());
 				pstmt.setString(4, setProjectDTO.getProjectOutline());
 				pstmt.setString(5, setProjectDTO.getProjectName());
 //				System.out.println(pstmt);

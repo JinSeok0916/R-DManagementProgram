@@ -3,7 +3,7 @@ package DTO;
 public class ProjectDTO {
 	private String projectName = null;
 	private int projectDate = 0;
-	private int projectBudget = 0;
+	private long projectBudget = 0;
 	private String projectOutline = null;
 	public String getProjectName() {
 		return projectName;
@@ -17,10 +17,10 @@ public class ProjectDTO {
 	public void setProjectDate(int projectDate) {
 		this.projectDate = projectDate;
 	}
-	public int getProjectBudget() {
+	public long getProjectBudget() {
 		return projectBudget;
 	}
-	public void setProjectBudget(int projectBudget) {
+	public void setProjectBudget(long projectBudget) {
 		this.projectBudget = projectBudget;
 	}
 	public String getProjectOutline() {
